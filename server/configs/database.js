@@ -2,15 +2,17 @@ import mysql from "mysql2";
 import dotenv from "dotenv";
 dotenv.config();
 
-const pool = mysql
-  .createPool({
-    host: "127.0.0.1",
-    user: "root",
-    password: "",
-    database: "yrgoeventDB",
-  })
-  .promise();
+// standard mysql connection
+// const pool = mysql
+//   .createPool({
+//     host: "127.0.0.1",
+//     user: "root",
+//     password: "",
+//     database: "yrgoeventDB",
+//   })
+//   .promise();
 
+// connection using .env
 // const pool = mysql
 //   .createPool({
 //     host: process.env.MYSQL_HOST,
@@ -20,14 +22,25 @@ const pool = mysql
 //   })
 //   .promise();
 
-async function getStudents() {
+export async function getStudents() {
   const [rows] = await pool.query("SELECT * from students");
   return rows;
 }
-const students = await getStudents();
-console.log(students);
 
-async function getStudent() {
+export async function getVisitors() {
+  const [rows] = await pool.query("SELECT * from visitors");
+  return rows;
+}
+
+export async function getUsers() {
+  const result = await pool.query(`
+  SELECT name
+  FROM users
+  `);
+  return result;
+}
+
+export async function getStudent() {
   const [rows] = await pool.query(`
   SELECT *
   FROM students
@@ -36,5 +49,11 @@ async function getStudent() {
   return rows[0];
 }
 
-const john = await getStudent();
-console.log(john);
+export async function createStudent(area, name, company) {
+  const result = await pool.query(
+    `INSERT INTO visitors (area, name, company)
+  VALUES (? , ? , ?)`,
+    [area, name, company],
+  );
+  return result;
+}
