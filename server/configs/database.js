@@ -12,17 +12,6 @@ dotenv.config();
 //   })
 //   .promise();
 
-const pool = mysql
-  .createPool({
-    host: "db-mysql-lon1-26103-do-user-16098185-0.c.db.ondigitalocean.com",
-    user: "doadmin",
-    password: "AVNS_QjIchW2TZrOVugX4VOQ",
-    database: "defaultdb",
-    port: 25060,
-    ssl: { rejectUnauthorized: false }, // this is required if the sslmode is REQUIRED
-  })
-  .promise();
-
 // connection using .env
 // const pool = mysql
 //   .createPool({
