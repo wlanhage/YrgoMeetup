@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function RegistrationForm() {
+
     const [selectedProgram, setSelectedProgram] = useState('');
 
     const handleProgramChange = (event) => {
