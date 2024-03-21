@@ -3,14 +3,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // standard mysql connection
-// const pool = mysql
-//   .createPool({
-//     host: "127.0.0.1",
-//     user: "root",
-//     password: "",
-//     database: "yrgoeventDB",
-//   })
-//   .promise();
+const pool = mysql
+  .createPool({
+    host: "127.0.0.1",
+    user: "root",
+    password: "",
+    database: "yrgoeventDB",
+  })
+  .promise();
 
 // connection using .env
 // const pool = mysql
@@ -49,7 +49,7 @@ export async function getStudent() {
   return rows[0];
 }
 
-export async function createStudent(area, name, company) {
+export async function createVisitor(area, name, company) {
   const result = await pool.query(
     `INSERT INTO visitors (area, name, company)
   VALUES (? , ? , ?)`,
