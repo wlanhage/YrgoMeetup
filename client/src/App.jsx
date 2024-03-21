@@ -4,15 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home.jsx";
 import Reg from "./pages/reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
+import Visitors from "./components/Visitors.jsx";
 
-import axios from 'axios'
-axios.get('http://localhost:3000/visitors')
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +18,7 @@ function App() {
           <Route path="/Company" element={<CompanyReg />} />
         </Routes>
       </div>
+      <Visitors />
     </>
   );
 }
