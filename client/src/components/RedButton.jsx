@@ -1,3 +1,4 @@
+
 function RedButton ({text}) {
 
     const style = {
@@ -9,6 +10,7 @@ function RedButton ({text}) {
         height: '56px',
         padding: '16px 24px',
         justifyContent: 'space-between',
+        fontFamily: 'inter',
         
     };
 

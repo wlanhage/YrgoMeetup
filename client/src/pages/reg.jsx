@@ -1,14 +1,13 @@
  //Reg.js
  import React from 'react'
  import Navbar from '../components/navbar';
-import Registrationform from '../components/Registrationform';
+import StudentRegForm from '../components/StudentRegForm';
 
  const Reg = () => {
    return (
      <div>
          <Navbar />
-         <Registrationform />
-         <h1>Reg</h1>
+         <StudentRegForm/>
      </div>
    )
  }
