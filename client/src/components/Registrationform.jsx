@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Visitors from "./Visitors.jsx";
 
 function RegistrationForm() {
+
   const [selectedProgram, setSelectedProgram] = useState("");
 
   const handleProgramChange = (event) => {
