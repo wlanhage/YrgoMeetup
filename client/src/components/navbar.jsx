@@ -10,6 +10,9 @@ const Navbar = () => {
         <li>
           <Link to="/reg">Reg</Link>
         </li>
+        <li>
+          <Link to="/Company">Företag</Link>
+        </li>
       </ul>
     </nav>
   );

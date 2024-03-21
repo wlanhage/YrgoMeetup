@@ -35,6 +35,7 @@ function RegistrationForm() {
                     Motiongraphics - <input type="checkbox" name="myCheckbox" />
                     After effects - <input type="checkbox" name="myCheckbox" />
                 </div>
+                <button action="submit">Send</button>
             </form>
         </>
     )
