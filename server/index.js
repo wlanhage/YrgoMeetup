@@ -1,10 +1,8 @@
 import express from "express";
 import { port } from "./config.js";
-
 import {
   getStudents,
   getStudent,
-  createStudent,
   getVisitors,
   getUsers,
 } from "./configs/database.js";
@@ -17,10 +15,10 @@ app.get("/visitors", async (req, res) => {
   res.send(visitors);
 });
 
-app.get("/users", async (req, res) => {
-  const users = await getUsers();
-  res.send(users);
-});
+// app.get("/users", async (req, res) => {
+//   const users = await getUsers();
+//   res.send(users);
+// });
 
 app.get("/students", async (req, res) => {
   const students = await getStudents();
@@ -35,7 +33,7 @@ app.get("/visitors/:id", async (req, res) => {
 
 app.post("/visitors", async (req, res) => {
   const { area, name, company } = req.body;
-  const visitor = await createStudent(area, name, company);
+  const visitor = await createVisitor(area, name, company);
   res.send(visitor);
 });
 
