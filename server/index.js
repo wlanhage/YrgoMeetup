@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 import { port } from "./config.js";
 import {
   getStudents,
@@ -9,6 +10,7 @@ import {
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/visitors", async (req, res) => {
   const visitors = await getVisitors();
