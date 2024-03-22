@@ -6,6 +6,7 @@ import {
   getStudent,
   getVisitors,
   getUsers,
+  createVisitor,
 } from "./configs/database.js";
 
 const app = express();
@@ -34,8 +35,8 @@ app.get("/visitors/:id", async (req, res) => {
 });
 
 app.post("/visitors", async (req, res) => {
-  const { area, name, company } = req.body;
-  const visitor = await createVisitor(area, name, company);
+  const { companyName, description, contactName, webpage } = req.body;
+  const visitor = await createVisitor(companyName, description, contactName, webpage);
   res.send(visitor);
 });
 

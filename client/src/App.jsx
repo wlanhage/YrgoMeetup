@@ -18,7 +18,6 @@ function App() {
           <Route path="/Company" element={<CompanyReg />} />
         </Routes>
       </div>
-      <Visitors />
     </>
   );
 }

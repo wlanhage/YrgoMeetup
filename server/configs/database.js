@@ -49,11 +49,11 @@ export async function getStudent() {
   return rows[0];
 }
 
-export async function createVisitor(area, name, company) {
+export async function createVisitor(companyName, description, contactName, webpage) {
   const result = await pool.query(
-    `INSERT INTO visitors (area, name, company)
-  VALUES (? , ? , ?)`,
-    [area, name, company]
+    `INSERT INTO visitors (companyName, description, contactName, webpage)
+  VALUES (? , ? , ?, ?)`,
+    [companyName, description, contactName, webpage]
   );
   return result;
 }
