@@ -1,14 +1,12 @@
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 import { port } from "./config.js";
-import {
-  getStudents,
-  getStudent,
-  getVisitors,
-  getUsers,
-} from "./configs/database.js";
+import { getUsers } from "./configs/database.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
@@ -17,13 +15,8 @@ app.get("/visitors", async (req, res) => {
   res.send(visitors);
 });
 
-// app.get("/users", async (req, res) => {
-//   const users = await getUsers();
-//   res.send(users);
-// });
-
-app.get("/students", async (req, res) => {
-  const students = await getStudents();
+app.get("/users", async (req, res) => {
+  const students = await getUsers();
   res.send(students);
 });
 
@@ -33,9 +26,9 @@ app.get("/visitors/:id", async (req, res) => {
   res.send(students);
 });
 
-app.post("/visitors", async (req, res) => {
+app.post("/users", async (req, res) => {
   const { area, name, company } = req.body;
-  const visitor = await createVisitor(area, name, company);
+  const visitor = await createVisitor(name, company, "age");
   res.send(visitor);
 });
 

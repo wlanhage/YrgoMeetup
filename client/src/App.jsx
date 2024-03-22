@@ -4,8 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Reg from "./pages/Reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
-import Visitors from "./components/Visitors.jsx";
-
+import Visitors from "./components/GetUsers.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
