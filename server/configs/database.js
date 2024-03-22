@@ -12,15 +12,15 @@ const pool = mysql
   })
   .promise();
 
-// export async function getStudents() {
-//   const [rows] = await pool.query("SELECT * from students");
-//   return rows;
-// }
+ export async function getStudents() {
+   const [rows] = await pool.query("SELECT * from students");
+   return rows;
+ }
 
-// export async function getVisitors() {
-//   const [rows] = await pool.query("SELECT * from visitors");
-//   return rows;
-// }
+ export async function getVisitors() {
+   const [rows] = await pool.query("SELECT * from visitors");
+   return rows;
+ }
 
 export async function getUsers() {
   const result = await pool.query(`
@@ -39,20 +39,20 @@ export async function createVisitor(companyName, description, contactName, webpa
   return result;
 }
 
-// export async function getStudent() {
-//   const [rows] = await pool.query(`
-//   SELECT *
-//   FROM students
-//   WHERE students.name = 'John Doe'
-//   `);
-//   return rows[0];
-// }
+ export async function getStudent() {
+   const [rows] = await pool.query(`
+   SELECT *
+   FROM students
+   WHERE students.name = 'John Doe'
+   `);
+   return rows[0];
+ }
 
-// export async function createStudent(name, area) {
-//   const result = await pool.query(
-//     `INSERT INTO students (name, area,)
-//   VALUES (? , ?)`,
-//     [name, area]
-//   );
-//   return result;
-// }
+ export async function createStudent(name, area) {
+   const result = await pool.query(
+     `INSERT INTO students (name, area,)
+   VALUES (? , ?)`,
+     [name, area]
+   );
+   return result;
+ }
