@@ -1,9 +1,18 @@
 import express from "express";
 import cors from "cors";
 import { port } from "./config.js";
-import { getUsers } from "./configs/database.js";
+
+import {
+  getStudents,
+  getStudent,
+  getVisitors,
+  getUsers,
+  createVisitor,
+} from "./configs/database.js";
+
 import dotenv from "dotenv";
 dotenv.config();
+
 
 const app = express();
 
@@ -26,9 +35,15 @@ app.get("/visitors/:id", async (req, res) => {
   res.send(students);
 });
 
+app.post("/visitors", async (req, res) => {
+  const { companyName, description, contactName, webpage } = req.body;
+  const visitor = await createVisitor(companyName, description, contactName, webpage);
+  });
+
 app.post("/users", async (req, res) => {
   const { area, name, company } = req.body;
   const visitor = await createVisitor(name, company, "age");
+
   res.send(visitor);
 });
 

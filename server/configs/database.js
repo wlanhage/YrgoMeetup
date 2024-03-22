@@ -27,6 +27,15 @@ export async function getUsers() {
   SELECT *
   FROM users
   `);
+  return rows[0];
+}
+
+export async function createVisitor(companyName, description, contactName, webpage) {
+  const result = await pool.query(
+    `INSERT INTO visitors (companyName, description, contactName, webpage)
+  VALUES (? , ? , ?, ?)`,
+    [companyName, description, contactName, webpage]
+  );
   return result;
 }
 
@@ -37,15 +46,6 @@ export async function getUsers() {
 //   WHERE students.name = 'John Doe'
 //   `);
 //   return rows[0];
-// }
-
-// export async function createVisitor(area, name, company) {
-//   const result = await pool.query(
-//     `INSERT INTO visitors (area, name, company)
-//   VALUES (? , ? , ?)`,
-//     [area, name, company]
-//   );
-//   return result;
 // }
 
 // export async function createStudent(name, area) {
