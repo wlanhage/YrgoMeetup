@@ -53,7 +53,16 @@ export async function createVisitor(area, name, company) {
   const result = await pool.query(
     `INSERT INTO visitors (area, name, company)
   VALUES (? , ? , ?)`,
-    [area, name, company],
+    [area, name, company]
+  );
+  return result;
+}
+
+export async function createStudent(name, area) {
+  const result = await pool.query(
+    `INSERT INTO students (name, area,)
+  VALUES (? , ?)`,
+    [name, area]
   );
   return result;
 }
