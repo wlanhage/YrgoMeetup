@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/home.jsx";
-import Reg from "./pages/reg.jsx";
+import Home from "./pages/Home.jsx";
+import Reg from "./pages/Reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
 import Visitors from "./components/Visitors.jsx";
 
@@ -14,7 +14,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/reg" element={<Reg />} />
+          <Route path="/Reg" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
         </Routes>
       </div>
