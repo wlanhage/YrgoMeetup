@@ -22,6 +22,14 @@ function CompanyRegForm() {
         ...input,
         paddingBottom: '80px'
     }
+    const header= {
+        fontSize: '36px',
+        color: 'black', 
+        fontFamily: 'inter',
+        fontWeight: 400,
+        marginBottom: '50px'
+    }
+
 
     const label = {
         fontSize: '16px',
@@ -31,7 +39,7 @@ function CompanyRegForm() {
 
     return (
         <>
-        <h2>Anmälningsformulär</h2>
+        <h2 style={header}>Anmälningsformulär</h2>
         <form action="">
             <label htmlFor="" style={label} >Företagsnamn</label><br />
             <input type="text" style={input} placeholder="Namn..." /> <br /><br />

@@ -1,7 +1,7 @@
 import RedButton from "./RedButton";
 import '../App.css'
 
-function StudentRegForm() {
+function LoginForm() {
     const input = {
         backgroundColor: '#828282',
         width: '310px',
@@ -16,6 +16,7 @@ function StudentRegForm() {
         borderRadius: '4px, 4px, 4px, 4px'
         
     }
+
     const header= {
         fontSize: '36px',
         color: 'black', 
@@ -30,25 +31,17 @@ function StudentRegForm() {
     }
 return (
     <>
-    <h2 style={header}>Skapa Konto</h2>
+    <h2 style={header}>Logga In</h2>
     <form action="">
-            <label htmlFor="" style={label} >Förnamn</label><br />
+            <label htmlFor="" style={label} >e-mail</label><br />
             <input type="text" style={input} placeholder="Förnamn" /> <br /><br />
-
-            <label htmlFor="" style={label}>Efternamn</label><br />
-            <input type="text" style={input} placeholder="Efternamn" /><br /><br />
-
-            <label htmlFor="" style={label}>E-mail</label><br />
-            <input type="text" style={input} placeholder="namn@gmail.com" /><br /><br />
 
             <label htmlFor="" style={label}>Lösenord</label><br />
             <input type="text" style={input} placeholder="*****" /><br /><br />
 
-            <label htmlFor="" style={label}>Bekräfta Lösenord</label><br />
-            <input type="text" style={input} placeholder="*****" /><br /><br />
-    <RedButton text="Nästa" />
+    <RedButton text="Logga In" />
     </form>
     </>
 )
 }
-export default StudentRegForm;
+export default LoginForm;
