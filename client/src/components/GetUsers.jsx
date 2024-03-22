@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Visitors() {
-  const [visitors, setVisitors] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/visitors")
+      .get("http://localhost:3000/users")
       .then((response) => {
-        setVisitors(response.data);
+        const users = response.data[0];
+        setUsers(users);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -17,10 +18,10 @@ function Visitors() {
 
   return (
     <div>
-      {visitors.map((visitor, index) => (
+      {users.map((user, index) => (
         <div key={index}>
-          <h1>{visitor.name}</h1>
-          <p>{visitor.company}</p>
+          <h1>{user.name}</h1>
+          <p>{user.company}</p>
         </div>
       ))}
     </div>
