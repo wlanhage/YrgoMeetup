@@ -22,6 +22,7 @@ function CompanyRegForm() {
     ...input,
     paddingBottom: "80px",
   };
+
   const header = {
     fontSize: "36px",
     color: "black",
@@ -37,10 +38,13 @@ function CompanyRegForm() {
   };
 
   const [formData, setFormData] = useState({
-    companyName: "",
-    description: "",
-    contactName: "",
-    webpage: "",
+    company: "",
+    email: "",
+    phone: "",
+    linkedin: "",
+    textfield: "",
+    web: false,
+    design: false,
   });
 
   const handleChange = (e) => {
