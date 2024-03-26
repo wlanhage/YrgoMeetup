@@ -2,6 +2,16 @@ import mysql from "mysql2";
 import dotenv from "dotenv";
 dotenv.config();
 
+// const pool = mysql
+//   .createPool({
+//     host: "db-mysql-lon1-26103-do-user-16098185-0.c.db.ondigitalocean.com",
+//     port: 25060,
+//     user: "doadmin",
+//     password: "AVNS_QjIchW2TZrOVugX4VOQ",
+//     database: "defaultdb",
+//   })
+//   .promise();
+
 const pool = mysql
   .createPool({
     host: process.env.MYSQL_HOST,

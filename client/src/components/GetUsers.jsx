@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function Visitors() {
+function getUsers() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -28,4 +28,4 @@ function Visitors() {
   );
 }
 
-export default Visitors;
+export default getUsers;
