@@ -13,7 +13,8 @@ export default function ViewButtons() {
     }
     const text = {
         marginLeft: '2rem',
-        marginRight: '2rem',        
+        marginRight: '2rem',
+        textAlign: 'left',         
     }
     return (
         <div style={box}>
