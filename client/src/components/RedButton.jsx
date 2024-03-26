@@ -6,7 +6,7 @@ function RedButton ({text}) {
         color: 'white',
         border: 'none',
         borderRadius: '35px 35px 35px 35px',
-        width: '326px',
+        width: 'calc(100vw - 4rem)',
         height: '56px',
         padding: '16px 24px',
         justifyContent: 'space-between',
