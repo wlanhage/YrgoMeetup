@@ -39,11 +39,31 @@ export async function createCompany(
   return result;
 }
 
-export async function createStudent(name, area) {
+export async function createStudent(
+  firstname,
+  lastname,
+  developer,
+  designer,
+  email,
+  phone,
+  linkedin,
+  textfield,
+  password
+) {
   const result = await pool.query(
-    `INSERT INTO students (name, area,)
-   VALUES (? , ?)`,
-    [name, area]
+    `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
+  VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      firstname,
+      lastname,
+      developer || false,
+      designer || false,
+      email,
+      phone,
+      linkedin,
+      textfield,
+      password,
+    ]
   );
   return result;
 }
