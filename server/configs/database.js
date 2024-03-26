@@ -2,16 +2,6 @@ import mysql from "mysql2";
 import dotenv from "dotenv";
 dotenv.config();
 
-// const pool = mysql
-//   .createPool({
-//     host: "db-mysql-lon1-26103-do-user-16098185-0.c.db.ondigitalocean.com",
-//     port: 25060,
-//     user: "doadmin",
-//     password: "AVNS_QjIchW2TZrOVugX4VOQ",
-//     database: "defaultdb",
-//   })
-//   .promise();
-
 const pool = mysql
   .createPool({
     host: process.env.MYSQL_HOST,
@@ -22,47 +12,38 @@ const pool = mysql
   })
   .promise();
 
- export async function getStudents() {
-   const [rows] = await pool.query("SELECT * from students");
-   return rows;
- }
-
- export async function getVisitors() {
-   const [rows] = await pool.query("SELECT * from visitors");
-   return rows;
- }
-
-export async function getUsers() {
-  const result = await pool.query(`
-  SELECT *
-  FROM users
-  `);
-  return rows[0];
+export async function getStudents() {
+  const result = await pool.query("SELECT * from students");
+  return result;
 }
 
-export async function createVisitor(companyName, description, contactName, webpage) {
+export async function getCompanys() {
+  const result = await pool.query("SELECT * from companys");
+  return result;
+}
+
+export async function createCompany(
+  company,
+  email,
+  phone,
+  linkedin,
+  texfield,
+  web,
+  design
+) {
   const result = await pool.query(
-    `INSERT INTO visitors (companyName, description, contactName, webpage)
+    `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
   VALUES (? , ? , ?, ?)`,
-    [companyName, description, contactName, webpage]
+    [company, email, phone, linkedin, texfield, web, design]
   );
   return result;
 }
 
- export async function getStudent() {
-   const [rows] = await pool.query(`
-   SELECT *
-   FROM students
-   WHERE students.name = 'John Doe'
-   `);
-   return rows[0];
- }
-
- export async function createStudent(name, area) {
-   const result = await pool.query(
-     `INSERT INTO students (name, area,)
+export async function createStudent(name, area) {
+  const result = await pool.query(
+    `INSERT INTO students (name, area,)
    VALUES (? , ?)`,
-     [name, area]
-   );
-   return result;
- }
+    [name, area]
+  );
+  return result;
+}
