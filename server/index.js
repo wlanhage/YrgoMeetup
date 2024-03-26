@@ -24,13 +24,13 @@ app.get("/visitors/:id", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { company, email, phone, linkedin, texfield, web, design } = req.body;
+  const { company, email, phone, linkedin, textfield, web, design } = req.body;
   const createdCompany = await createCompany(
     company,
     email,
     phone,
     linkedin,
-    texfield,
+    textfield,
     web,
     design
   );

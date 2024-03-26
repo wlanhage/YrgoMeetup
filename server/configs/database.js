@@ -27,14 +27,14 @@ export async function createCompany(
   email,
   phone,
   linkedin,
-  texfield,
+  textfield,
   web,
   design
 ) {
   const result = await pool.query(
     `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
-  VALUES (? , ? , ?, ?)`,
-    [company, email, phone, linkedin, texfield, web, design]
+  VALUES (? , ? , ?, ?, ?, ?, ?)`,
+    [company, email, phone, linkedin, textfield, web || false, design || false]
   );
   return result;
 }

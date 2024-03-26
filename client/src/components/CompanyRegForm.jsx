@@ -44,10 +44,10 @@ function CompanyRegForm() {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -55,16 +55,19 @@ function CompanyRegForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/users",
+        "http://localhost:3000/companys",
         formData
       );
       console.log(response.data);
 
       setFormData({
-        companyName: "",
-        description: "",
-        contactName: "",
-        webpage: "",
+        company: "",
+        email: "",
+        phone: "",
+        linkedin: "",
+        textfield: "",
+        web: false,
+        design: false,
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -82,10 +85,10 @@ function CompanyRegForm() {
         <input
           type="text"
           style={input}
-          name="companyName"
-          value={formData.companyName}
+          name="company"
+          value={formData.company}
           onChange={handleChange}
-          placeholder="Namn..."
+          placeholder="company..."
         />{" "}
         <br />
         <br />
@@ -96,24 +99,38 @@ function CompanyRegForm() {
         <input
           type="text"
           style={largeInput}
-          name="description"
-          value={formData.description}
+          name="textfield"
+          value={formData.textfield}
           onChange={handleChange}
           placeholder="Text är..."
         />
         <br />
         <br />
         <label htmlFor="" style={label}>
-          Kontaktperson
+          Phone
+        </label>
+        <br />
+        <input
+          type="text"
+          style={largeInput}
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="phone..."
+        />
+        <br />
+        <br />
+        <label htmlFor="" style={label}>
+          Email
         </label>
         <br />
         <input
           type="text"
           style={input}
-          name="contactName"
-          value={formData.contactName}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
-          placeholder="Namn..."
+          placeholder="email..."
         />
         <br />
         <br />
@@ -131,10 +148,34 @@ function CompanyRegForm() {
         <input
           type="text"
           style={input}
-          name="webpage"
-          value={formData.webpage}
+          name="linkedin"
+          value={formData.linkedin}
           onChange={handleChange}
           placeholder="www."
+        />
+        <br />
+        <br />
+        <label htmlFor="web" style={label}>
+          Web
+        </label>
+        <br />
+        <input
+          type="checkbox"
+          name="web"
+          checked={formData.web}
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+        <label htmlFor="design" style={label}>
+          Design
+        </label>
+        <br />
+        <input
+          type="checkbox"
+          name="design"
+          checked={formData.design}
+          onChange={handleChange}
         />
         <br />
         <br />
