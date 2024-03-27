@@ -79,7 +79,7 @@ app.post("/students", async (req, res) => {
 // });
 
 app.listen(port, () => {
-  console.log(`App is lsitening to port ${port}`);
+  console.log(`App is listening to port ${port}`);
 });
 
 app.use((err, req, res, next) => {
