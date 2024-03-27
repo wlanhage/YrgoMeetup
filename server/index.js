@@ -16,6 +16,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
