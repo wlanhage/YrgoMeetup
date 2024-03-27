@@ -59,7 +59,7 @@ function CompanyRegForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/companys",
+        "http://localhost:8080/companys",
         formData
       );
       console.log(response.data);
