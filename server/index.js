@@ -7,6 +7,7 @@ import {
   createCompany,
   getStudents,
   createStudent,
+  getLanguages,
 } from "./configs/database.js";
 
 import dotenv from "dotenv";
@@ -26,6 +27,11 @@ app.get("/companys", async (req, res) => {
 app.get("/students", async (req, res) => {
   const students = await getStudents();
   res.send(students);
+});
+
+app.get("/languages", async (req, res) => {
+  const languages = await getLanguages();
+  res.send(languages);
 });
 
 app.post("/companys", async (req, res) => {
