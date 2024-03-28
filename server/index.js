@@ -28,12 +28,6 @@ app.get("/students", async (req, res) => {
   res.send(students);
 });
 
-// app.get("/visitors/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const student = await getStudent();
-//   res.send(students);
-// });
-
 app.post("/companys", async (req, res) => {
   const { company, email, phone, linkedin, textfield, web, design } = req.body;
   const createdCompany = await createCompany(
@@ -71,13 +65,6 @@ app.post("/students", async (req, res) => {
     password
   );
 });
-
-// app.post("/users", async (req, res) => {
-//   const { area, name, company } = req.body;
-//   const visitor = await createVisitor(name, company, "age");
-
-//   res.send(visitor);
-// });
 
 app.listen(port, () => {
   console.log(`App is listening to port ${port}`);
