@@ -22,6 +22,11 @@ export async function getCompanys() {
   return result;
 }
 
+export async function getLanguages() {
+  const result = await pool.query("SELECT * from languages");
+  return result;
+}
+
 export async function createCompany(
   company,
   email,
