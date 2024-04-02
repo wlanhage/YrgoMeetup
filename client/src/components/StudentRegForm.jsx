@@ -58,6 +58,46 @@ function StudentRegForm() {
   };
 
   const handleSubmit = async (e) => {
+
+      // Validate first name, last name, email, password, and text field
+      if (!formData.firstname || typeof formData.firstname !== 'string' || !/^[a-zA-Z]+$/.test(formData.firstname)) {
+        alert('Invalid first name');
+        return;
+      }
+
+      if (!formData.lastname || typeof formData.lastname !== 'string' || !/^[a-zA-Z]+$/.test(formData.lastname)) {
+        alert('Invalid last name');
+        return;
+      }
+
+      if (!formData.email || typeof formData.email !== 'string' || !/\S+@\S+\.\S+/.test(formData.email)) {
+        alert('Invalid email');
+        return;
+      }
+
+      if (!formData.password || typeof formData.password !== 'string' || !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/.test(formData.password)) {
+        alert('Invalid password');
+        return;
+      }
+
+      //temporary max length for text field 
+      if (typeof formData.textfield !== 'string' || formData.textfield.length > 250) {
+        alert('Invalid text field');
+        return;
+      }
+      if ( typeof formData.phone !== 'string' || formData.phone.length !== 0 && formData.phone.length !==     10 || !formData.phone.startsWith("07")) {
+        alert('Invalid phone number');
+        return;
+      }
+      if (typeof formData.linkedin !== 'string'){
+        alert('Invalid linkedin-url');
+        return
+      }
+      if ( typeof formData.developer !== 'boolean' || typeof formData.designer !== 'boolean'){
+        alert('Invalid developer or designer');
+        return;
+      }
+
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -96,6 +136,7 @@ function StudentRegForm() {
           value={formData.firstname}
           onChange={handleChange}
           placeholder="Förnamn"
+          required
         />{" "}
         <br />
         <br />
@@ -110,6 +151,7 @@ function StudentRegForm() {
           value={formData.lastname}
           onChange={handleChange}
           placeholder="Efternamn"
+          required
         />
         <br />
         <br />
@@ -124,6 +166,22 @@ function StudentRegForm() {
           value={formData.email}
           onChange={handleChange}
           placeholder="namn@gmail.com"
+          required
+        />
+        <br />
+        <br />
+        <label htmlFor="" style={label}>
+          Lösenord
+        </label>
+        <br />
+        <input
+          type="password"
+          style={input}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="*****"
+          required
         />
         <br />
         <br />
@@ -152,6 +210,7 @@ function StudentRegForm() {
           value={formData.linkedin}
           onChange={handleChange}
           placeholder="linkedin"
+          
         />
         <br />
         <br />
@@ -166,20 +225,6 @@ function StudentRegForm() {
           value={formData.textfield}
           onChange={handleChange}
           placeholder="övrigt..."
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          Lösenord
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="*****"
         />
         <br />
         <br />

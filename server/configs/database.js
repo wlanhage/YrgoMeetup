@@ -50,6 +50,9 @@ export async function createStudent(
   textfield,
   password
 ) {
+  try {
+
+    //make sure to change db so that the email of every entry is unique
   const result = await pool.query(
     `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
   VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
@@ -65,5 +68,19 @@ export async function createStudent(
       password,
     ]
   );
+  return result;
+}
+catch (error) {
+  console.error("Error creating student:", error);
+}
+};
+
+
+export async function getStudentCredentials(email){
+  console.log(email);
+  if (!email) {
+    throw new Error('Email is required');
+  }
+  const result = await pool.query("SELECT * FROM students WHERE email = ?", [email]);
   return result;
 }
