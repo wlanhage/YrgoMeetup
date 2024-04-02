@@ -15,6 +15,7 @@ import {
   getCompanySoftwares,
   getStudentLanguages,
   getStudentSoftwares,
+  getCards,
 } from "./configs/database.js";
 
 import dotenv from "dotenv";
@@ -59,6 +60,11 @@ app.get("/student_languages", async (req, res) => {
 app.get("/student_softwares", async (req, res) => {
   const studentSoftwares = await getStudentSoftwares();
   res.send(studentSoftwares);
+});
+
+app.get("/cards", async (req, res) => {
+  const cards = await getCards();
+  res.send(cards);
 });
 
 app.post("/companys", async (req, res) => {
@@ -192,7 +198,6 @@ app.use((err, req, res, next) => {
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   try {
     const [students] = await getStudentCredentials(email);
     const student = students[0];
