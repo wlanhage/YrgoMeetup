@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CompanyCardDesign from "../pages/CompanyCardDesign";
 import '../App.css';
 
@@ -62,6 +62,16 @@ function CompanyCardContent (props) {
 
     }
 
+    const [submittedData, setSubmittedData] = useState({});
+
+    useEffect(() => {
+        // Retrieve formData from local storage
+        const formData = localStorage.getItem('submittedFormData');
+        if (formData) {
+            setSubmittedData(JSON.parse(formData));
+        }
+      }, []);
+
 
 
     return (
@@ -70,7 +80,7 @@ function CompanyCardContent (props) {
                     <div style={imageContainer}>
 
                     </div>
-                    <div style={text}>Company name</div>
+                    <div style={text}>{submittedData.company}</div>
                     <div style={text}>Webpage.se</div>
                 </div>
                 <div style={cardContainerRight}>

@@ -61,12 +61,17 @@ export async function createCompany(
   web,
   design
 ) {
-  const result = await pool.query(
-    `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
-  VALUES (? , ? , ?, ?, ?, ?, ?)`,
-    [company, email, phone, linkedin, textfield, web || false, design || false]
-  );
-  return result;
+  try {
+    const result = await pool.query(
+      `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
+      VALUES (? , ? , ?, ?, ?, ?, ?)`,
+      [company, email, phone, linkedin, textfield, web || false, design || false]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error creating company:", error);
+    throw error;
+  }
 }
 
 export async function createStudent(

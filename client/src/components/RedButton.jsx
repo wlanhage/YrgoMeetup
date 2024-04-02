@@ -1,3 +1,4 @@
+import { onClick } from 'react';
 
 function RedButton ({text, style: additionalStyle}) {
 
@@ -16,7 +17,7 @@ function RedButton ({text, style: additionalStyle}) {
     };
 
     return (
-        <button style={style}> 
+        <button style={style} onClick={onClick}> 
             {text}
         </button>
         
