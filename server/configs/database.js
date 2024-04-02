@@ -47,6 +47,11 @@ export async function getStudentLanguages() {
   return result;
 }
 
+export async function getCards() {
+  const result = await pool.query("SELECT * from cards");
+  return result;
+}
+
 export async function createCompany(
   company,
   email,
