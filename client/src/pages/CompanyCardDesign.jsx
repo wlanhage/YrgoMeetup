@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import "../App.css";
 import RedButton from '../components/RedButton';
@@ -7,6 +7,15 @@ import CompanyRegProgBar from '../components/CompanyRegProgBar';
 
 function CompanyCardDesign () {
 // FUNKTIONER -------------
+    useEffect(() => {
+      // Retrieve formData from local storage
+      const formData = localStorage.getItem('submittedFormData');
+      if (formData) {
+          setSubmittedData(JSON.parse(formData));
+      }
+    }, []);
+
+
     const [selectedTitle, setSelectedTitle] = useState('Färg');
 
     const [cardColor, setCardColor] = useState('#F52A3B');
