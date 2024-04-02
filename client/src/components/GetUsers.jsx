@@ -6,7 +6,7 @@ function getUsers() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users")
+      .get("https://yrgomeetup.onrender.com/users")
       .then((response) => {
         const users = response.data[0];
         setUsers(users);

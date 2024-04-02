@@ -59,7 +59,7 @@ function CompanyRegForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/companys",
+        "https://yrgomeetup.onrender.com/companys",
         formData
       );
       console.log(response.data);

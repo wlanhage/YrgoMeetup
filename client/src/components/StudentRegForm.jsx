@@ -101,7 +101,7 @@ function StudentRegForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/students",
+        "https://yrgomeetup.onrender.com/students",
         formData
       );
       console.log(response.data);

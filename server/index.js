@@ -10,6 +10,7 @@ import {
   getStudents,
   createStudent,
   getStudentCredentials,
+  getLanguages,
 } from "./configs/database.js";
 
 import dotenv from "dotenv";
@@ -19,6 +20,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
@@ -30,11 +32,10 @@ app.get("/students", async (req, res) => {
   res.send(students);
 });
 
-// app.get("/visitors/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const student = await getStudent();
-//   res.send(students);
-// });
+app.get("/languages", async (req, res) => {
+  const languages = await getLanguages();
+  res.send(languages);
+});
 
 app.post("/companys", async (req, res) => {
   const { company, email, phone, linkedin, textfield, web, design } = req.body;
@@ -138,15 +139,8 @@ app.post("/students", async (req, res) => {
   );
 });
 
-// app.post("/users", async (req, res) => {
-//   const { area, name, company } = req.body;
-//   const visitor = await createVisitor(name, company, "age");
-
-//   res.send(visitor);
-// });
-
 app.listen(port, () => {
-  console.log(`App is lsitening to port ${port}`);
+  console.log(`App is listening to port ${port}`);
 });
 
 app.use((err, req, res, next) => {
