@@ -47,11 +47,6 @@ export async function getStudentLanguages() {
   return result;
 }
 
-export async function getStudentSoftwares() {
-  const result = await pool.query("SELECT * from student_softwares");
-  return result;
-}
-
 export async function createCompany(
   company,
   email,
