@@ -37,8 +37,8 @@ export async function getCompanySoftwares() {
   return result;
 }
 
-export async function getCompanySoftwares() {
-  const result = await pool.query("SELECT * from company_softwares");
+export async function getStudentSoftwares() {
+  const result = await pool.query("SELECT * from student_softwares");
   return result;
 }
 
