@@ -2,6 +2,7 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function CompanyRegForm() {
   const input = {
@@ -37,6 +38,8 @@ function CompanyRegForm() {
     fontFamily: "inter",
   };
 
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     company: "",
     email: "",
@@ -63,6 +66,10 @@ function CompanyRegForm() {
         formData
       );
       console.log(response.data);
+
+      localStorage.setItem('submittedFormData', JSON.stringify(formData));
+
+      navigate('/CompanyCardDesign');
 
       setFormData({
         company: "",
@@ -187,7 +194,7 @@ function CompanyRegForm() {
         />
         <br />
         <br />
-        <RedButton text="Submit" />
+        <RedButton onSubmit={handleSubmit} text="Submit" onClick={() => navigate('/CompanyCardDesign')}/>
       </form>
     </>
   );

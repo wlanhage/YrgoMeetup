@@ -83,18 +83,22 @@ app.post("/companys", async (req, res) => {
 //validate email and password
 app.post("/students", async (req, res) => {
   const {
-    firstname,
-    lastname,
-    developer,
-    designer,
-    email,
-    phone,
-    linkedin,
-    textfield,
-    password,
+    formData: {
+      firstname,
+      lastname,
+      developer,
+      designer,
+      email,
+      phone,
+      linkedin,
+      textfield,
+      password,
+    },
+    languageData,
   } = req.body;
 
   // password should contain at least one number, one lowercase and uppercase letter, min. 8 characters
+
   const validatePassword = (password) => {
     const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return re.test(password);
@@ -137,7 +141,6 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid last name");
     return;
   }
-
   if (!email || typeof email !== "string" || !validateEmail(email)) {
     res.status(400).send("Invalid email");
     return;
@@ -172,17 +175,23 @@ app.post("/students", async (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
-  const createdStudent = await createStudent(
-    encodedFirstname,
-    encodedLastname,
-    developer,
-    designer,
-    email,
-    phone,
-    linkedin,
-    encodedTextfield,
-    hashedPassword
-  );
+  try {
+    const student = await createStudent(
+      firstname,
+      lastname,
+      developer,
+      designer,
+      email,
+      phone,
+      linkedin,
+      textfield,
+      password,
+      languageData // Pass languageData to createStudent
+    );
+    res.json(student);
+  } catch (error) {
+    res.status(500).json({ error: "Error creating student" });
+  }
 });
 
 app.listen(port, () => {
