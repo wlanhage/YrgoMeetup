@@ -7,6 +7,7 @@ import CompanyReg from "./pages/CompanyReg.jsx";
 import getUsers from "./components/GetUsers.jsx";
 import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
+import LoginForm from "./components/LoginForm.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Company" element={<CompanyReg />} />
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
+          <Route path="/LoginForm" element={<LoginForm />} /> 
         </Routes>
       </div>
     </>

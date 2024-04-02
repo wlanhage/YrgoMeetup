@@ -93,6 +93,7 @@ function CompanyRegForm() {
           value={formData.company}
           onChange={handleChange}
           placeholder="company..."
+          required
         />{" "}
         <br />
         <br />
@@ -121,6 +122,7 @@ function CompanyRegForm() {
           value={formData.phone}
           onChange={handleChange}
           placeholder="phone..."
+          
         />
         <br />
         <br />
@@ -129,7 +131,7 @@ function CompanyRegForm() {
         </label>
         <br />
         <input
-          type="text"
+          type="email"
           style={input}
           name="email"
           value={formData.email}
@@ -156,6 +158,7 @@ function CompanyRegForm() {
           value={formData.linkedin}
           onChange={handleChange}
           placeholder="www."
+          required
         />
         <br />
         <br />
@@ -168,6 +171,7 @@ function CompanyRegForm() {
           name="web"
           checked={formData.web}
           onChange={handleChange}
+          
         />
         <br />
         <br />

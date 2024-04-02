@@ -27,6 +27,31 @@ export async function getLanguages() {
   return result;
 }
 
+export async function getCompanyLanguages() {
+  const result = await pool.query("SELECT * from company_languages");
+  return result;
+}
+
+export async function getCompanySoftwares() {
+  const result = await pool.query("SELECT * from company_softwares");
+  return result;
+}
+
+export async function getCompanySoftwares() {
+  const result = await pool.query("SELECT * from company_softwares");
+  return result;
+}
+
+export async function getStudentLanguages() {
+  const result = await pool.query("SELECT * from student_languages");
+  return result;
+}
+
+export async function getStudentSoftwares() {
+  const result = await pool.query("SELECT * from student_softwares");
+  return result;
+}
+
 export async function createCompany(
   company,
   email,
@@ -55,20 +80,36 @@ export async function createStudent(
   textfield,
   password
 ) {
-  const result = await pool.query(
-    `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
+  try {
+    //make sure to change db so that the email of every entry is unique
+    const result = await pool.query(
+      `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
   VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      firstname,
-      lastname,
-      developer || false,
-      designer || false,
-      email,
-      phone,
-      linkedin,
-      textfield,
-      password,
-    ]
-  );
+      [
+        firstname,
+        lastname,
+        developer || false,
+        designer || false,
+        email,
+        phone,
+        linkedin,
+        textfield,
+        password,
+      ]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error creating student:", error);
+  }
+}
+
+export async function getStudentCredentials(email) {
+  console.log(email);
+  if (!email) {
+    throw new Error("Email is required");
+  }
+  const result = await pool.query("SELECT * FROM students WHERE email = ?", [
+    email,
+  ]);
   return result;
 }
