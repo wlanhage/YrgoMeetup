@@ -65,7 +65,15 @@ export async function createCompany(
     const result = await pool.query(
       `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
       VALUES (? , ? , ?, ?, ?, ?, ?)`,
-      [company, email, phone, linkedin, textfield, web || false, design || false]
+      [
+        company,
+        email,
+        phone,
+        linkedin,
+        textfield,
+        web || false,
+        design || false,
+      ]
     );
     return result;
   } catch (error) {
@@ -83,11 +91,21 @@ export async function createStudent(
   phone,
   linkedin,
   textfield,
-  password
+  password,
+  languages
 ) {
   try {
+    const studentId = studentResult.insertId;
+
+    for (const language of languages) {
+      await pool.query(
+        `INSERT INTO student_languages (student_id, language_id) VALUES (?, ?)`,
+        [studentId, language]
+      );
+    }
+
     //make sure to change db so that the email of every entry is unique
-    const result = await pool.query(
+    const studentResult = await pool.query(
       `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
   VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -102,7 +120,7 @@ export async function createStudent(
         password,
       ]
     );
-    return result;
+    return studentResult;
   } catch (error) {
     console.error("Error creating student:", error);
   }

@@ -49,61 +49,127 @@ function StudentRegForm() {
     password: "",
   });
 
+  const [languageData, setLanguageData] = useState({
+    studentId: "",
+    languageId: "",
+  });
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, type, checked } = e.target;
+    let value = e.target.value;
+
+    if (type === "checkbox") {
+      value = checked;
+      if (name === "languages[]") {
+        setLanguageData((prevState) => {
+          if (checked) {
+            return {
+              ...prevState,
+              languageId: e.target.value,
+            };
+          } else {
+            return prevState.filter((id) => id !== value);
+          }
+        });
+        return;
+      }
+    }
+
     setFormData((prevState) => ({
       ...prevState,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
-
-      // Validate first name, last name, email, password, and text field
-      if (!formData.firstname || typeof formData.firstname !== 'string' || !/^[a-zA-Z]+$/.test(formData.firstname)) {
-        alert('Invalid first name');
-        return;
-      }
-
-      if (!formData.lastname || typeof formData.lastname !== 'string' || !/^[a-zA-Z]+$/.test(formData.lastname)) {
-        alert('Invalid last name');
-        return;
-      }
-
-      if (!formData.email || typeof formData.email !== 'string' || !/\S+@\S+\.\S+/.test(formData.email)) {
-        alert('Invalid email');
-        return;
-      }
-
-      if (!formData.password || typeof formData.password !== 'string' || !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/.test(formData.password)) {
-        alert('Invalid password');
-        return;
-      }
-
-      //temporary max length for text field 
-      if (typeof formData.textfield !== 'string' || formData.textfield.length > 250) {
-        alert('Invalid text field');
-        return;
-      }
-      if ( typeof formData.phone !== 'string' || formData.phone.length !== 0 && formData.phone.length !==     10 || !formData.phone.startsWith("07")) {
-        alert('Invalid phone number');
-        return;
-      }
-      if (typeof formData.linkedin !== 'string'){
-        alert('Invalid linkedin-url');
-        return
-      }
-      if ( typeof formData.developer !== 'boolean' || typeof formData.designer !== 'boolean'){
-        alert('Invalid developer or designer');
-        return;
-      }
-
+    // Validate first name, last name, email, password, and text field
+    console.log(formData);
+    console.log(languageData);
     e.preventDefault();
+
+    if (
+      !formData.firstname ||
+      typeof formData.firstname !== "string" ||
+      !/^[a-zA-Z]+$/.test(formData.firstname)
+    ) {
+      alert("Invalid first name");
+      return;
+    }
+
+    if (
+      !formData.lastname ||
+      typeof formData.lastname !== "string" ||
+      !/^[a-zA-Z]+$/.test(formData.lastname)
+    ) {
+      alert("Invalid last name");
+      return;
+    }
+
+    if (
+      !formData.email ||
+      typeof formData.email !== "string" ||
+      !/\S+@\S+\.\S+/.test(formData.email)
+    ) {
+      alert("Invalid email");
+      return;
+    }
+
+    if (
+      !formData.password ||
+      typeof formData.password !== "string" ||
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/.test(formData.password)
+    ) {
+      alert("Invalid password");
+      return;
+    }
+
+    //temporary max length for text field
+    if (
+      typeof formData.textfield !== "string" ||
+      formData.textfield.length > 250
+    ) {
+      alert("Invalid text field");
+      return;
+    }
+    if (
+      typeof formData.phone !== "string" ||
+      (formData.phone.length !== 0 && formData.phone.length !== 10) ||
+      !formData.phone.startsWith("07")
+    ) {
+      alert("Invalid phone number");
+      return;
+    }
+    if (typeof formData.linkedin !== "string") {
+      alert("Invalid linkedin-url");
+      return;
+    }
+    if (
+      typeof formData.developer !== "boolean" ||
+      typeof formData.designer !== "boolean"
+    ) {
+      alert("Invalid developer or designer");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/students",
         formData
       );
+      if (response.status === 200) {
+        const studentId = response.data.insertId; // Get studentId from response
+        for (const languageId of languageData) {
+          await axios.post(
+            "https://yrgomeetup.onrender.com/student_languages",
+            {
+              studentId,
+              languageId,
+            }
+          );
+        }
+      } else {
+        // Handle error...
+      }
       console.log(response.data);
       setFormData({
         firstname: "",
@@ -210,7 +276,6 @@ function StudentRegForm() {
           value={formData.linkedin}
           onChange={handleChange}
           placeholder="linkedin"
-          
         />
         <br />
         <br />
@@ -239,6 +304,7 @@ function StudentRegForm() {
           onChange={handleChange}
         />
         <br />
+        <br />
         <label htmlFor="designer" style={label}>
           Digital designer
         </label>
@@ -247,6 +313,54 @@ function StudentRegForm() {
           name="designer"
           style={input}
           checked={formData.designer}
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+        <label htmlFor="php" style={label}>
+          PHP
+        </label>
+        <input
+          type="checkbox"
+          name="languages[]"
+          style={input}
+          value={3}
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+        <label htmlFor="csharp" style={label}>
+          C#
+        </label>
+        <input
+          type="checkbox"
+          name="languages[]"
+          style={input}
+          value={4}
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+        <label htmlFor="html" style={label}>
+          HTML
+        </label>
+        <input
+          type="checkbox"
+          name="languages[]"
+          style={input}
+          value={5}
+          onChange={handleChange}
+        />
+        <br />
+        <br />
+        <label htmlFor="css" style={label}>
+          CSS
+        </label>
+        <input
+          type="checkbox"
+          name="languages[]"
+          style={input}
+          value={6}
           onChange={handleChange}
         />
         <br />
