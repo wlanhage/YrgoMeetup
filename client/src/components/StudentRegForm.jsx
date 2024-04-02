@@ -61,7 +61,7 @@ function StudentRegForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/students",
+        "http://localhost:8080/students",
         formData
       );
       console.log(response.data);
