@@ -86,7 +86,6 @@ function StudentRegForm() {
     console.log(formData);
     console.log(languageData);
     e.preventDefault();
-
     if (
       !formData.firstname ||
       typeof formData.firstname !== "string" ||
