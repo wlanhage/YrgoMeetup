@@ -17,7 +17,7 @@ function RedButton ({text, style: additionalStyle}) {
     };
 
     return (
-        <button style={style} onClick={onClick}> 
+        <button style={style}> 
             {text}
         </button>
         
