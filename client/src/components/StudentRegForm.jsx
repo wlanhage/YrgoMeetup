@@ -74,7 +74,6 @@ function StudentRegForm() {
         return;
       }
     }
-
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -155,20 +154,20 @@ function StudentRegForm() {
         "https://yrgomeetup.onrender.com/students",
         formData
       );
-      if (response.status === 200) {
-        const studentId = response.data.insertId; // Get studentId from response
-        for (const languageId of languageData) {
-          await axios.post(
-            "https://yrgomeetup.onrender.com/student_languages",
-            {
-              studentId,
-              languageId,
-            }
-          );
-        }
-      } else {
-        // Handle error...
-      }
+      // if (response.status === 200) {
+      //   const studentId = response.data.insertId; // Get studentId from response
+      //   for (const languageId of languageData) {
+      //     await axios.post(
+      //       "https://yrgomeetup.onrender.com/student_languages",
+      //       {
+      //         studentId,
+      //         languageId,
+      //       }
+      //     );
+      //   }
+      // } else {
+      //   // Handle error...
+      // }
       console.log(response.data);
       setFormData({
         firstname: "",
