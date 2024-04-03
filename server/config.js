@@ -1,1 +1,1 @@
-export const port = 8080;
+export const port = 10000 || 5000 || 3000 || 8080 || 5173;
