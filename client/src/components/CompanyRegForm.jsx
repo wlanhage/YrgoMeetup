@@ -2,9 +2,12 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function CompanyRegForm() {
+   const navigate = useNavigate();
+
   const input = {
     backgroundColor: "#828282",
     width: "310px",
@@ -38,7 +41,9 @@ function CompanyRegForm() {
     fontFamily: "inter",
   };
 
-  const navigate = useNavigate();
+  /*  ---------  */ 
+
+
 
   const [formData, setFormData] = useState({
     company: "",
@@ -63,13 +68,13 @@ function CompanyRegForm() {
     try {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/companys",
-        formData
-      );
-      console.log(response.data);
+        formData, 
+       
 
-      localStorage.setItem("submittedFormData", JSON.stringify(formData));
+      localStorage.setItem('submittedFormData', JSON.stringify(formData)),
 
-      navigate("/CompanyCardDesign");
+      navigate("/CompanyCardDesign"),
+
 
       setFormData({
         company: "",
@@ -79,8 +84,12 @@ function CompanyRegForm() {
         textfield: "",
         web: false,
         design: false,
-      });
-    } catch (error) {
+      }),
+
+      navigate('/CompanyCardDesign'),
+
+      )} 
+      catch (error) {
       console.error("Error submitting form:", error);
     }
   };
@@ -192,11 +201,9 @@ function CompanyRegForm() {
         />
         <br />
         <br />
-        <RedButton
-          onSubmit={handleSubmit}
-          text="Submit"
-          onClick={() => navigate("/CompanyCardDesign")}
-        />
+      
+        <RedButton onClick={handleSubmit} text="Submit" />     
+        
       </form>
     </>
   );

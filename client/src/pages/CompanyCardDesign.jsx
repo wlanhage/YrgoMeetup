@@ -4,6 +4,7 @@ import "../App.css";
 import RedButton from '../components/RedButton';
 import CompanyCardContent from '../components/CompanyCardContent';
 import CompanyRegProgBar from '../components/CompanyRegProgBar';
+import { Link } from "react-router-dom";
 
 function CompanyCardDesign () {
 // FUNKTIONER -------------
@@ -15,7 +16,7 @@ function CompanyCardDesign () {
       }
     }, []);
 
-
+    const [submittedData, setSubmittedData] = useState(null);
     const [selectedTitle, setSelectedTitle] = useState('Färg');
 
     const [cardColor, setCardColor] = useState('#F52A3B');
@@ -265,7 +266,10 @@ function CompanyCardDesign () {
 
         <div style={buttonContainer}>
             <RedButton text={'Skapa'}/>
-            <RedButton text={'Backa'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
+
+            <Link to="/Company">
+              <RedButton text={'Backa'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
+            </Link>
         </div>
         </>
     )

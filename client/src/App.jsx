@@ -7,6 +7,7 @@ import CompanyReg from "./pages/CompanyReg.jsx";
 import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import LoginForm from "./components/LoginForm.jsx";
+import CompanyRegForm from "./components/CompanyRegForm.jsx";
 
 
 function App() {
