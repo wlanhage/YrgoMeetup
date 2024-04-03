@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
-
 function CompanyRegForm() {
    const navigate = useNavigate();
 
@@ -70,14 +69,12 @@ function CompanyRegForm() {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/companys",
         formData, 
-        
-        
-
-      
-
-      console.log('hej'),
+       
 
       localStorage.setItem('submittedFormData', JSON.stringify(formData)),
+
+      navigate("/CompanyCardDesign");
+
 
       setFormData({
         company: "",
@@ -143,7 +140,6 @@ function CompanyRegForm() {
           value={formData.phone}
           onChange={handleChange}
           placeholder="phone..."
-          
         />
         <br />
         <br />
@@ -192,7 +188,6 @@ function CompanyRegForm() {
           name="web"
           checked={formData.web}
           onChange={handleChange}
-          
         />
         <br />
         <br />
@@ -208,12 +203,8 @@ function CompanyRegForm() {
         />
         <br />
         <br />
-        
-        
-        <RedButton onClick={handleSubmit} text="Submit" />
-
-        <Link to="/CompanyCardDesign"><RedButton text={"vidare"} /></Link>
-        
+      
+        <RedButton onClick={handleSubmit} text="Submit" />     
         
       </form>
     </>
