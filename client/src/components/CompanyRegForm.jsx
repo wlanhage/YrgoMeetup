@@ -73,7 +73,7 @@ function CompanyRegForm() {
 
       localStorage.setItem('submittedFormData', JSON.stringify(formData)),
 
-      navigate("/CompanyCardDesign");
+      navigate("/CompanyCardDesign"),
 
 
       setFormData({
@@ -86,12 +86,10 @@ function CompanyRegForm() {
         design: false,
       }),
 
-      navigate('/CompanyCardDesign')
-      );
-      console.log(response.data)
+      navigate('/CompanyCardDesign'),
 
-      
-    } catch (error) {
+      )} 
+      catch (error) {
       console.error("Error submitting form:", error);
     }
   };
