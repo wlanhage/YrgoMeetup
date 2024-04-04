@@ -41,7 +41,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Private-Network", true);
   //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
   res.setHeader("Access-Control-Max-Age", 7200);
-
   next();
 });
 
@@ -112,7 +111,6 @@ app.post("/students", async (req, res) => {
       textfield,
       password,
     },
-    languageData,
   } = req.body;
 
   // password should contain at least one number, one lowercase and uppercase letter, min. 8 characters
@@ -203,8 +201,7 @@ app.post("/students", async (req, res) => {
       phone,
       linkedin,
       textfield,
-      password,
-      languageData // Pass languageData to createStudent
+      password
     );
     res.json(student);
   } catch (error) {
@@ -218,7 +215,6 @@ app.listen(port, () => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.header("Access-Control-Allow-Origin", "*");
   res.status(500).send("Something broke!");
 });
 
