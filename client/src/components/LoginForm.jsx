@@ -2,9 +2,9 @@ import RedButton from "./RedButton";
 import '../App.css'
 import React, { useState } from 'react';
 import axios from "axios";
-
-
+import { useNavigate }from "react-router-dom";
 function LoginForm() {
+    const navigate = useNavigate();
     const input = {
         backgroundColor: '#828282',
         width: '310px',
@@ -44,18 +44,40 @@ function LoginForm() {
             [name]: value
         }));
     }
+    const register = (e) => {
+        e.preventDefault();
+        console.log("click");
+        try{
+            navigate('/Register');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/login', formData);
-            console.log(response.data);
+            console.log('Making request...'); // This will log "Making request..." before the request is made
+            const response = await axios.post(/* 'https://yrgomeetup.onrender.com/login' */ "http://localhost:8080/login", formData, { withCredentials: true });
+            console.log('Response:', response); 
+            console.log('Response status:', response.data); 
 
+            const token = response.data.token;
+
+            // Set the token in the request headers for subsequent requests
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            //if token exists, navigate to UserDashboard
+            if(response.data.status === "success"){
+              console.log("Login successful!")
+              console.log(response.data);
+              navigate('/UserDashboard'); 
+            }
         }catch (error) {
+            console.error('Error submitting form:', error);
             if (error.response && error.response.data.message === 'User not found') {
                 console.error('Error: The user does not exist. Please check your email and try again.');
             } else {
-                console.error('Error submitting form:', error.response.data);
+                console.error('Error submitting form:', error.response);
             }
         }
     }
@@ -81,6 +103,11 @@ return (
             placeholder="*****" /> <br /><br />
 
     <RedButton text="Logga In" onClick={handleSubmit} />
+    <br />
+    <br />
+    </form>
+    <form onClick={register}>
+    <RedButton text="Inte medlem? Skapa konto" onClick={register} />
     </form>
     </>
 );

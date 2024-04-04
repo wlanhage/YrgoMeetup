@@ -37,11 +37,6 @@ export async function getCompanySoftwares() {
   return result;
 }
 
-export async function getCompanySoftwares() {
-  const result = await pool.query("SELECT * from company_softwares");
-  return result;
-}
-
 export async function getStudentLanguages() {
   const result = await pool.query("SELECT * from student_languages");
   return result;
@@ -111,5 +106,10 @@ export async function getStudentCredentials(email) {
   const result = await pool.query("SELECT * FROM students WHERE email = ?", [
     email,
   ]);
+  return result;
+}
+
+export async function getUserInformation(id) {
+  const result = await pool.query("SELECT * FROM students WHERE id = ?", [id]);
   return result;
 }

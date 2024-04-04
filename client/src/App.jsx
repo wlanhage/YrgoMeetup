@@ -7,7 +7,8 @@ import CompanyReg from "./pages/CompanyReg.jsx";
 import getUsers from "./components/GetUsers.jsx";
 import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
-import LoginForm from "./components/LoginForm.jsx";
+import Login from "./pages/Login.jsx";
+import UserDashboard from "./pages/UserDashboard.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,11 +17,12 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Reg" element={<Reg />} />
+          <Route path="/Register" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
-          <Route path="/LoginForm" element={<LoginForm />} /> 
+          <Route path="/Login" element={<Login/>} /> 
+          <Route path="/UserDashboard" element={<UserDashboard/>} />
         </Routes>
       </div>
     </>
