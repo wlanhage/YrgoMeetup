@@ -100,113 +100,27 @@ app.post("/companys", async (req, res) => {
 //validate email and password
 app.post("/students", async (req, res) => {
   const {
-    formData: {
-      firstname,
-      lastname,
-      developer,
-      designer,
-      email,
-      phone,
-      linkedin,
-      textfield,
-      password,
-    },
+    firstname,
+    lastname,
+    developer,
+    designer,
+    email,
+    phone,
+    linkedin,
+    textfield,
+    password,
   } = req.body;
-
-  // password should contain at least one number, one lowercase and uppercase letter, min. 8 characters
-
-  const validatePassword = (password) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
-    return re.test(password);
-  };
-  // email should be in the correct format
-  const validateEmail = (email) => {
-    const re = /\S+@\S+\.\S{2,3}$/;
-    return re.test(email);
-  };
-  const validateFirstName = (firstname) => {
-    const re = /^[a-zA-Z]+$/;
-    return re.test(firstname);
-  };
-  const validateLastName = (lastname) => {
-    const re = /^[a-zA-Z]+$/;
-    return re.test(lastname);
-  };
-  // validate textfields
-  if (
-    !firstname ||
-    typeof firstname !== "string" ||
-    !validateFirstName(firstname) ||
-    !/^[a-zA-Z]+$/.test(firstname)
-  ) {
-    res.status(400).send("Invalid first name");
-    return;
-  }
-  if (
-    !lastname ||
-    typeof lastname !== "string" ||
-    !validateLastName(lastname) ||
-    !/^[a-zA-Z]+$/.test(lastname)
-  ) {
-    res.status(400).send("Invalid last name");
-    return;
-  }
-
-  //temporary max lenght for text field is 250 characters
-  if (typeof textfield !== "string" || textfield.length > 250) {
-    res.status(400).send("Invalid last name");
-    return;
-  }
-  if (!email || typeof email !== "string" || !validateEmail(email)) {
-    res.status(400).send("Invalid email");
-    return;
-  }
-  if (
-    typeof phone !== "string" ||
-    (phone.length !== 0 && phone.length !== 10) ||
-    !phone.startsWith("07")
-  ) {
-    res.status(400).send("Invalid phone number");
-    return;
-  }
-  if (typeof linkedin !== "string") {
-    res.status(400).send("Invalid linkedin-url");
-  }
-  if (typeof developer !== "boolean" || typeof designer !== "boolean") {
-    res.status(400).send("Invalid developer or designer");
-  }
-
-  if (
-    !password ||
-    typeof password !== "string" ||
-    !validatePassword(password)
-  ) {
-    res.status(400).send("Invalid password");
-    return;
-  }
-
-  const encodedFirstname = he.encode(firstname);
-  const encodedLastname = he.encode(lastname);
-  const encodedTextfield = he.encode(textfield);
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
-  try {
-    const student = await createStudent(
-      firstname,
-      lastname,
-      developer,
-      designer,
-      email,
-      phone,
-      linkedin,
-      textfield,
-      password
-    );
-    res.json(student);
-  } catch (error) {
-    res.status(500).json({ error: "Error creating student" });
-  }
+  const createdStudent = await createStudent(
+    firstname,
+    lastname,
+    developer,
+    designer,
+    email,
+    phone,
+    linkedin,
+    textfield,
+    password
+  );
 });
 
 app.listen(port, () => {
