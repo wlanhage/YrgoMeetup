@@ -19,7 +19,7 @@ function CompanyCardDesign () {
     const [submittedData, setSubmittedData] = useState(null);
     const [selectedTitle, setSelectedTitle] = useState('Färg');
 
-    const [cardColor, setCardColor] = useState('#F52A3B');
+    const [cardColor, setCardColor] = useState('#FFFFFF');
     const handleColorChange = (event) => {
         setCardColor(event.target.value)
     };
@@ -49,6 +49,11 @@ function CompanyCardDesign () {
       /* setShowPatternButtons(false); */
     }
 
+    const [isFlipped, setIsFlipped] = useState(true);
+    const handleCardClick = () => {
+      setIsFlipped(!isFlipped);
+    }
+
 
     // STYLING -------------
 
@@ -64,16 +69,46 @@ function CompanyCardDesign () {
         textAlign: 'start',
     }
 
+    const cardContainer = {
+      position: 'relative',
+      width: '320px',
+      height: '200px',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+  }
+
     const card = {
         width: '320px',
         height: '200px',
         backgroundColor: cardColor,
         marginLeft: 'auto',
         marginRight: 'auto',
-        border: '2.5px solid',
+        border: '1.5px solid',
         borderRadius: '9px 9px 9px 9px',
-        
+
+        position: 'absolute',
+        transform: 'translate(-12px, 12px)',
     } 
+
+    const cardBackside = {
+        width: '320px',
+        height: '200px',
+        backgroundColor: '#F52A3B',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        border: '1.5px solid',
+        borderRadius: '9px 9px 9px 9px',
+
+        position: 'absolute',
+        transform: 'translate(12px, -12px)',
+    }
+
+    const cardBacksideText = {
+      position: 'relative',
+      top: '30px',
+      fontFamily: 'inter',
+      fontSize: '40px',
+    }
 
     const selectionBar = {
         marginTop: '20px',
@@ -96,7 +131,8 @@ function CompanyCardDesign () {
         fontSize: '50px',
         transform: 'rotate(20deg)',
         position: 'absolute',
-        right: '70px',
+        left: '85px',
+        bottom: '130px'
     }
 
     const radioButton = {
@@ -134,17 +170,33 @@ function CompanyCardDesign () {
     return (
         <>
             <Navbar />
-            <CompanyRegProgBar number={'1'} redBarWidth={'110px'} grayBarWidth={'220px'} />
+            <CompanyRegProgBar number={'2'} redBarWidth={'220px'} grayBarWidth={'110px'} />
 
         <div style={headerText}>Designa ditt <br/> egna visitkort</div>
 
-        {<div style={emojiStyle}>
-                    {emoji}
-                </div> }
-
-        <div style={card}>
-            <CompanyCardContent />
-        </div>
+        
+                <div style={cardContainer} onClick={handleCardClick}>
+                  {isFlipped ? (
+                    <>
+                      <div style={cardBackside}></div>
+                      <div style={card}>
+                        <CompanyCardContent />
+                        <div style={emojiStyle}>
+                          {emoji}
+                        </div> 
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div style={card}>
+                        <CompanyCardContent />
+                      </div>
+                      <div style={cardBackside}>
+                        <h3 style={cardBacksideText}>{submittedData.company}</h3>
+                      </div>
+                    </>
+                  )}
+                </div>
 
 
         <div style={selectionBar}>
@@ -178,28 +230,28 @@ function CompanyCardDesign () {
             style={radioButton}
             type="radio"
             name="color"
-            value="white"
+            value="#FFFFFF"
             onChange={handleColorChange}
           />
         <input
             style={radioButton}
             type="radio"
             name="color"
-            value="#F52A3B"
+            value="#C5EBD8"
             onChange={handleColorChange}
           />
           <input 
             style={radioButton}
             type="radio"
             name="color"
-            value="blue"
+            value="#FCFA58"
             onChange={handleColorChange}
           />
           <input
             style={radioButton}
             type="radio"
             name="color"
-            value="green"
+            value="#A8E8E7  "
             onChange={handleColorChange}
           />
         </div>
