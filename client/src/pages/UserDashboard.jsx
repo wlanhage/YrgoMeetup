@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./Login";
+import RedButton from "../components/RedButton";
 
 function UserDashboard () {
 
@@ -42,12 +43,26 @@ useEffect(() => {
     }
     }, [userId]);
 
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.get("http://localhost:8080/logout", { withCredentials: true });
+            if (response.data.message === "success") {
+                location.reload("true")
+            }
+        }catch(error){
+            console.error('Error:', error);
+        }
+    }
     return (
     <div>
         {authorized ? 
             <div>
             <h1></h1>
             <p>Welcome {user.firstname} {user.lastname}</p>
+            <form onClick={handleLogout}>
+            <RedButton text="Logga ut" onClick={handleLogout} />
+            </form>    
           </div>
          : 
          <div>
