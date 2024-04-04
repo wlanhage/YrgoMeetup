@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import CompanyRegProgBar from '../components/CompanyRegProgBar';
 
 function CompanyRegForm() {
    const navigate = useNavigate();
@@ -96,6 +97,7 @@ function CompanyRegForm() {
 
   return (
     <>
+    <CompanyRegProgBar number={'1'} redBarWidth={'110px'} grayBarWidth={'220px'} />
       <h2 style={header}>Anmälningsformulär</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="" style={label}>
