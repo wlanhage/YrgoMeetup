@@ -91,20 +91,9 @@ export async function createStudent(
   phone,
   linkedin,
   textfield,
-  password,
-  languages
+  password
 ) {
   try {
-    const studentId = studentResult.insertId;
-
-    for (const language of languages) {
-      await pool.query(
-        `INSERT INTO student_languages (student_id, language_id) VALUES (?, ?)`,
-        [studentId, language]
-      );
-    }
-
-    //make sure to change db so that the email of every entry is unique
     const studentResult = await pool.query(
       `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
   VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
