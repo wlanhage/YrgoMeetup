@@ -12,7 +12,7 @@ const navigate = useNavigate();
 const [user, setUser] = useState('');
 const [userId, setUserId] = useState('');
 
-
+//verify the user
 useEffect(() => {
     axios.get("http://localhost:8080/verifyUser", { withCredentials: true })
         .then((res) => {
@@ -29,20 +29,24 @@ useEffect(() => {
         });
 }, []);
 
+//get the user information
 useEffect(() => {
     if (userId){
+        try{
     axios.post("http://localhost:8080/getUserInformation",{user:userId}, { withCredentials: true })
         .then((res) => {
             console.log(res.data);
             setUser(res.data);
            
         })
-        .catch((error) => {
+    } catch(error) {
             console.error("Error fetching data:", error);
-        });
+        };
     }
     }, [userId]);
 
+
+//logout the user
     const handleLogout = async (e) => {
         e.preventDefault();
         try {
@@ -60,9 +64,7 @@ useEffect(() => {
             <div>
             <h1></h1>
             <p>Welcome {user.firstname} {user.lastname}</p>
-            <form onClick={handleLogout}>
             <RedButton text="Logga ut" onClick={handleLogout} />
-            </form>    
           </div>
          : 
          <div>

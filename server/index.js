@@ -200,19 +200,15 @@ app.use((err, req, res, next) => {
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   try {
      const [students] = await getStudentCredentials(email);
-
      if (students.length > 0) {
      const student = students[0];
      const passwordMatch = await bcrypt.compare(password, student.password);
-
-
     //send student id with and use it to create a jwt
      if (passwordMatch) {
       const payload = {id: student.id};
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m'});
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '150m'});
       res.cookie('token', token);
       return res.json({status: "success"});
      } else {
@@ -223,7 +219,7 @@ app.post("/login", async (req, res) => {
      }
   } catch (error) {
      console.error(error);
-     res.status(500).send({ message: "Server error" });
+     res.status(500).send({ message: error});
   }
  });
  
