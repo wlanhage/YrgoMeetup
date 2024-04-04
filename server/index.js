@@ -208,9 +208,11 @@ app.post("/login", async (req, res) => {
      const student = students[0];
      const passwordMatch = await bcrypt.compare(password, student.password);
 
+
+    //send student id with and use it to create a jwt
      if (passwordMatch) {
-      const payload = student.id;
-      const token = jwt.sign(payload, process.env.JWT_SECRET);
+      const payload = {id: student.id};
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m'});
       res.cookie('token', token);
       return res.json({status: "success"});
      } else {
@@ -228,6 +230,7 @@ app.post("/login", async (req, res) => {
 
 //make sure there is a token and request the user credetials by decrypting the token
 const verifyUser = (req, res, next) => {
+  console.log("hello");
   const token = req.cookies.token;  
   if (!token) {
     return res.json({ message: "There is no token. Please provide one." });
@@ -236,9 +239,10 @@ const verifyUser = (req, res, next) => {
       if (err) {
         return res.json({ message: "Web token not valid" });
       } else {
-        req.id = decoded;
+        req.id = decoded.id;
+        console.log(req.id);
         // Send the response inside the jwt.verify callback
-        return res.json({ status: "success", id: req.id});
+       next();
       } 
     });
   }
@@ -250,12 +254,26 @@ const verifyUser = (req, res, next) => {
 
  //get information form the verified user
  app.post("/getUserInformation", async (req, res) => {
-  const id = req.body.user;
+  try {const id = req.body.user;
   console.log(id)
   const [users] = await getUserInformation(id);
   if (users.length > 0) {
     const user = users[0];
   return res.json(user);
 }
+} catch (error) {
+  console.error(error);
+  res.status(500).send({ message: "Server error" });
+}
+ });
+
+  //logout and clear the cookie
+ app.get("/logout", (req, res) => {
+  try {
+  res.clearCookie('token');
+  res.json({ message: "success" }); 
+  } catch (error) {
+  console.error(error);
+  }
  });
  
