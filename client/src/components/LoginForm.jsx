@@ -46,7 +46,6 @@ function LoginForm() {
     }
     const register = (e) => {
         e.preventDefault();
-        console.log("click");
         try{
             navigate('/Register');
         } catch (error) {
@@ -102,13 +101,11 @@ return (
             onChange={handleChange}     
             placeholder="*****" /> <br /><br />
 
-    <RedButton text="Logga In" onClick={handleSubmit} />
+    <RedButton text="Logga In" />
     <br />
     <br />
     </form>
-    <form onClick={register}>
     <RedButton text="Inte medlem? Skapa konto" onClick={register} />
-    </form>
     </>
 );
 }
