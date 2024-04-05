@@ -6,6 +6,13 @@ import "../App.css";
 import RedButton from "./RedButton";
 
 function CompanysPage() {
+  const cardsWrapper = {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "24px",
+  };
+
   const companyCardContainer = {
     display: "flex",
     flexDirection: "column",
@@ -19,12 +26,13 @@ function CompanysPage() {
   };
   const companyCard = {
     display: "flex",
+    flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
 
-    height: "201px",
-    width: "316px",
+    height: "210px",
+    width: "340px",
     borderRadius: "8.04px",
     border: "1px solid var(--Base-Black, #000)",
     background: "var(--Base-White, #FFF)",
@@ -121,30 +129,32 @@ function CompanysPage() {
         <p>Söker DD</p>
         <p>Söker WU</p>
       </section>
-      {companyData.map((company, index) => (
-        <div key={index} style={companyCard}>
-          <div style={wrapper}>
-            <img src={yrgologo}></img>
+      <section style={cardsWrapper}>
+        {companyData.map((company, index) => (
+          <div key={index} style={companyCard}>
+            <div style={wrapper}>
+              <img src={yrgologo}></img>
 
-            <div style={companyInfo}>
-              <h2 style={{ margin: "6px" }}>{company.company}</h2>
-              <p style={{ margin: "6px" }}>{company.email}</p>
-              <p style={{ margin: "6px" }}>{company.phone}</p>
-              <p style={{ width: "50px", margin: "6px" }}>
-                <a href={company.linkedin}>Linkedin</a>{" "}
-              </p>
-              <RedButton
-                text={"Ta reda på mer"}
-                style={{
-                  width: "100%",
-                  padding: "5px",
-                  height: "auto",
-                }}
-              />
+              <div style={companyInfo}>
+                <h2 style={{ margin: "6px" }}>{company.company}</h2>
+                <p style={{ margin: "6px" }}>{company.email}</p>
+                <p style={{ margin: "6px" }}>{company.phone}</p>
+                <p style={{ width: "50px", margin: "6px" }}>
+                  <a href={company.linkedin}>Linkedin</a>{" "}
+                </p>
+                <RedButton
+                  text={"Ta reda på mer"}
+                  style={{
+                    width: "100%",
+                    padding: "5px",
+                    height: "auto",
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </section>
     </div>
   );
 }
