@@ -7,24 +7,23 @@ import CompanyReg from "./pages/CompanyReg.jsx";
 import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import LoginForm from "./components/LoginForm.jsx";
+import CompanysPage from "./components/CompanysPage.jsx";
+import Companys from "./pages/Companys.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
 
-
 function App() {
-  
   return (
     <>
       <div className="App">
-      
-        <Routes>  
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Reg" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCard" element={<CompanyCard />} />
-          <Route path="/LoginForm" element={<LoginForm />} /> 
+          <Route path="/LoginForm" element={<LoginForm />} />
+          <Route path="/Companys" element={<Companys />} />
         </Routes>
-        
       </div>
     </>
   );
