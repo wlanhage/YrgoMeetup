@@ -4,14 +4,15 @@ const Navbar = () => {
   return (
     <nav>
       <ul>
-          <Link to="/">Home</Link>
-          <Link to="/reg">Reg</Link>
-          <Link to="/Company">Företag</Link>
-          <Link to="/CompanyCard">KortDesign</Link>
-          <Link to="/LoginForm"> login</Link>
+        <Link to="/">Home</Link>
+        <Link to="/reg">Reg</Link>
+        <Link to="/Company">Företag</Link>
+        <Link to="/CompanyCard">KortDesign</Link>
+        <Link to="/LoginForm"> login</Link>
+        <Link to="/Companys">Companys</Link>
       </ul>
     </nav>
   );
-}
+};
 
-export default Navbar
+export default Navbar;
