@@ -5,16 +5,18 @@ import { useState } from "react";
 
 function StudentRegForm() {
   const input = {
-    backgroundColor: "#828282",
+    backgroundColor: "#ffffff",
     width: "310px",
-    height: "36px",
+    // height: "36px",
     padding: "8px",
 
     fontSize: "16px",
     color: "white",
     fontFamily: "inter",
 
-    border: "none",
+    marginTop: "8px",
+
+    border: "1px solid #000000",
     borderRadius: "4px, 4px, 4px, 4px",
   };
 
@@ -34,6 +36,14 @@ function StudentRegForm() {
     fontSize: "16px",
     color: "black",
     fontFamily: "inter",
+    textAlign: "center",
+    width: "320px",
+  };
+
+  const programWrapper = {
+    display: "flex",
+
+    justifyContent: "center",
   };
 
   const [formData, setFormData] = useState({
@@ -190,6 +200,21 @@ function StudentRegForm() {
       <h2 style={header}>Skapa Konto</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="" style={label}>
+          E-mail
+        </label>
+        <br />
+        <input
+          type="text"
+          style={input}
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="namn@gmail.com"
+          required
+        />
+        <br />
+        <br />
+        <label htmlFor="" style={label}>
           Förnamn
         </label>
         <br />
@@ -215,21 +240,6 @@ function StudentRegForm() {
           value={formData.lastname}
           onChange={handleChange}
           placeholder="Efternamn"
-          required
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          E-mail
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="namn@gmail.com"
           required
         />
         <br />
@@ -291,30 +301,32 @@ function StudentRegForm() {
         />
         <br />
         <br />
-        <label htmlFor="developer" style={label}>
-          Webbutvecklare
-        </label>
-        <input
-          type="checkbox"
-          name="developer"
-          style={input}
-          checked={formData.developer}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <label htmlFor="designer" style={label}>
-          Digital designer
-        </label>
-        <input
-          type="checkbox"
-          name="designer"
-          style={input}
-          checked={formData.designer}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
+        <div style={programWrapper}>
+          <label htmlFor="developer" style={label}>
+            Webbutvecklare
+          </label>
+          <input
+            type="checkbox"
+            name="developer"
+            style={input}
+            checked={formData.developer}
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+          <label htmlFor="designer" style={label}>
+            Digital designer
+          </label>
+          <input
+            type="checkbox"
+            name="designer"
+            style={input}
+            checked={formData.designer}
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+        </div>
         <label htmlFor="php" style={label}>
           PHP
         </label>
