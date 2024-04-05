@@ -12,6 +12,7 @@ import Companys from "./pages/Companys.jsx";
 import Menu from "./components/Menu.jsx";
 import BurgerMenu from "./pages/BurgerMenu.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
+import CookiePopup from "./components/CookiePopup.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/LoginForm" element={<LoginForm />} />
           <Route path="/Companys" element={<Companys />} />
           <Route path="/BurgerMenu" element={<BurgerMenu />} />
+          <Route path="/CookiePopup" element={<CookiePopup />} />
         </Routes>
       </div>
     </>
