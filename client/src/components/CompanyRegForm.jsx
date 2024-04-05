@@ -74,8 +74,6 @@ function CompanyRegForm() {
 
       localStorage.setItem('submittedFormData', JSON.stringify(formData)),
 
-      navigate("/CompanyCardDesign"),
-
 
       setFormData({
         company: "",
@@ -87,7 +85,7 @@ function CompanyRegForm() {
         design: false,
       }),
 
-      navigate('/CompanyCardDesign'),
+      navigate('/CompanyCard'),
 
       )} 
       catch (error) {

@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Reg from "./pages/Reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
-import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
+import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import LoginForm from "./components/LoginForm.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
@@ -21,7 +21,7 @@ function App() {
           <Route path="/Reg" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
-          <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
+          <Route path="/CompanyCard" element={<CompanyCard />} />
           <Route path="/LoginForm" element={<LoginForm />} /> 
         </Routes>
         

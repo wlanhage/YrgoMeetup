@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import CompanyCardDesign from "../pages/CompanyCardDesign";
 import '../App.css';
 
 
