@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar.jsx";
 function CompanyCards() {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <CompanysPage />
     </div>
   );
