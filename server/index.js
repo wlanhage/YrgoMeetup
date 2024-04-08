@@ -3,8 +3,8 @@ import cors from "cors";
 import { port } from "./config.js";
 import bcrypt from "bcryptjs";
 import he from "he";
-import jwt from 'jsonwebtoken';
-import cookieParser from 'cookie-parser';
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 import {
   getCompanys,
@@ -30,28 +30,16 @@ const app = express();
 app.use(express.json());
 
 //obs! Remember to change origin to the frontend url when deploying
-app.use(cors(
-  {origin: ["http://localhost:5173"], methods: ["POST", "GET"], credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.static("public"));
-
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   res.setHeader("Access-Control-Allow-Private-Network", true);
-//   //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
-//   res.setHeader("Access-Control-Max-Age", 7200);
-//   next();
-// });
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
@@ -133,7 +121,6 @@ app.post("/students", async (req, res) => {
   );
 });
 
-
 app.listen(port, () => {
   console.log(`App is listening to port ${port}`);
 });
@@ -149,33 +136,34 @@ app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   try {
-     const [students] = await getStudentCredentials(email);
-     if (students.length > 0) {
-     const student = students[0];
-     const passwordMatch = await bcrypt.compare(password, student.password);
-    //send student id with and use it to create a jwt
-     if (passwordMatch) {
-      const payload = {id: student.id};
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '150m'});
-      res.cookie('token', token);
-      return res.json({status: "success"});
-     } else {
-       return res.status(400).send({ message: "Wrong password" });
-     }
-     } else {
-       return res.status(400).send({ message: "User not found" });
-     }
+    const [students] = await getStudentCredentials(email);
+    if (students.length > 0) {
+      const student = students[0];
+      const passwordMatch = await bcrypt.compare(password, student.password);
+      //send student id with and use it to create a jwt
+      if (passwordMatch) {
+        const payload = { id: student.id };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+          expiresIn: "20m",
+        });
+        res.cookie("token", token);
+        return res.json({ status: "success" });
+      } else {
+        return res.status(400).send({ message: "Wrong password" });
+      }
+    } else {
+      return res.status(400).send({ message: "User not found" });
+    }
   } catch (error) {
-     console.error(error);
-     res.status(500).send({ message: error});
+    console.error(error);
+    res.status(500).send({ message: error });
   }
- });
- 
+});
 
 //make sure there is a token and request the user credetials by decrypting the token
 const verifyUser = (req, res, next) => {
   console.log("hello");
-  const token = req.cookies.token;  
+  const token = req.cookies.token;
   if (!token) {
     return res.json({ message: "There is no token. Please provide one." });
   } else {
@@ -186,64 +174,59 @@ const verifyUser = (req, res, next) => {
         req.id = decoded.id;
         console.log(req.id);
         // Send the response inside the jwt.verify callback
-       next();
-      } 
+        next();
+      }
     });
   }
-}
- app.get("/verifyUser", verifyUser, async (req, res) => {
-  return res.json({status: "success", id: req.id})
- });
+};
+app.get("/verifyUser", verifyUser, async (req, res) => {
+  return res.json({ status: "success", id: req.id });
+});
 
-
- //get information form the verified user
- app.post("/getUserInformation", async (req, res) => {
+//get information form the verified user
+app.post("/getUserInformation", async (req, res) => {
   try {
-  const id = req.body.user;
-  const [users] = await getUserInformation(id);
-  if (users.length > 0) {
-    const user = users[0];
-  return res.json(user);
-}
-} catch (error) {
-  console.error(error);
-  res.status(500).send({ message: "Server error" });
-}
- });
+    const id = req.body.user;
+    const [users] = await getUserInformation(id);
+    if (users.length > 0) {
+      const user = users[0];
+      return res.json(user);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server error" });
+  }
+});
 
-//get the skills of the user  
+//get the skills of the user
 
 app.post("/getUserSkills", async (req, res) => {
-  try{
-  const id = req.body.user;
-  let [softwares, languages] = await getUserSkills(id);
-  console.log(softwares);
-  console.log(languages);
-  if (languages.length > 0 && softwares.length > 0) {
-   return res.json({languages, softwares});
-} 
-else if ( languages.length > 0 && !softwares.length > 0) {
-  return res.json({languages});
-} 
-else if (!languages.length > 0 && softwares.length > 0) {
-  return res.json({softwares});
-}
-else {
-  return res.status(400).send({ message: "No skills found" });
-}
-} catch (error) {
-  console.error(error);
-  res.status(500).send({ message: "Server error" });
-}
- });
-
-  //logout and clear the cookie
- app.get("/logout", (req, res) => {
   try {
-  res.clearCookie('token');
-  res.json({ message: "success" }); 
+    const id = req.body.user;
+    let [softwares, languages] = await getUserSkills(id);
+    console.log(softwares);
+    console.log(languages);
+    if (languages.length > 0 && softwares.length > 0) {
+      return res.json({ languages, softwares });
+    } else if (languages.length > 0 && !softwares.length > 0) {
+      return res.json({ languages });
+    } else if (!languages.length > 0 && softwares.length > 0) {
+      return res.json({ softwares });
+    } else {
+      return res.status(400).send({ message: "No skills found" });
+    }
   } catch (error) {
-  console.error(error);
+    console.error(error);
+    res.status(500).send({ message: "Server error" });
   }
- });
- 
+});
+
+//logout and clear the cookie
+app.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.json({ message: "success" });
+  } catch (error) {
+    console.error(error);
+  }
+});

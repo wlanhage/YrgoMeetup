@@ -6,7 +6,7 @@ import CompanyCardContent from '../components/CompanyCardContent';
 import CompanyRegProgBar from '../components/CompanyRegProgBar';
 import { Link } from "react-router-dom";
 
-function CompanyCardDesign () {
+function CompanyCardDesign ({toggleDesign, setDesignData}) {
 // FUNKTIONER -------------
     useEffect(() => {
       // Retrieve formData from local storage
@@ -22,11 +22,13 @@ function CompanyCardDesign () {
     const [cardColor, setCardColor] = useState('#FFFFFF');
     const handleColorChange = (event) => {
         setCardColor(event.target.value)
+        setDesignData(prevState => ({ ...prevState, color: event.target.value }));
     };
 
     const [emoji, setEmoji] = useState('');
     const handleIconChange = (event) => {
-        setEmoji(event.target.value);
+        setEmoji(event.target.value)
+        setDesignData(prevState => ({ ...prevState, emoji: event.target.value }));
     }
 
     const [showColorButtons, setShowColorButtons] = useState(true);
@@ -317,7 +319,7 @@ function CompanyCardDesign () {
         )}
 
         <div style={buttonContainer}>
-            <RedButton text={'Skapa'}/>
+            <RedButton onClick={toggleDesign} text={'Skapa'}/>
 
             <Link to="/Company">
               <RedButton text={'Backa'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
