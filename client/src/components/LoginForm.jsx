@@ -3,6 +3,8 @@ import "../App.css";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate }from "react-router-dom";
+
+
 function LoginForm() {
     const navigate = useNavigate();
     const input = {
@@ -10,25 +12,20 @@ function LoginForm() {
         width: '310px',
         height: '36px',
         padding: '8px',
-
         fontSize: '16px',
         color: 'white',
         fontFamily: 'inter',
+        border: "none",
+        borderRadius: "4px 4px 4px 4px",
+    };
 
-    fontSize: "16px",
-    color: "white",
-    fontFamily: "inter",
+    const header = {
+        fontSize: "36px",
+        color: "black",
+        fontFamily: "inter",
+        fontWeight: 400,
+    };
 
-    border: "none",
-    borderRadius: "4px, 4px, 4px, 4px",
-  };
-
-  const header = {
-    fontSize: "36px",
-    color: "black",
-    fontFamily: "inter",
-    fontWeight: 400,
-  };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -36,6 +33,7 @@ function LoginForm() {
             [name]: value
         }));
     }
+
     const register = (e) => {
         e.preventDefault();
         try{
@@ -49,7 +47,7 @@ function LoginForm() {
         e.preventDefault();
         try {
             console.log('Making request...'); // This will log "Making request..." before the request is made
-            const response = await axios.post(/* 'https://yrgomeetup.onrender.com/login' */ "http://localhost:8080/login", formData, { withCredentials: true });
+            const response = await axios.post( 'https://yrgomeetup.onrender.com/login', formData, { withCredentials: true });
             console.log('Response:', response); 
             console.log('Response status:', response.data); 
 
@@ -71,37 +69,36 @@ function LoginForm() {
                 console.error('Error submitting form:', error.response);
             }
         }
-
     }
-  };
 
-  return (
-    <>
-    <h2 style={header}>Logga In</h2>
-    <form onSubmit={handleSubmit}>
-            <label htmlFor="" style={label} >e-mail</label><br />
-            <input type="text" 
-            style={input} 
-            name="email"
-            value={formData.email}
-            onChange={handleChange}     
-            placeholder="example@email.com" /> <br /><br />
+    return (
+        <>
+        <h2 style={header}>Logga In</h2>
+        <form onSubmit={handleSubmit}>
+                <label htmlFor="" style={label} >e-mail</label><br />
+                <input type="text" 
+                style={input} 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}     
+                placeholder="example@email.com" /> <br /><br />
 
-            <label htmlFor="" style={label}>Lösenord</label><br />
-            <input type="password" 
-            style={input} 
-            name="password"
-            value={formData.password}
-            onChange={handleChange}     
-            placeholder="*****" /> <br /><br />
+                <label htmlFor="" style={label}>Lösenord</label><br />
+                <input type="password" 
+                style={input} 
+                name="password"
+                value={formData.password}
+                onChange={handleChange}     
+                placeholder="*****" /> <br /><br />
 
-    <RedButton text="Logga In" />
-    <br />
-    <br />
-    </form>
-    <RedButton text="Inte medlem? Skapa konto" onClick={register} />
+        <RedButton text="Logga In" onClick={handleSubmit} />
+        <br />
+        <br />
+        </form>
+        <RedButton text="Inte medlem? Skapa konto" onClick={register} />
 
-    </>
-  );
+        </>
+    );
 }
+
 export default LoginForm;

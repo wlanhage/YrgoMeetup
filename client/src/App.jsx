@@ -15,6 +15,7 @@ import Menu from "./components/Menu.jsx";
 import BurgerMenu from "./pages/BurgerMenu.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
 import CookiePopup from "./components/CookiePopup.jsx";
+import CompanyCardDesign from "./components/CompanyCardDesign.jsx";
 
 function App() {
   return (
@@ -24,11 +25,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Register" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
-          {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
           <Route path="/Login" element={<Login/>} /> 
           <Route path="/UserDashboard" element={<UserProfilePage/>} />
-          <Route path="/CompanyCard" element={<CompanyCard />} 
+          <Route path="/CompanyCard" element={<CompanyCard />} /> 
           <Route path="/Companys" element={<Companys />} />
           <Route path="/BurgerMenu" element={<BurgerMenu />} />
           <Route path="/CookiePopup" element={<CookiePopup />} />
@@ -39,4 +39,3 @@ function App() {
 }
 
 export default App;
-s

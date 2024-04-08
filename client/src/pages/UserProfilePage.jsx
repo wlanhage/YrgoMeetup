@@ -57,7 +57,7 @@ function UserProfilePage () {
 
 useEffect(() => {
     try{
-    axios.get("http://localhost:8080/verifyUser", { withCredentials: true })
+    axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
         .then((res) => {
             console.log(res.data);
             if (res.data.status === "success") {
@@ -75,7 +75,7 @@ useEffect(() => {
     useEffect(() => {
         if (authorized){
             try{
-        axios.post("http://localhost:8080/getUserInformation",{user:userId}, { withCredentials: true })
+        axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data);
@@ -84,7 +84,7 @@ useEffect(() => {
                 console.error("Error fetching data:", error);
             };
             try{
-                axios.post("http://localhost:8080/getUserSkills",{user:userId}, { withCredentials: true })
+                axios.post("https://yrgomeetup.onrender.com/getUserSkills",{user:userId}, { withCredentials: true })
                     .then((res) => {
                         console.log(res.data); 
                         setSoftwares(res.data.softwares);
@@ -102,7 +102,7 @@ useEffect(() => {
         const handleLogout = async (e) => {
             e.preventDefault();
             try {
-                const response = await axios.get("http://localhost:8080/logout", { withCredentials: true });
+                const response = await axios.get("https://yrgomeetup.onrender.com/logout", { withCredentials: true });
                 if (response.data.message === "success") {
                     location.reload("true")
                 }
