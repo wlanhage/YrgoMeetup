@@ -146,7 +146,8 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-        res.cookie('token', token, { maxAge: 86400000, sameSite: 'None', secure: true }); // expires in 24 hours
+        res.cookie('token', token, { domain: 'localhost:5173', path: '/', maxAge: 86400000, sameSite: 'None', secure: true });
+ // expires in 24 hours
 
         return res.json({ status: "success" });
       } else {
