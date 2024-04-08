@@ -6,7 +6,9 @@ import Reg from "./pages/Reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
 import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
-import LoginForm from "./components/LoginForm.jsx";
+import Login from "./pages/Login.jsx";
+import UserDashboard from "./pages/UserDashboard.jsx";
+import UserProfilePage from "./pages/UserProfilePage.jsx";
 import CompanysPage from "./components/CompanysPage.jsx";
 import Companys from "./pages/Companys.jsx";
 import Menu from "./components/Menu.jsx";
@@ -20,11 +22,13 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Reg" element={<Reg />} />
+          <Route path="/Register" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
-          <Route path="/CompanyCard" element={<CompanyCard />} />
-          <Route path="/LoginForm" element={<LoginForm />} />
+          <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
+          <Route path="/Login" element={<Login/>} /> 
+          <Route path="/UserDashboard" element={<UserProfilePage/>} />
+          <Route path="/CompanyCard" element={<CompanyCard />} 
           <Route path="/Companys" element={<Companys />} />
           <Route path="/BurgerMenu" element={<BurgerMenu />} />
           <Route path="/CookiePopup" element={<CookiePopup />} />
@@ -35,3 +39,4 @@ function App() {
 }
 
 export default App;
+s
