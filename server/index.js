@@ -22,6 +22,7 @@ import {
   getCards,
 } from "./configs/database.js";
 
+axios.defaults.withCredentials = true;
 import dotenv from "dotenv";
 dotenv.config();
 
