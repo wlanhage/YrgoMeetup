@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./Login";
 import RedButton from "../components/RedButton";
+import Cookies from "js-cookie";
 
 function UserDashboard () {
 
@@ -14,40 +15,50 @@ const [userId, setUserId] = useState('');
 
 //verify the user
 useEffect(() => {
-    axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            if (res.data.status === "success") {
-                setAuthorized(true);
-                setUserId(res.data.id);
-            } else {
-                navigate("/Login");
-            }
-        })
-        .catch((error) => {
-            console.error("Error fetching data:", error);
-        });
+        const token = Cookies.get('token');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.status === "success") {
+                    console.log("user is authorized", res.data);
+                    setAuthorized(true);
+                    setUserId(res.data.id);
+                } else {
+                    navigate("/Login");
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
 }, []);
 
 //get the user information
 useEffect(() => {
+    console.log("trying to get user information")
     if (userId){
+        console.log("user id: ", userId)
         try{
     axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
         .then((res) => {
             console.log(res.data);
             setUser(res.data);
+            console.log("user info fetched: ", user);
            
         })
     } catch(error) {
             console.error("Error fetching data:", error);
+            
         };
+    } else {
+        navigate("/Login");
     }
     }, [userId]);
 
 
 //logout the user
     const handleLogout = async (e) => {
+        console.log("logging out")
         e.preventDefault();
         try {
             const response = await axios.get("https://yrgomeetup.onrender.com/logout", { withCredentials: true });

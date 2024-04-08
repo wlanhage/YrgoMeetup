@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import "../App.css";
-import RedButton from '../components/RedButton';
+import RedButton from './RedButton';
 import CompanyCardContent from '../components/CompanyCardContent';
 import CompanyRegProgBar from '../components/CompanyRegProgBar';
 import { Link } from "react-router-dom";

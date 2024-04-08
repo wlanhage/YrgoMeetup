@@ -2,8 +2,11 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
+import SecondaryButton from "./SecondaryButton";
+import { useNavigate } from "react-router-dom";
 
 function StudentRegForm() {
+  const navigate = useNavigate();
   const input = {
     backgroundColor: "#ffffff",
     width: "310px",
@@ -194,6 +197,21 @@ function StudentRegForm() {
       console.error("Error submitting form:", error);
     }
   };
+  const login = (e) => {
+    e.preventDefault();
+    try{
+        navigate('/Login');
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  }
+    const navigateToCreateProfile = (e) => {
+    try {
+      navigate("/UserCreateProfile");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+}
 
   return (
     <>
@@ -375,8 +393,9 @@ function StudentRegForm() {
         />
         <br />
         <br />
-        <RedButton text="Nästa" />
+        <RedButton text="Nästa" onClick={navigateToCreateProfile} />
       </form>
+      <SecondaryButton text="Logga in" onClick={login}/>
     </>
   );
 }
