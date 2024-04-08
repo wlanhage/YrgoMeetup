@@ -1,6 +1,10 @@
 import { onClick } from 'react';
 
+<<<<<<< HEAD
 function RedButton ({text, style: additionalStyle, onClick }) {
+=======
+function RedButton ({ text, style: additionalStyle, onClick }) {
+>>>>>>> finishedCard-and-students-loop
 
     const style = {
         backgroundColor: '#F52A3B',
@@ -17,7 +21,11 @@ function RedButton ({text, style: additionalStyle, onClick }) {
     };
 
     return (
+<<<<<<< HEAD
         <button style={style} onClick={onClick}> 
+=======
+        <button onClick={onClick} style={style}> 
+>>>>>>> finishedCard-and-students-loop
             {text}
         </button>
         
