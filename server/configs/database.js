@@ -110,6 +110,28 @@ export async function getStudentCredentials(email) {
 }
 
 export async function getUserInformation(id) {
-  const result = await pool.query("SELECT * FROM students WHERE id = ?", [id]);
+  const result = await pool.query("SELECT * FROM students, student_languages, student_softwares WHERE id = ?", [id]);
   return result;
+}
+
+export async function getUserSkills(id) {
+  console.log(`Fetching skills for user with ID: ${id}`);
+  
+  const [softwares] = await pool.query(`
+    SELECT * 
+    FROM softwares
+    INNER JOIN student_softwares ON student_softwares.software_id = softwares.id  
+    WHERE student_softwares.student_id = ?
+  `, [id]);
+  console.log(`Fetched softwares: ${JSON.stringify(softwares)}`);
+
+  const [languages] = await pool.query(`
+    SELECT * 
+    FROM languages 
+    INNER JOIN student_languages ON student_languages.language_id = languages.id 
+    WHERE student_languages.student_id = ?
+  `, [id]);
+  console.log(`Fetched languages: ${JSON.stringify(languages)}`);
+
+  return [softwares, languages];
 }

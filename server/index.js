@@ -18,6 +18,7 @@ import {
   getStudentLanguages,
   getStudentSoftwares,
   getUserInformation,
+  getUserSkills,
 } from "./configs/database.js";
 
 import dotenv from "dotenv";
@@ -250,12 +251,38 @@ const verifyUser = (req, res, next) => {
 
  //get information form the verified user
  app.post("/getUserInformation", async (req, res) => {
-  try {const id = req.body.user;
-  console.log(id)
+  try {
+  const id = req.body.user;
   const [users] = await getUserInformation(id);
   if (users.length > 0) {
     const user = users[0];
   return res.json(user);
+}
+} catch (error) {
+  console.error(error);
+  res.status(500).send({ message: "Server error" });
+}
+ });
+
+//get the skills of the user  
+
+app.post("/getUserSkills", async (req, res) => {
+  try{
+  const id = req.body.user;
+  let [softwares, languages] = await getUserSkills(id);
+  console.log(softwares);
+  console.log(languages);
+  if (languages.length > 0 && softwares.length > 0) {
+   return res.json({languages, softwares});
+} 
+else if ( languages.length > 0 && !softwares.length > 0) {
+  return res.json({languages});
+} 
+else if (!languages.length > 0 && softwares.length > 0) {
+  return res.json({softwares});
+}
+else {
+  return res.status(400).send({ message: "No skills found" });
 }
 } catch (error) {
   console.error(error);
