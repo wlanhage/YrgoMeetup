@@ -9,6 +9,7 @@ import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import Login from "./pages/Login.jsx";
 import UserDashboard from "./pages/UserDashboard.jsx";
+import UserProfilePage from "./pages/UserProfilePage.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,7 +23,8 @@ function App() {
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
           <Route path="/Login" element={<Login/>} /> 
-          <Route path="/UserDashboard" element={<UserDashboard/>} />
+{/*           <Route path="/UserDashboard" element={<UserDashboard/>} /> */}
+<Route path="/UserDashboard" element={<UserProfilePage/>} />
         </Routes>
       </div>
     </>
