@@ -8,6 +8,7 @@ import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import LoginForm from "./components/LoginForm.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
+import MeetStudents from "./pages/MeetStudents.jsx";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCard" element={<CompanyCard />} />
           <Route path="/LoginForm" element={<LoginForm />} /> 
+          <Route path="/Students" element={<MeetStudents />} /> 
         </Routes>
         
       </div>

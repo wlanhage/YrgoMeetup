@@ -15,3 +15,8 @@
   cursor: pointer;
   border: 2px;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
