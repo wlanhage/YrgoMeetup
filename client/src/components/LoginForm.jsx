@@ -6,6 +6,10 @@ import { useNavigate }from "react-router-dom";
 
 
 function LoginForm() {
+    const [formData, setFormData] = useState({
+        email: 'karlsson@email.com',
+        password: '123ABCabc'
+    });
     const navigate = useNavigate();
     const input = {
         backgroundColor: '#828282',
@@ -21,6 +25,12 @@ function LoginForm() {
 
     const header = {
         fontSize: "36px",
+        color: "black",
+        fontFamily: "inter",
+        fontWeight: 400,
+    };
+    const label = {
+        fontSize: "16px",
         color: "black",
         fontFamily: "inter",
         fontWeight: 400,
@@ -44,10 +54,12 @@ function LoginForm() {
     }
 
     const handleSubmit = async (e) => {
+        console.log('Making request...');
         e.preventDefault();
         try {
             console.log('Making request...'); // This will log "Making request..." before the request is made
             const response = await axios.post( 'https://yrgomeetup.onrender.com/login', formData, { withCredentials: true });
+            console.log('Request:', formData);
             console.log('Response:', response); 
             console.log('Response status:', response.data); 
 
@@ -75,7 +87,7 @@ function LoginForm() {
         <>
         <h2 style={header}>Logga In</h2>
         <form onSubmit={handleSubmit}>
-                <label htmlFor="" style={label} >e-mail</label><br />
+                <label htmlFor="email" style={label} >e-mail</label><br />
                 <input type="text" 
                 style={input} 
                 name="email"
@@ -83,7 +95,7 @@ function LoginForm() {
                 onChange={handleChange}     
                 placeholder="example@email.com" /> <br /><br />
 
-                <label htmlFor="" style={label}>Lösenord</label><br />
+                <label htmlFor="password" style={label}>Lösenord</label><br />
                 <input type="password" 
                 style={input} 
                 name="password"
@@ -91,7 +103,7 @@ function LoginForm() {
                 onChange={handleChange}     
                 placeholder="*****" /> <br /><br />
 
-        <RedButton text="Logga In" onClick={handleSubmit} />
+        <RedButton text="Logga In" type="submit" />
         <br />
         <br />
         </form>
