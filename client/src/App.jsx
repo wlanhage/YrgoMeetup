@@ -4,15 +4,19 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Reg from "./pages/Reg.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
-import getUsers from "./components/GetUsers.jsx";
-import CompanyCardDesign from "./pages/CompanyCardDesign.jsx";
+import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import Login from "./pages/Login.jsx";
 import UserDashboard from "./pages/UserDashboard.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
+import CompanysPage from "./components/CompanysPage.jsx";
+import Companys from "./pages/Companys.jsx";
+import Menu from "./components/Menu.jsx";
+import BurgerMenu from "./pages/BurgerMenu.jsx";
+import CompanyRegForm from "./components/CompanyRegForm.jsx";
+import CookiePopup from "./components/CookiePopup.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
   return (
     <>
       <div className="App">
@@ -23,8 +27,11 @@ function App() {
           {/* <Route path="/UserProfile" element={<UserProfile />} /> */}
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
           <Route path="/Login" element={<Login/>} /> 
-{/*           <Route path="/UserDashboard" element={<UserDashboard/>} /> */}
-<Route path="/UserDashboard" element={<UserProfilePage/>} />
+          <Route path="/UserDashboard" element={<UserProfilePage/>} />
+          <Route path="/CompanyCard" element={<CompanyCard />} 
+          <Route path="/Companys" element={<Companys />} />
+          <Route path="/BurgerMenu" element={<BurgerMenu />} />
+          <Route path="/CookiePopup" element={<CookiePopup />} />
         </Routes>
       </div>
     </>
@@ -32,3 +39,4 @@ function App() {
 }
 
 export default App;
+s

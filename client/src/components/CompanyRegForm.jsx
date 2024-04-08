@@ -2,8 +2,13 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import CompanyRegProgBar from '../components/CompanyRegProgBar';
 
 function CompanyRegForm() {
+   const navigate = useNavigate();
+
   const input = {
     backgroundColor: "#828282",
     width: "310px",
@@ -37,6 +42,10 @@ function CompanyRegForm() {
     fontFamily: "inter",
   };
 
+  /*  ---------  */ 
+
+
+
   const [formData, setFormData] = useState({
     company: "",
     email: "",
@@ -60,9 +69,11 @@ function CompanyRegForm() {
     try {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/companys",
-        formData
-      );
-      console.log(response.data);
+        formData, 
+       
+
+      localStorage.setItem('submittedFormData', JSON.stringify(formData)),
+
 
       setFormData({
         company: "",
@@ -72,14 +83,19 @@ function CompanyRegForm() {
         textfield: "",
         web: false,
         design: false,
-      });
-    } catch (error) {
+      }),
+
+      navigate('/CompanyCard'),
+
+      )} 
+      catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
   return (
     <>
+    <CompanyRegProgBar number={'1'} redBarWidth={'110px'} grayBarWidth={'220px'} />
       <h2 style={header}>Anmälningsformulär</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="" style={label}>
@@ -122,7 +138,6 @@ function CompanyRegForm() {
           value={formData.phone}
           onChange={handleChange}
           placeholder="phone..."
-          
         />
         <br />
         <br />
@@ -171,7 +186,6 @@ function CompanyRegForm() {
           name="web"
           checked={formData.web}
           onChange={handleChange}
-          
         />
         <br />
         <br />
@@ -187,7 +201,9 @@ function CompanyRegForm() {
         />
         <br />
         <br />
-        <RedButton text="Submit" />
+      
+        <RedButton onClick={handleSubmit} text="Submit" />     
+        
       </form>
     </>
   );

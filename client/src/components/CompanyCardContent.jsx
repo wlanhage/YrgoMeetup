@@ -1,9 +1,8 @@
-import React from 'react';
-import CompanyCardDesign from "../pages/CompanyCardDesign";
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 
 
-function CompanyCardContent (props) {
+function CompanyCardContent () {
     
     const cardContainer = {
         display: 'flex',
@@ -33,8 +32,8 @@ function CompanyCardContent (props) {
     }
 
     const imageContainer = {
-        width: '100px',
-        height: '100px',
+        width: '110px',
+        height: '110px',
         backgroundColor: 'gray',
 
     }
@@ -50,17 +49,27 @@ function CompanyCardContent (props) {
     const tag = {
         padding: '3px',
         margin: '2px',
-        border: 'solid',
+        border: '0.5px solid',
     }
 
     const text = {
         fontFamily: 'inter',
 
-        border: '1px solid black',
+        border: '0.7px solid black',
         
         paddingLeft: '3px',
 
     }
+
+    const [submittedData, setSubmittedData] = useState({});
+
+    useEffect(() => {
+        // Retrieve formData from local storage
+        const formData = localStorage.getItem('submittedFormData');
+        if (formData) {
+            setSubmittedData(JSON.parse(formData));
+        }
+      }, []);
 
 
 
@@ -70,14 +79,14 @@ function CompanyCardContent (props) {
                     <div style={imageContainer}>
 
                     </div>
-                    <div style={text}>Company name</div>
-                    <div style={text}>Webpage.se</div>
+                    <div style={text}>{submittedData.company}</div>
+                    <div style={text}>{submittedData.linkedin}</div>
                 </div>
                 <div style={cardContainerRight}>
-                    <div style={text}>Kontaktperson</div>
-                    <div style={text}>Mailadress@mail.se</div>
-                    <div style={text}>Företaget gör ABC...</div>
-                    <div style={text}>Något annat vi bör veta</div>
+                    <div style={text}>{submittedData.phone}</div>
+                    <div style={text}>{submittedData.email}</div>
+                    <div style={text}>{submittedData.textfield}</div>
+                    <div style={text}>{submittedData.linkedin}</div>
                     <div style={tagsArea}>
                         <div style={tag}>Ett</div>
                         <div style={tag}>Två</div>

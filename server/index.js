@@ -19,6 +19,7 @@ import {
   getStudentSoftwares,
   getUserInformation,
   getUserSkills,
+  getCards,
 } from "./configs/database.js";
 
 import dotenv from "dotenv";
@@ -34,6 +35,23 @@ app.use(cors(
 
 app.use(cookieParser());
 app.use(express.static("public"));
+
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
+//   );
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   res.setHeader("Access-Control-Allow-Private-Network", true);
+//   //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
+//   res.setHeader("Access-Control-Max-Age", 7200);
+//   next();
+// });
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
@@ -70,6 +88,11 @@ app.get("/student_softwares", async (req, res) => {
   res.send(studentSoftwares);
 });
 
+app.get("/cards", async (req, res) => {
+  const cards = await getCards();
+  res.send(cards);
+});
+
 app.post("/companys", async (req, res) => {
   const { company, email, phone, linkedin, textfield, web, design } = req.body;
   const createdCompany = await createCompany(
@@ -97,96 +120,19 @@ app.post("/students", async (req, res) => {
     password,
   } = req.body;
 
-  // password should contain at least one number, one lowercase and uppercase letter, min. 8 characters
-  const validatePassword = (password) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
-    return re.test(password);
-  };
-  // email should be in the correct format
-  const validateEmail = (email) => {
-    const re = /\S+@\S+\.\S{2,3}$/;
-    return re.test(email);
-  };
-  const validateFirstName = (firstname) => {
-    const re = /^[a-zA-Z]+$/;
-    return re.test(firstname);
-  };
-  const validateLastName = (lastname) => {
-    const re = /^[a-zA-Z]+$/;
-    return re.test(lastname);
-  };
-  // validate textfields
-  if (
-    !firstname ||
-    typeof firstname !== "string" ||
-    !validateFirstName(firstname) ||
-    !/^[a-zA-Z]+$/.test(firstname)
-  ) {
-    res.status(400).send("Invalid first name");
-    return;
-  }
-  if (
-    !lastname ||
-    typeof lastname !== "string" ||
-    !validateLastName(lastname) ||
-    !/^[a-zA-Z]+$/.test(lastname)
-  ) {
-    res.status(400).send("Invalid last name");
-    return;
-  }
-
-  //temporary max length for text field is 250 characters
-  if (typeof textfield !== "string" || textfield.length > 250) {
-    res.status(400).send("Invalid last name");
-    return;
-  }
-
-  if (!email || typeof email !== "string" || !validateEmail(email)) {
-    res.status(400).send("Invalid email");
-    return;
-  }
-  if (
-    typeof phone !== "string" ||
-    (phone.length !== 0 && phone.length !== 10) ||
-    !phone.startsWith("07")
-  ) {
-    res.status(400).send("Invalid phone number");
-    return;
-  }
-  if (typeof linkedin !== "string") {
-    res.status(400).send("Invalid linkedin-url");
-  }
-  if (typeof developer !== "boolean" || typeof designer !== "boolean") {
-    res.status(400).send("Invalid developer or designer");
-  }
-
-  if (
-    !password ||
-    typeof password !== "string" ||
-    !validatePassword(password)
-  ) {
-    res.status(400).send("Invalid password");
-    return;
-  }
-
-  const encodedFirstname = he.encode(firstname);
-  const encodedLastname = he.encode(lastname);
-  const encodedTextfield = he.encode(textfield);
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
   const createdStudent = await createStudent(
-    encodedFirstname,
-    encodedLastname,
+    firstname,
+    lastname,
     developer,
     designer,
     email,
     phone,
     linkedin,
-    encodedTextfield,
-    hashedPassword
+    textfield,
+    password
   );
 });
+
 
 app.listen(port, () => {
   console.log(`App is listening to port ${port}`);
@@ -198,6 +144,7 @@ app.use((err, req, res, next) => {
 });
 
 //login function that compares the input to user email and their hashed password and creates a jwt
+
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

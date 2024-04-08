@@ -1,8 +1,11 @@
-
+import "../App.css";
 
 
 function CompanyRegProgBar ({number, grayBarWidth, redBarWidth}) {
 
+    const textStyle = {
+        fontFamily: 'inter',
+    }
 
     const ProgBarContainer = {
         display: 'flex',
@@ -13,6 +16,8 @@ function CompanyRegProgBar ({number, grayBarWidth, redBarWidth}) {
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: '15px',
+
+        
     }
 
     const grayBar = {
@@ -34,7 +39,7 @@ function CompanyRegProgBar ({number, grayBarWidth, redBarWidth}) {
 
     return (
         <>
-            <div>Steg {number} av 3</div>
+            <div style={textStyle}>Steg {number} av 3</div>
             <div style={ProgBarContainer}>
                 <div style={redBar}></div>
                 <div style={grayBar}></div>

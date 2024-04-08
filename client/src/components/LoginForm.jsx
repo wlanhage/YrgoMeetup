@@ -1,6 +1,6 @@
 import RedButton from "./RedButton";
-import '../App.css'
-import React, { useState } from 'react';
+import "../App.css";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate }from "react-router-dom";
 function LoginForm() {
@@ -15,28 +15,20 @@ function LoginForm() {
         color: 'white',
         fontFamily: 'inter',
 
-        border: 'none',
-        borderRadius: '4px, 4px, 4px, 4px'
-        
-    }
+    fontSize: "16px",
+    color: "white",
+    fontFamily: "inter",
 
-    const header= {
-        fontSize: '36px',
-        color: 'black', 
-        fontFamily: 'inter',
-        fontWeight: 400,
-    }
+    border: "none",
+    borderRadius: "4px, 4px, 4px, 4px",
+  };
 
-    const label = {
-        fontSize: '16px',
-        color: 'black', 
-        fontFamily: 'inter',
-    }
-    const [formData, setFormData] = useState({
-        email: '', 
-        password: ''
-    });
-
+  const header = {
+    fontSize: "36px",
+    color: "black",
+    fontFamily: "inter",
+    fontWeight: 400,
+  };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -79,9 +71,11 @@ function LoginForm() {
                 console.error('Error submitting form:', error.response);
             }
         }
-    }
 
-return (
+    }
+  };
+
+  return (
     <>
     <h2 style={header}>Logga In</h2>
     <form onSubmit={handleSubmit}>
@@ -106,7 +100,8 @@ return (
     <br />
     </form>
     <RedButton text="Inte medlem? Skapa konto" onClick={register} />
+
     </>
-);
+  );
 }
 export default LoginForm;

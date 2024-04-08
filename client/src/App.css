@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
+* {
+  box-sizing: border-box;
+}
 #root {
   max-width: none;
   margin: 0 auto;
@@ -14,4 +17,8 @@
 .selectionBarTitle:hover {
   cursor: pointer;
   border: 2px;
+}
+
+body {
+  margin: 0;
 }

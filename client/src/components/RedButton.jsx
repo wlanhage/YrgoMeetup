@@ -1,3 +1,4 @@
+import { onClick } from 'react';
 
 function RedButton ({text, style: additionalStyle, onClick }) {
 

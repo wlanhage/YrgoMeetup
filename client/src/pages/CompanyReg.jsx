@@ -1,4 +1,5 @@
 
+import React from 'react';
 import CompanyRegForm from '../components/CompanyRegForm.jsx';
 import Navbar from '../components/Navbar.jsx';
 
