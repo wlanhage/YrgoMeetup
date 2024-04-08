@@ -21,6 +21,20 @@ import {
   getUserSkills,
   getCards,
 } from "./configs/database.js";
+const session = require('express-session');
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    proxy: true,
+    name: 'MyCoolWebAppCookieName',
+    cookie: {
+      secure: true,
+      httpOnly: false,
+      sameSite: 'none'
+    }
+}));
 
 axios.defaults.withCredentials = true;
 import dotenv from "dotenv";
