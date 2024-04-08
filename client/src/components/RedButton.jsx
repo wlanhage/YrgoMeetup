@@ -1,6 +1,6 @@
 import { onClick } from 'react';
-
 function RedButton ({text, style: additionalStyle, onClick }) {
+
 
     const style = {
         backgroundColor: '#F52A3B',
@@ -17,7 +17,8 @@ function RedButton ({text, style: additionalStyle, onClick }) {
     };
 
     return (
-        <button style={style} onClick={onClick}> 
+
+        <button onClick={onClick} style={style}> 
             {text}
         </button>
         
