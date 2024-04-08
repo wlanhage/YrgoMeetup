@@ -162,15 +162,19 @@ app.post("/login", async (req, res) => {
 
 //make sure there is a token and request the user credetials by decrypting the token
 const verifyUser = (req, res, next) => {
-  console.log("hello");
+  console.log("trying to verify user...");
   const token = req.cookies.token;
   if (!token) {
+    console.log("there is no token");
     return res.json({ message: "There is no token. Please provide one." });
   } else {
+    console.log("there is a token");
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        console.log("Token not valid");
         return res.json({ message: "Web token not valid" });
       } else {
+        console.log("token is valid");
         req.id = decoded.id;
         console.log(req.id);
         // Send the response inside the jwt.verify callback
