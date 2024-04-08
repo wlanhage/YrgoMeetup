@@ -16,6 +16,7 @@ import BurgerMenu from "./pages/BurgerMenu.jsx";
 import CompanyRegForm from "./components/CompanyRegForm.jsx";
 import CookiePopup from "./components/CookiePopup.jsx";
 import CompanyCardDesign from "./components/CompanyCardDesign.jsx";
+import MeetStudents from "./pages/MeetStudents.jsx";
 
 function App() {
   return (
@@ -25,13 +26,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Register" element={<Reg />} />
           <Route path="/Company" element={<CompanyReg />} />
-          <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
+      
           <Route path="/Login" element={<Login/>} /> 
           <Route path="/UserDashboard" element={<UserProfilePage/>} />
           <Route path="/CompanyCard" element={<CompanyCard />} /> 
           <Route path="/Companys" element={<Companys />} />
           <Route path="/BurgerMenu" element={<BurgerMenu />} />
           <Route path="/CookiePopup" element={<CookiePopup />} />
+          <Route path="/Students" element={<MeetStudents />} /> 
+
         </Routes>
       </div>
     </>
