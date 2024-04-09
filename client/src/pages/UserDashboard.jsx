@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Login from "./Login";
 import RedButton from "../components/RedButton";
 import Cookies from "js-cookie";
 
@@ -16,10 +15,12 @@ const [userId, setUserId] = useState('');
 //verify the user
 useEffect(() => {
         const token = Cookies.get('token');
+        console.log(window.location.hostname);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
+                console.log('Response:', res);
+                console.log('Response status:', res.data);
                 if (res.data.status === "success") {
                     console.log("user is authorized", res.data);
                     setAuthorized(true);
@@ -39,8 +40,8 @@ useEffect(() => {
     if (userId){
         console.log("user id: ", userId)
         try{
-    axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
-        .then((res) => {
+            axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
+            .then((res) => {
             console.log(res.data);
             setUser(res.data);
             console.log("user info fetched: ", user);
@@ -77,7 +78,7 @@ useEffect(() => {
             <p>Welcome {user.firstname} {user.lastname}</p>
             <RedButton text="Logga ut" onClick={handleLogout} />
           </div>
-         : 
+         :
          <div>
           {/* <Login/> */} 
           </div>

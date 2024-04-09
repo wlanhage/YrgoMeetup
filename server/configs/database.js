@@ -89,24 +89,20 @@ export async function createStudent(
   developer,
   designer,
   email,
-  phone,
   linkedin,
-  textfield,
   password
 ) {
   try {
     const studentResult = await pool.query(
-      `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
-  VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO students (firstname, lastname, developer, designer, email, linkedin, password)
+  VALUES (? , ? , ?, ?, ?, ?, ?)`,
       [
         firstname,
         lastname,
         developer || false,
         designer || false,
         email,
-        phone,
         linkedin,
-        textfield,
         password,
       ]
     );
