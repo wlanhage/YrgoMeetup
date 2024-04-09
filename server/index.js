@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import he from "he";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import session from 'express-session';
 
 import {
   getCompanys,
@@ -21,7 +22,6 @@ import {
   getUserSkills,
   getCards,
 } from "./configs/database.js";
-const session = require('express-session');
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
