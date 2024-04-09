@@ -14,7 +14,7 @@ function StudentRegForm() {
     padding: "8px",
 
     fontSize: "16px",
-    color: "white",
+    color: "black",
     fontFamily: "inter",
 
     marginTop: "8px",
@@ -48,45 +48,24 @@ function StudentRegForm() {
 
     justifyContent: "center",
   };
+  const form = {
+    marginBottom: "24px",
+  }
 
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    program: "",
     developer: false,
     designer: false,
     email: "",
-    phone: "",
     linkedin: "",
-    textfield: "",
     password: "",
   });
 
-  const [languageData, setLanguageData] = useState({
-    studentId: "",
-    languageId: "",
-  });
-
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     const { name, type, checked } = e.target;
     let value = e.target.value;
 
-    if (type === "checkbox") {
-      value = checked;
-      if (name === "languages[]") {
-        setLanguageData((prevState) => {
-          if (checked) {
-            return {
-              ...prevState,
-              languageId: e.target.value,
-            };
-          } else {
-            return prevState.filter((id) => id !== value);
-          }
-        });
-        return;
-      }
-    }
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -94,9 +73,10 @@ function StudentRegForm() {
   };
 
   const handleSubmit = async (e) => {
+  
     // Validate first name, last name, email, password, and text field
     console.log(formData);
-    console.log(languageData);
+
     e.preventDefault();
     if (
       !formData.firstname ||
@@ -133,70 +113,34 @@ function StudentRegForm() {
       alert("Invalid password");
       return;
     }
-
-    //temporary max length for text field
-    if (
-      typeof formData.textfield !== "string" ||
-      formData.textfield.length > 250
-    ) {
-      alert("Invalid text field");
-      return;
-    }
-    if (
-      typeof formData.phone !== "string" ||
-      (formData.phone.length !== 0 && formData.phone.length !== 10) ||
-      !formData.phone.startsWith("07")
-    ) {
-      alert("Invalid phone number");
-      return;
-    }
+  
     if (typeof formData.linkedin !== "string") {
       alert("Invalid linkedin-url");
       return;
     }
-    if (
-      typeof formData.developer !== "boolean" ||
-      typeof formData.designer !== "boolean"
+/*     if (
+      typeof formData.developer !== "bool" ||
+      typeof formData.designer !== "bool"
     ) {
       alert("Invalid developer or designer");
       return;
-    }
+    } */
 
     try {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/students",
         formData
-      );
-      // if (response.status === 200) {
-      //   const studentId = response.data.insertId; // Get studentId from response
-      //   for (const languageId of languageData) {
-      //     await axios.post(
-      //       "https://yrgomeetup.onrender.com/student_languages",
-      //       {
-      //         studentId,
-      //         languageId,
-      //       }
-      //     );
-      //   }
-      // } else {
-      //   // Handle error...
-      // }
-      console.log(response.data);
-      setFormData({
-        firstname: "",
-        lastname: "",
-        developer: false,
-        designer: false,
-        email: "",
-        phone: "",
-        linkedin: "",
-        textfield: "",
-        password: "",
-      });
-    } catch (error) {
+      );    
+      console.log('Response:', response); // Log the entire response
+      if (response.status === 201) {
+      navigate("/UserCreateProfile"); // Try navigating regardless of the response status
+    } 
+  }catch (error) {
       console.error("Error submitting form:", error);
+      console.error("Error details:", error.response);
     }
   };
+
   const login = (e) => {
     e.preventDefault();
     try{
@@ -205,13 +149,6 @@ function StudentRegForm() {
         console.error('Error:', error);
     }
   }
-    const navigateToCreateProfile = (e) => {
-    try {
-      navigate("/UserCreateProfile");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-}
 
   return (
     <>
@@ -278,20 +215,6 @@ function StudentRegForm() {
         <br />
         <br />
         <label htmlFor="" style={label}>
-          Phone
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          placeholder="phone"
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
           Linkedin
         </label>
         <br />
@@ -305,95 +228,13 @@ function StudentRegForm() {
         />
         <br />
         <br />
-        <label htmlFor="" style={label}>
-          Övrigt
-        </label>
-        <br />
-        <input
-          type="text"
-          style={largeInput}
-          name="textfield"
-          value={formData.textfield}
-          onChange={handleChange}
-          placeholder="övrigt..."
-        />
-        <br />
-        <br />
-        <div style={programWrapper}>
-          <label htmlFor="developer" style={label}>
-            Webbutvecklare
-          </label>
-          <input
-            type="checkbox"
-            name="developer"
-            style={input}
-            checked={formData.developer}
-            onChange={handleChange}
-          />
-          <br />
-          <br />
-          <label htmlFor="designer" style={label}>
-            Digital designer
-          </label>
-          <input
-            type="checkbox"
-            name="designer"
-            style={input}
-            checked={formData.designer}
-            onChange={handleChange}
-          />
-          <br />
-          <br />
-        </div>
-        <label htmlFor="php" style={label}>
-          PHP
-        </label>
-        <input
-          type="checkbox"
-          name="languages[]"
-          style={input}
-          value={3}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <label htmlFor="csharp" style={label}>
-          C#
-        </label>
-        <input
-          type="checkbox"
-          name="languages[]"
-          style={input}
-          value={4}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <label htmlFor="html" style={label}>
-          HTML
-        </label>
-        <input
-          type="checkbox"
-          name="languages[]"
-          style={input}
-          value={5}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <label htmlFor="css" style={label}>
-          CSS
-        </label>
-        <input
-          type="checkbox"
-          name="languages[]"
-          style={input}
-          value={6}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <RedButton text="Nästa" onClick={navigateToCreateProfile} />
+{/*         <p>Vilken inriktning går du?</p>
+        <label htmlFor="developer">Webbutveckling</label>
+        <input type="radio" name="developer" checked={formData.developer} onChange={handleChange}/>
+        <label htmlFor="designer">Design</label>
+        <input type="radio" name="designer" checked={formData.designer} onChange={handleChange}/> */}
+
+        <RedButton style={{marginTop:"24px"}} text="Nästa" type="submit" />
       </form>
       <SecondaryButton text="Logga in" onClick={login}/>
     </>

@@ -64,8 +64,6 @@ const UserCreateProfile= () => {
 <RedButton text="Färdigställ Profil" />
 <SecondaryButton text="Logga ut" />
 </form>
-
-
 </div>
     )
 }

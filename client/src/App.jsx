@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Reg from "./pages/Reg.jsx";
+import Reg from "./pages/Register.jsx";
 import CompanyReg from "./pages/CompanyReg.jsx";
 import CompanyCard from "./pages/CompanyCard.jsx";
 import UserProfile from "./pages/UserCreateProfile.jsx";
@@ -17,6 +17,7 @@ import CompanyRegForm from "./components/CompanyRegForm.jsx";
 import CookiePopup from "./components/CookiePopup.jsx";
 import CompanyCardDesign from "./components/CompanyCardDesign.jsx";
 import UserCreateProfile from "./pages/UserCreateProfile.jsx";
+import Register from "./pages/Register.jsx";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Register" element={<Reg />} />
+          <Route path="/Register" element={<Register />} />
           <Route path="/Company" element={<CompanyReg />} />
           <Route path="/CompanyCardDesign" element={<CompanyCardDesign />} />
           <Route path="/Login" element={<Login/>} /> 
