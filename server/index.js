@@ -150,7 +150,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid first name");
     return;
   } else {
-    const sanitizedFirstName = he.encode(firstname);
+   /*  const sanitizedFirstName = he.encode(firstname); */
   }
   if (
     !lastname ||
@@ -161,7 +161,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid last name");
     return;
   } else {
-    const sanitizedLastName = he.encode(lastname);
+    /* const sanitizedLastName = he.encode(lastname); */
   }
 
   //validate email
