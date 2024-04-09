@@ -118,6 +118,8 @@ app.post("/students", async (req, res) => {
     password,
   } = req.body;
   const hashedPassword = "";
+   const sanitizedFirstName = "";
+  const sanitizedLastName = "";
   //validate the password
   const validatePassword = (password) => {
     const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
