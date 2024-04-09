@@ -30,7 +30,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
     proxy: true,
