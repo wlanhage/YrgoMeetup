@@ -203,7 +203,7 @@ app.post("/students", async (req, res) => {
     textfield, 
     phone
   );
-  res.status(201).json({message: "student created", student:createdStudent});
+  res.status(201).json({message: "student created", student:studentResult});
 } catch(error){
   console.error("error creating student:", error);
   res.status(500).json({ message: 'Error creating student' });
