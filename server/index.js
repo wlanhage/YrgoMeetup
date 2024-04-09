@@ -187,10 +187,10 @@ app.post("/students", async (req, res) => {
   ) {
     res.status(400).send("Invalid password");
     return;
-  } else{
+  } /* else{
     const salt = await bcrypt.genSalt(10);
     hashedPassword = await bcrypt.hash(password, salt);
-  }
+  } */
   try{
   const createdStudent = await createStudent(
     sanitizedFirstName,
