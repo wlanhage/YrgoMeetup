@@ -120,7 +120,7 @@ app.post("/students", async (req, res) => {
   const hashedPassword = "";
   //validate the password
   const validatePassword = (password) => {
-    const re = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,20}$/;
+    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return re.test(password);
   };
 
