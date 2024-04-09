@@ -23,6 +23,13 @@ import {
   getCards,
 } from "./configs/database.js";
 
+const app = express();
+
+axios.defaults.withCredentials = true;
+import dotenv from "dotenv";
+dotenv.config();
+
+app.use(express.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -35,15 +42,6 @@ app.use(session({
       sameSite: 'none'
     }
 }));
-
-axios.defaults.withCredentials = true;
-import dotenv from "dotenv";
-dotenv.config();
-
-const app = express();
-
-app.use(express.json());
-
 //obs! Remember to change origin to the frontend url when deploying
 app.use(
   cors({
