@@ -55,48 +55,53 @@ function UserProfilePage () {
     const [languages, setLanguages] = useState([]);
     let skills = "";
 
-useEffect(() => {
-    try{
-    axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            if (res.data.status === "success") {
-                setAuthorized(true);
-                setUserId(res.data.id);
-            } else {
-                navigate("/Login");
-            }
-        })
-    } catch (error) {
-            console.error("Error fetching data:", error);
-        };
-    },
- []);
     useEffect(() => {
-        if (authorized){
-            try{
-        axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setUser(res.data);
-            })
-        } catch(error) {
-                console.error("Error fetching data:", error);
-            };
-            try{
-                axios.post("https://yrgomeetup.onrender.com/getUserSkills",{user:userId}, { withCredentials: true })
-                    .then((res) => {
-                        console.log(res.data); 
-                        setSoftwares(res.data.softwares);
-                        setLanguages(res.data.languages);
-                        {console.log(softwares)}
-                        {console.log(languages)}
-                    })
-                } catch(error) {
-                        console.error("Error fetching data:", error);
-                    };
+        const verifyUser = async () => {
+            try {
+                const response = await axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true });
+                if (response.data.status === "success") {
+                    setAuthorized(true);
+                    setUserId(response.data.id);
+                } else {
+                    navigate("/Login");
                 }
-                }, [userId]);
+            } catch (error) {
+                console.error("Error verifying user:", error);
+                // Handle error appropriately (e.g., redirect to error page)
+            }
+        };
+    
+        verifyUser();
+    }, []);
+    
+    useEffect(() => {
+        if (authorized) {
+            const fetchUserInformation = async () => {
+                try {
+                    const userResponse = await axios.post("https://yrgomeetup.onrender.com/getUserInformation", { user: userId }, { withCredentials: true });
+                    setUser(userResponse.data);
+                } catch (error) {
+                    console.error("Error fetching user information:", error);
+                    // Handle error appropriately
+                }
+            };
+    
+            const fetchUserSkills = async () => {
+                try {
+                    const skillsResponse = await axios.post("https://yrgomeetup.onrender.com/getUserSkills", { user: userId }, { withCredentials: true });
+                    setSoftwares(skillsResponse.data.softwares);
+                    setLanguages(skillsResponse.data.languages);
+                } catch (error) {
+                    console.error("Error fetching user skills:", error);
+                    // Handle error appropriately
+                }
+            };
+    
+            fetchUserInformation();
+            fetchUserSkills();
+        }
+    }, [userId, authorized]);
+    
 
     //logout the user
         const handleLogout = async (e) => {
@@ -111,10 +116,10 @@ useEffect(() => {
             }
         }
         if (user.developer === 1) {
-            skills = "webbutveckling";
+            skills = "Webbutveckling";
         }
         if (user.designer === 1) {
-            skills = "webbdesign";
+            skills = "Design";
         }
         
     return (

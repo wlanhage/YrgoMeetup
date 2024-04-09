@@ -20,8 +20,8 @@ function StudentsLoop ({selectedCategory, filteredStudents}) {
 
 
         const container = {
-            width: '320px',
-            height: '140px',
+            width: '360px',
+            height: '180px',
             paddingTop: '24px',
             paddingBottom: '24px',
             paddingLeft: '20px',
