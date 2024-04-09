@@ -11,7 +11,7 @@ import {
   getCompanys,
   createCompany,
   getStudents,
-  studentResult,
+  createStudent,
   getStudentCredentials,
   getLanguages,
   getCompanyLanguages,
