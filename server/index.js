@@ -116,6 +116,8 @@ app.post("/students", async (req, res) => {
     email,
     linkedin,
     password,
+    textfield, 
+    phone,
   } = req.body;
   //validate the password
   const validatePassword = (password) => {
@@ -197,6 +199,8 @@ app.post("/students", async (req, res) => {
     email,
     linkedin,
     password,
+    textfield, 
+    phone
   );
   res.status(201).json({message: "student created", student:createdStudent});
 } catch(error){
