@@ -83,37 +83,33 @@ export async function createCompany(
   }
 }
 
-async function createStudent(
+
+export async function createStudent(
   firstname,
   lastname,
   developer,
   designer,
   email,
-  phone,
   linkedin,
-  textfield,
   password
 ) {
   try {
     const studentResult = await pool.query(
-      `INSERT INTO students (firstname, lastname, developer, designer, email, phone, linkedin, textfield, password)
-  VALUES (? , ? , ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO students (firstname, lastname, developer, designer, email, linkedin, password)
+  VALUES (? , ? , ?, ?, ?, ?, ?)`,
       [
         firstname,
         lastname,
         developer || false,
         designer || false,
         email,
-        phone,
         linkedin,
-        textfield,
         password,
       ]
     );
     return studentResult;
   } catch (error) {
     console.error("Error creating student:", error);
-    throw error; // Throw the error so it can be caught in the calling function
   }
 }
 
