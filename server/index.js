@@ -6,6 +6,7 @@ import he from "he";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import session from 'express-session';
+import axios from 'axios';
 
 import {
   getCompanys,
