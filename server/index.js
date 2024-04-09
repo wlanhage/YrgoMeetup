@@ -44,7 +44,7 @@ app.use(session({
 //obs! Remember to change origin to the frontend url when deploying
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["POST", "GET"],
     credentials: true,
   })
