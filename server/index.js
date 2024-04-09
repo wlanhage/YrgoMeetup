@@ -108,7 +108,9 @@ app.post("/companys", async (req, res) => {
 
 //validate email and password
 app.post("/students", async (req, res) => {
-   console.log("POST /students", req.body);
+let encodedFirstname;
+let encodedLastname;
+let hashedPassword;
   const {
     firstname,
     lastname,
@@ -141,7 +143,7 @@ app.post("/students", async (req, res) => {
     return re.test(lastname);
   };
   // validate textfields
-/*   if (
+  if (
     !firstname ||
     typeof firstname !== "string" ||
     !validateFirstName(firstname) ||
@@ -150,7 +152,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid first name");
     return;
   } else {
-  firstname = he.encode(firstname);
+  encodedFirstname = he.encode(firstname);
   }
   if (
     !lastname ||
@@ -161,7 +163,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid last name");
     return;
   } else {
-   lastname = he.encode(lastname);
+   encodedLastname = he.encode(lastname);
   }
 
   //validate email
@@ -187,23 +189,23 @@ app.post("/students", async (req, res) => {
   ) {
     res.status(400).send("Invalid password");
     return;
-  }  *//* else{
+  }  else{
     const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(password, salt);
-  } */
+    hashedPassword = await bcrypt.hash(password, salt);
+  }
   try{
-  const createdStudent = await createStudent( 
-    firstname,
-    lastname,
+  const createdStudent = await createStudent(
+    encodedFirstname,
+    encodedLastname,
     developer,
     designer,
     email,
     linkedin,
-    password,
-    textfield, 
-    phone
+    hashedPassword,
+    textfield,
+    phone,
   );
-  res.status(201).json({message: "student created", student:studentResult});
+  res.status(201).json({message: "student created", student:createdStudent});
 } catch(error){
   console.error("error creating student:", error);
   res.status(500).json({ message: 'Error creating student' });
@@ -218,7 +220,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
-
 //login function that compares the input to user email and their hashed password and creates a jwt
 
 app.post("/login", async (req, res) => {
