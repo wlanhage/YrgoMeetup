@@ -166,7 +166,7 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-       res.cookie('token', token, { maxAge: 86400000, sameSite: 'None' });
+       res.cookie('token', token, { expiresIn:"20m", sameSite: 'None' });
  // expires in 24 hours
 
         return res.json({ status: "success" });
