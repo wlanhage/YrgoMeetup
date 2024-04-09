@@ -192,6 +192,7 @@ app.post("/students", async (req, res) => {
   } */
   try{
   const createdStudent = await createStudent(
+  console.log("POST /students", req.body); 
     firstname,
     lastname,
     developer,
