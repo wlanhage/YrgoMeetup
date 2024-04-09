@@ -114,22 +114,90 @@ app.post("/students", async (req, res) => {
     developer,
     designer,
     email,
-    phone,
     linkedin,
-    textfield,
     password,
   } = req.body;
-try {
+  hashedPassword = "";
+  //validate the password
+  const validatePassword = (password) => {
+    const re = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,20}$/;
+    return re.test(password);
+  };
+
+  // email should be in the correct format
+  
+  const validateEmail = (email) => {
+    const re = /\S+@\S+.\S{2,3}$/;
+    return re.test(email);
+  };
+  const validateFirstName = (firstname) => {
+    const re = /^[a-zA-Z]+$/;
+    return re.test(firstname);
+  };
+  const validateLastName = (lastname) => {
+    const re = /^[a-zA-Z]+$/;
+    return re.test(lastname);
+  };
+  // validate textfields
+  if (
+    !firstname ||
+    typeof firstname !== "string" ||
+    !validateFirstName(firstname) ||
+    !/^[a-zA-Z]+$/.test(firstname)
+  ) {
+    res.status(400).send("Invalid first name");
+    return;
+  } else {
+    const sanitizedFirstName = he.encode(firstname);
+  }
+  if (
+    !lastname ||
+    typeof lastname !== "string" ||
+    !validateLastName(lastname) ||
+    !/^[a-zA-Z]+$/.test(lastname)
+  ) {
+    res.status(400).send("Invalid last name");
+    return;
+  } else {
+    const sanitizedLastName = he.encode(lastname);
+  }
+
+  //validate email
+  if (!email || typeof email !== "string" || !validateEmail(email)) {
+    res.status(400).send("Invalid email");
+    return;
+  }
+  //validate linkedin
+  if (typeof linkedin !== "string") {
+    res.status(400).send("Invalid linkedin-url");
+  }
+
+  //validate developer and designer
+  if (typeof developer !== "boolean" || typeof designer !== "boolean") {
+    res.status(400).send("Invalid developer or designer");
+  }
+
+  //validate password
+  if (
+    !password ||
+    typeof password !== "string" ||
+    !validatePassword(password)
+  ) {
+    res.status(400).send("Invalid password");
+    return;
+  } else{
+    const salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+  }
+  try{
   const createdStudent = await createStudent(
-    firstname,
-    lastname,
+    sanitizedFirstName,
+    sanitizedLastName,
     developer,
     designer,
     email,
-    phone,
     linkedin,
-    textfield,
-    password
+    hashedPassword,
   );
   res.status(201).json({message: "student created", student:createdStudent});
 } catch(error){
