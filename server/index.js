@@ -122,7 +122,7 @@ app.post("/students", async (req, res) => {
     textfield,
     password,
   } = req.body;
-
+try {
   const createdStudent = await createStudent(
     firstname,
     lastname,
@@ -134,6 +134,11 @@ app.post("/students", async (req, res) => {
     textfield,
     password
   );
+  res.status(201).json({message: "student created", student:createdStudent});
+} catch(error){
+  console.error("error creating student:", error);
+  res.status(500).json({ message: 'Error creating student' });
+}
 });
 
 app.listen(port, () => {
