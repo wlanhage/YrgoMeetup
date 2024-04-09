@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav>
       <ul>
         <Link to="/">Home</Link>
-        <Link to="/reg">Reg</Link>
+        <Link to="/Register">Reg</Link>
         <Link to="/Company">Företag</Link>
         <Link to="/CompanyCard">KortDesign</Link>
         <Link to="/UserDashboard"> Login</Link>
