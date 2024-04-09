@@ -138,7 +138,7 @@ app.post("/students", async (req, res) => {
     return re.test(lastname);
   };
   // validate textfields
-  if (
+/*   if (
     !firstname ||
     typeof firstname !== "string" ||
     !validateFirstName(firstname) ||
@@ -184,7 +184,7 @@ app.post("/students", async (req, res) => {
   ) {
     res.status(400).send("Invalid password");
     return;
-  } /* else{
+  }  *//* else{
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
   } */
