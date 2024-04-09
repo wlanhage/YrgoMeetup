@@ -108,6 +108,7 @@ app.post("/companys", async (req, res) => {
 
 //validate email and password
 app.post("/students", async (req, res) => {
+   console.log("POST /students", req.body);
   const {
     firstname,
     lastname,
@@ -191,8 +192,7 @@ app.post("/students", async (req, res) => {
     password = await bcrypt.hash(password, salt);
   } */
   try{
-  const createdStudent = await createStudent(
-  console.log("POST /students", req.body); 
+  const createdStudent = await createStudent( 
     firstname,
     lastname,
     developer,
