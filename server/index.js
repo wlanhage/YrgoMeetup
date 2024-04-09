@@ -117,9 +117,6 @@ app.post("/students", async (req, res) => {
     linkedin,
     password,
   } = req.body;
-  const hashedPassword = "";
-   const sanitizedFirstName = "";
-  const sanitizedLastName = "";
   //validate the password
   const validatePassword = (password) => {
     const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
@@ -150,7 +147,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid first name");
     return;
   } else {
-   /*  const sanitizedFirstName = he.encode(firstname); */
+  firstname = he.encode(firstname);
   }
   if (
     !lastname ||
@@ -161,7 +158,7 @@ app.post("/students", async (req, res) => {
     res.status(400).send("Invalid last name");
     return;
   } else {
-    /* const sanitizedLastName = he.encode(lastname); */
+   lastname = he.encode(lastname);
   }
 
   //validate email
@@ -189,17 +186,17 @@ app.post("/students", async (req, res) => {
     return;
   } /* else{
     const salt = await bcrypt.genSalt(10);
-    hashedPassword = await bcrypt.hash(password, salt);
+    password = await bcrypt.hash(password, salt);
   } */
   try{
   const createdStudent = await createStudent(
-    sanitizedFirstName,
-    sanitizedLastName,
+    firstname,
+    firstname,
     developer,
     designer,
     email,
     linkedin,
-    hashedPassword,
+    password,
   );
   res.status(201).json({message: "student created", student:createdStudent});
 } catch(error){
