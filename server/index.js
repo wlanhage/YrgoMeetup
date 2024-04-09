@@ -117,7 +117,7 @@ app.post("/students", async (req, res) => {
     linkedin,
     password,
   } = req.body;
-  hashedPassword = "";
+  const hashedPassword = "";
   //validate the password
   const validatePassword = (password) => {
     const re = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,20}$/;
