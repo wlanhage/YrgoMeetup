@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import session from 'express-session';
 
+
 import {
   getCompanys,
   createCompany,
@@ -45,10 +46,13 @@ app.use(session({
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
+
+
     methods: ["POST", "GET"],
     credentials: true,
   })
 );
+
 app.options('*', cors())
 app.use(cookieParser());
 app.use(express.static("public"));
@@ -236,9 +240,8 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-       res.cookie('token', token, { expiresIn:"20m", sameSite: 'None' });
+      res.cookie('token', token, { expiresIn:"20m", sameSite: 'None' });
  // expires in 24 hours
-
         return res.json({ status: "success" });
       } else {
         return res.status(400).send({ message: "Wrong password" });
@@ -326,3 +329,4 @@ app.get("/logout", (req, res) => {
     console.error(error);
   }
 });
+
