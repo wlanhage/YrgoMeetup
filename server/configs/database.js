@@ -83,7 +83,7 @@ export async function createCompany(
   }
 }
 
-export async function createStudent(
+async function createStudent(
   firstname,
   lastname,
   developer,
@@ -113,6 +113,7 @@ export async function createStudent(
     return studentResult;
   } catch (error) {
     console.error("Error creating student:", error);
+    throw error; // Throw the error so it can be caught in the calling function
   }
 }
 
