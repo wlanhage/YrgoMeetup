@@ -1,13 +1,22 @@
 import CompanyRegProgBar from "./CompanyRegProgBar";
 import CompanyCardContent from "./CompanyCardContent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import RedButton from "./RedButton";
 import { Link } from "react-router-dom";
 
 
 
+
 function CompanyCardFinished ({designData}) {
+
+  if (!designData.color) {
+    designData.color = '#9C9A9A';
+  }
+
+  if (!designData.icon) {
+    designData.icon = icon4;
+  }
 
     const textArea = {
         width: '85%',
@@ -50,7 +59,7 @@ function CompanyCardFinished ({designData}) {
 
     const cardContainer = {
         position: 'relative',
-        width: '350px',
+        width: '320px',
         height: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -58,30 +67,32 @@ function CompanyCardFinished ({designData}) {
     }
   
       const card = {
-          width: '320px',
-          height: '200px',
-          backgroundColor: designData.color,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          border: '1.5px solid',
-          borderRadius: '9px 9px 9px 9px',
-  
-          position: 'absolute',
-          transform: 'translate(0px, 12px)',
-      } 
+        width: '320px',
+        height: '200px',
+        backgroundColor: 'white',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        border: '1.5px solid',
+        borderRadius: '9px 9px 9px 9px',
+
+        position: 'absolute',
+        transform: 'translate(-12px, 12px)',
+    } 
   
       const cardBackside = {
-          width: '320px',
-          height: '200px',
-          backgroundColor: '#F52A3B',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          border: '1.5px solid',
-          borderRadius: '9px 9px 9px 9px',
-  
-          position: 'absolute',
-          transform: 'translate(25px, -12px)',
-      }
+        width: '320px',
+        height: '200px',
+        backgroundColor: designData.color,
+        backgroundImage: `url(${designData.pattern})`,
+        backgroundSize: 'cover',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        border: '1.5px solid',
+        borderRadius: '9px 9px 9px 9px',
+
+        position: 'absolute',
+        transform: 'translate(12px, -12px)',
+    }
   
       const cardBacksideText = {
         position: 'relative',
@@ -134,7 +145,7 @@ function CompanyCardFinished ({designData}) {
                     <div style={iconContainer}></div>Kl 15 - 17
                 </div>
             </div>
-            <div style={mailText}>Mail skickat</div>
+            {/* <div style={mailText}>Mail skickat</div> */}
         </div>
 
         
@@ -143,10 +154,7 @@ function CompanyCardFinished ({designData}) {
                     <>
                       <div style={cardBackside}></div>
                       <div style={card}>
-                        <CompanyCardContent />
-                        <div style={emojiStyle}>
-                          {designData.emoji}
-                        </div> 
+                      <CompanyCardContent designData={designData} />
                       </div>
                     </>
                   ) : (

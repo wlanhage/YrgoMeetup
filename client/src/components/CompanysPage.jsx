@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import burgerMenu from "../assets/menu.svg";
-import yrgologo from "../assets/yrgo.svg";
+
 import "../App.css";
 import RedButton from "./RedButton";
 
