@@ -6,6 +6,7 @@ import he from "he";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import session from 'express-session';
+import axios from "axios";
 
 import {
   getCompanys,
@@ -52,6 +53,7 @@ app.use(
 app.options('*', cors())
 app.use(cookieParser());
 app.use(express.static("public"));
+axios.defaults.withCredentials = true;
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
