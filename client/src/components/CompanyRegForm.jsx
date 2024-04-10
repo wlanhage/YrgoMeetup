@@ -28,14 +28,6 @@ function CompanyRegForm() {
     paddingBottom: "80px",
   };
 
-  // const header = {
-  //   fontSize: "36px",
-  //   color: "black",
-  //   fontFamily: "inter",
-  //   fontWeight: 400,
-  //   margin: "0 0 50px 0",
-  // };
-
   const label = {
     fontSize: "16px",
     color: "black",
