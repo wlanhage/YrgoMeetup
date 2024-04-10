@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ViewButtons from "./ViewButtons";
 
 export default function EventInformation() {
   const header = {
@@ -23,6 +24,7 @@ export default function EventInformation() {
   };
   const text = {
     fontWeight: "300",
+    maxWidth: "460px",
     fontFamily: "inter",
     fontSize: "16px",
     textAlign: "left",
@@ -35,10 +37,16 @@ export default function EventInformation() {
     fontSize: "16px",
     fontWeight: "400",
   };
+
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
     <div
       css={css`
         padding: 64px 32px 32px 32px;
+        /* background-color: #2b9fbc; */
       `}
     >
       <div
@@ -144,23 +152,36 @@ export default function EventInformation() {
             </span>
           </div>
         </div>
-        <div style={blueBox}>
-          <p style={text}>
-            Välkomna på mingelevent för att hitta framtida medarbetare i ert
-            företag eller bara jobba tillsammans under LIA. Ni kommer att träffa
-            Webbutvecklare och Digital Designers från Yrgo som vill visa vad de
-            har jobbat med under året och vi hoppas att ni hittar en match.
-          </p>
-          <p style={text}>
-            Ni som företag kan med fördel ta med någon form av identifikation
-            för synlighet. Vi kommer att ha stationer där företag och studerande
-            kan träffas.
-          </p>
+        <section
+          css={css`
+            display: flex;
+            flex-direction: column;
+            /* background-color: #982bbc; */
+            ${mq[1]} {
+              flex-direction: row;
+            }
+          `}
+        >
+          <div style={blueBox}>
+            <p style={text}>
+              Välkomna på mingelevent för att hitta framtida medarbetare i ert
+              företag eller bara jobba tillsammans under LIA. Ni kommer att
+              träffa Webbutvecklare och Digital Designers från Yrgo som vill
+              visa vad de har jobbat med under året och vi hoppas att ni hittar
+              en match.
+            </p>
+            <p style={text}>
+              Ni som företag kan med fördel ta med någon form av identifikation
+              för synlighet. Vi kommer att ha stationer där företag och
+              studerande kan träffas.
+            </p>
 
-          <p style={text}>
-            Varmt välkomna önskar Webbutvecklare och Digital Designer!
-          </p>
-        </div>
+            <p style={text}>
+              Varmt välkomna önskar Webbutvecklare och Digital Designer!
+            </p>
+          </div>
+          <ViewButtons />
+        </section>
       </div>
     </div>
   );
