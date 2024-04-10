@@ -28,13 +28,13 @@ function CompanyRegForm() {
     paddingBottom: "80px",
   };
 
-  const header = {
-    fontSize: "36px",
-    color: "black",
-    fontFamily: "inter",
-    fontWeight: 400,
-    margin: "0 0 50px 0",
-  };
+  // const header = {
+  //   fontSize: "36px",
+  //   color: "black",
+  //   fontFamily: "inter",
+  //   fontWeight: 400,
+  //   margin: "0 0 50px 0",
+  // };
 
   const label = {
     fontSize: "16px",
@@ -111,6 +111,7 @@ function CompanyRegForm() {
             flex-direction: row;
             justify-content: space-around;
             align-items: flex-start;
+            gap: 56px;
             margin: 2rem;
           }
         `}
@@ -118,10 +119,21 @@ function CompanyRegForm() {
         <div
           css={css`
             text-align: left;
-            padding: 0 2rem;
+            /* padding: 0 2rem; */
           `}
         >
-          <h2 style={header}>Anmälningsformulär</h2>
+          <h2
+            css={css`
+              font-size: 30px;
+              color: black;
+              font-family: "inter";
+              font-weight: 400;
+              margin: 0 0 20px 0;
+              flex-shrink: 1;
+            `}
+          >
+            Anmälningsformulär
+          </h2>
           <p
             css={css`
               max-width: 400px;
@@ -143,11 +155,11 @@ function CompanyRegForm() {
             justify-content: center;
             gap: 8px;
 
-            padding: 2rem 2rem;
+            /* padding: 2rem 2rem; */
             ${mq[2]} {
               border: 1px solid #000000;
-
               width: 720px;
+              padding: 2rem 2rem;
             }
           `}
         >
