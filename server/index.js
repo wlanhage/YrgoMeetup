@@ -239,7 +239,7 @@ app.post("/login", async (req, res) => {
         });
         let expiryDate = new Date();
 expiryDate.setMinutes(expiryDate.getMinutes() + 20);
-       res.cookie('token', token, { expires:expiryDate});
+       res.cookie('token', token, { expires:expiryDate, sameSite:"none", secure: true});
  // expires in 24 hours
 
         return res.json({ status: "success" });
