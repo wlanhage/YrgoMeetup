@@ -43,13 +43,12 @@ app.use(session({
     }
 }));
 //obs! Remember to change origin to the frontend url when deploying
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com", "https://hugosandsjo.se"],
-    methods: ["POST", "GET"],
+app.use(cors({
+    origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com", "https://hugosandsjo.se/"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-  })
-);
+    allowedHeaders: ["Origin", "Content-Type", "Accept"]
+}));
 app.options('*', cors())
 app.use(cookieParser());
 app.use(express.static("public"));
