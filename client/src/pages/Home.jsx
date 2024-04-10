@@ -10,7 +10,7 @@ import HeroSidescroll from "../components/HeroSidescroll.jsx";
 const Home = () => {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <Hero />
       <EventInformation />
       <ViewButtons />
