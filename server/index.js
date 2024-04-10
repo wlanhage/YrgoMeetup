@@ -47,7 +47,7 @@ app.use(cors({
     origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com", "https://hugosandsjo.se/"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-    allowedHeaders: ["Origin", "Content-Type", "Accept"]
+    allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"]
 }));
 app.options('*', cors())
 app.use(cookieParser());
