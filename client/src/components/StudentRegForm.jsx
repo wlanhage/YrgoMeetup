@@ -2,16 +2,16 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
-
+import backarrow from "../assets/arrow_back.svg";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 import SecondaryButton from "./SecondaryButton";
 import { useNavigate } from "react-router-dom";
 
-
 function StudentRegForm() {
   const navigate = useNavigate();
+
   const input = {
     backgroundColor: "#ffffff",
     padding: "10px",
@@ -41,29 +41,8 @@ function StudentRegForm() {
   };
 
   // const form = {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   maxWidth: "710px",
-  //   padding: "2rem 8rem",
-  //   backgroundColor: "#F2F2F2",
+  //   marginBottom: "24px",
   // };
-
-
-  // const regWrapper = {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // };
-
-
-  };
-  const form = {
-    marginBottom: "24px",
-  }
-
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -75,7 +54,7 @@ function StudentRegForm() {
     password: "",
   });
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, type, checked } = e.target;
     let value = e.target.value;
 
@@ -86,7 +65,6 @@ function StudentRegForm() {
   };
 
   const handleSubmit = async (e) => {
-  
     // Validate first name, last name, email, password, and text field
     console.log(formData);
 
@@ -117,7 +95,6 @@ function StudentRegForm() {
       alert("Invalid email");
       return;
     }
-
     if (
       !formData.password ||
       typeof formData.password !== "string" ||
@@ -126,12 +103,12 @@ function StudentRegForm() {
       alert("Invalid password");
       return;
     }
-  
+
     if (typeof formData.linkedin !== "string") {
       alert("Invalid linkedin-url");
       return;
     }
-/*     if (
+    /*     if (
       typeof formData.developer !== "bool" ||
       typeof formData.designer !== "bool"
     ) {
@@ -143,12 +120,12 @@ function StudentRegForm() {
       const response = await axios.post(
         "https://yrgomeetup.onrender.com/students",
         formData
-      );    
-      console.log('Response:', response); // Log the entire response
+      );
+      console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
-      navigate("/UserCreateProfile"); // Try navigating regardless of the response status
-    } 
-  }catch (error) {
+        navigate("/UserCreateProfile"); // Try navigating regardless of the response status
+      }
+    } catch (error) {
       console.error("Error submitting form:", error);
       console.error("Error details:", error.response);
     }
@@ -156,12 +133,12 @@ function StudentRegForm() {
 
   const login = (e) => {
     e.preventDefault();
-    try{
-        navigate('/Login');
+    try {
+      navigate("/Login");
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -171,7 +148,7 @@ function StudentRegForm() {
           padding: 1rem;
         `}
       >
-        <img src="../assets/arrow_back.svg"></img>
+        <img src={backarrow}></img>
       </header>
       <section
         css={css`
@@ -347,146 +324,9 @@ function StudentRegForm() {
               </label>
             </div>
           </div>
-          {/* <div className="skillsWrapper">
-            <label htmlFor="php" style={label}>
-              PHP
-            </label>
-            <input
-              type="checkbox"
-              name="languages[]"
-              style={input}
-              value={3}
-              onChange={handleChange}
-            />
-            <br />
-            <br />
-            <label htmlFor="csharp" style={label}>
-              C#
-            </label>
-            <input
-              type="checkbox"
-              name="languages[]"
-              style={input}
-              value={4}
-              onChange={handleChange}
-            />
-            <br />
-            <br />
-            <label htmlFor="html" style={label}>
-              HTML
-            </label>
-            <input
-              type="checkbox"
-              name="languages[]"
-              style={input}
-              value={5}
-              onChange={handleChange}
-            />
-            <br />
-            <br />
-            <label htmlFor="css" style={label}>
-              CSS
-            </label>
-            <input
-              type="checkbox"
-              name="languages[]"
-              style={input}
-              value={6}
-              onChange={handleChange}
-            />
-            <br />
-            <br />
-          </div> */}
           <RedButton text="Nästa" className="regButton" />
         </form>
       </section>
-
-      <h2 style={header}>Skapa Konto</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="" style={label}>
-          E-mail
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="namn@gmail.com"
-          required
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          Förnamn
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="firstname"
-          value={formData.firstname}
-          onChange={handleChange}
-          placeholder="Förnamn"
-          required
-        />{" "}
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          Efternamn
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="lastname"
-          value={formData.lastname}
-          onChange={handleChange}
-          placeholder="Efternamn"
-          required
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          Lösenord
-        </label>
-        <br />
-        <input
-          type="password"
-          style={input}
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="*****"
-          required
-        />
-        <br />
-        <br />
-        <label htmlFor="" style={label}>
-          Linkedin
-        </label>
-        <br />
-        <input
-          type="text"
-          style={input}
-          name="linkedin"
-          value={formData.linkedin}
-          onChange={handleChange}
-          placeholder="linkedin"
-        />
-        <br />
-        <br />
-{/*         <p>Vilken inriktning går du?</p>
-        <label htmlFor="developer">Webbutveckling</label>
-        <input type="radio" name="developer" checked={formData.developer} onChange={handleChange}/>
-        <label htmlFor="designer">Design</label>
-        <input type="radio" name="designer" checked={formData.designer} onChange={handleChange}/> */}
-
-        <RedButton style={{marginTop:"24px"}} text="Nästa" type="submit" />
-      </form>
-      <SecondaryButton text="Logga in" onClick={login}/>
-
     </>
   );
 }
