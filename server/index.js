@@ -31,13 +31,15 @@ dotenv.config();
 
 app.use(express.json());
 //obs! Remember to change origin to the frontend url when deploying
-app.use(cors({
-    origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-    allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"]
-}));
-app.options('*', cors())
+    allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
+  })
+);
+app.options("*", cors());
 app.use(cookieParser());
 app.use(express.static("public"));
 axios.defaults.withCredentials = true;
@@ -83,14 +85,13 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { companyName, website, firstname, lastname, email, } = req.body;
+  const { companyName, website, firstname, lastname, email } = req.body;
   const createdCompany = await createCompany(
     companyName,
     website,
     firstname,
     lastname,
-    email,
-    
+    email
   );
   res.json(createdCompany);
 });
@@ -98,32 +99,42 @@ app.post("/companys", async (req, res) => {
 app.put("/companys/:id/description", async (req, res) => {
   const { description, services, intern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyDescription(id, description, services, intern);
+  const updatedCompany = await updateCompanyDescription(
+    id,
+    description,
+    services,
+    intern
+  );
   res.json(updatedCompany);
 });
 
 app.put("/companys/:id/design", async (req, res) => {
   const { cardColor, icon, pattern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyCardDesign(id, cardColor, icon, pattern);
+  const updatedCompany = await updateCompanyCardDesign(
+    id,
+    cardColor,
+    icon,
+    pattern
+  );
   res.json(updatedCompany);
 });
 
 //validate email and password
 app.post("/students", async (req, res) => {
-let encodedFirstname;
-let encodedLastname;
-let hashedPassword;
+  let encodedFirstname;
+  let encodedLastname;
+  let hashedPassword;
   const {
     firstname,
     lastname,
-    developer,
-    designer,
     email,
-    linkedin,
     password,
-    textfield, 
-    phone,
+    designer,
+    developer,
+    linkedin,
+    portfolio,
+    textfield,
   } = req.body;
   //validate the password
   const validatePassword = (password) => {
@@ -132,7 +143,7 @@ let hashedPassword;
   };
 
   // email should be in the correct format
-  
+
   const validateEmail = (email) => {
     const re = /\S+@\S+.\S{2,3}$/;
     return re.test(email);
@@ -155,7 +166,7 @@ let hashedPassword;
     res.status(400).send("Invalid first name");
     return;
   } else {
-  encodedFirstname = he.encode(firstname);
+    encodedFirstname = he.encode(firstname);
   }
   if (
     !lastname ||
@@ -166,7 +177,7 @@ let hashedPassword;
     res.status(400).send("Invalid last name");
     return;
   } else {
-   encodedLastname = he.encode(lastname);
+    encodedLastname = he.encode(lastname);
   }
 
   //validate email
@@ -192,27 +203,27 @@ let hashedPassword;
   ) {
     res.status(400).send("Invalid password");
     return;
-  }  else{
+  } else {
     const salt = await bcrypt.genSalt(10);
     hashedPassword = await bcrypt.hash(password, salt);
   }
-  try{
-  const createdStudent = await createStudent(
-    encodedFirstname,
-    encodedLastname,
-    developer,
-    designer,
-    email,
-    linkedin,
-    hashedPassword,
-    textfield,
-    phone,
-  );
-  res.status(201).json({message: "student created", student:createdStudent});
-} catch(error){
-  console.error("error creating student:", error);
-  res.status(500).json({ message: 'Error creating student' });
-}
+  try {
+    const createdStudent = await createStudent(
+      encodedFirstname,
+      encodedLastname,
+      email,
+      hashedPassword,
+      linkedin,
+      portfolio,
+      textfield
+    );
+    res
+      .status(201)
+      .json({ message: "student created", student: createdStudent });
+  } catch (error) {
+    console.error("error creating student:", error);
+    res.status(500).json({ message: "Error creating student" });
+  }
 });
 
 app.listen(port, () => {
@@ -239,10 +250,10 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-/*         let expiryDate = new Date();
+        /*         let expiryDate = new Date();
 expiryDate.setMinutes(expiryDate.getMinutes() + 20);
        res.cookie('token', token, { expires:expiryDate}); */
- // expires in 24 hours
+        // expires in 24 hours
         return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });
@@ -270,7 +281,7 @@ const verifyUser = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         console.log("Token not valid", token);
-        return res.json({ message: "Web token not valid", token: token});
+        return res.json({ message: "Web token not valid", token: token });
       } else {
         console.log("token is valid");
         req.id = decoded.id;

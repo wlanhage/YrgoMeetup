@@ -8,17 +8,7 @@ import styled from "@emotion/styled";
 export default function ViewButtons() {
   const navigate = useNavigate();
 
-  const box = {
-    color: "black",
-    border: "none",
-    width: "100%-4rem",
-    height: "auto",
-
-    margin: "0 2rem 2rem 2rem",
-    justifyContent: "left",
-    fontFamily: "inter",
-    fontSize: 16,
-  };
+  const box = {};
 
   const text = {
     marginRight: "2rem",
@@ -26,14 +16,16 @@ export default function ViewButtons() {
   };
 
   const HeroButtonRed = styled.button`
-    background-color: red;
+    background-color: #f52a3b;
     color: white;
-    border: 1px solid white;
+
     border-radius: 35px 35px 35px 35px;
+    border: none;
+
     width: 100%;
     height: 56px;
     padding: 16px 24px;
-    font-family: inter;
+    font-family: "inter";
   `;
 
   const HeroButtonWhiteView = styled.button`
@@ -45,7 +37,7 @@ export default function ViewButtons() {
     width: 100%;
     height: 56px;
     padding: 16px 24px;
-    font-family: inter;
+    font-family: "inter";
   `;
   const NavigateToUserDashboard = (e) => {
     try {
@@ -55,16 +47,31 @@ export default function ViewButtons() {
       console.error("Error:", error);
     }
   };
+
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
   return (
-    <div style={box}>
+    <div
+      css={css`
+        color: black;
+        border: none;
+        padding: 36px;
+        justify-content: left;
+        margin: 32px;
+        font-family: inter;
+        font-size: 16px;
+        background-color: white;
+
+        ${mq[1]} {
+          width: 400px;
+          padding: 0;
+        }
+      `}
+    >
       <p style={text}>Anmäl ditt företag till eventet</p>
-      <RedButton
-        text="Gå till formuläret"
-        css={css`
-          color: black;
-          border: 1px solid black;
-        `}
-      />
+
+      <HeroButtonRed>Gå till formuläret</HeroButtonRed>
       <p style={text}>Är du Student?</p>
       <HeroButtonWhiteView onClick={NavigateToUserDashboard}>
         {" "}
