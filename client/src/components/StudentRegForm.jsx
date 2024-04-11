@@ -44,17 +44,18 @@ function StudentRegForm() {
   //   marginBottom: "24px",
   // };
 
-
   //both developer and designer are set to true by default just to make sure that the user is able to register before logic is added to the buttons
 
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    developer: true,
-    designer: true,
     email: "",
-    linkedin: "",
     password: "",
+    designer: true,
+    developer: true,
+    linkedin: "",
+    portfolio: "",
+    textfield: "",
   });
 
   const handleChange = (e) => {
@@ -121,14 +122,14 @@ function StudentRegForm() {
 
     try {
       const response = await axios({
-        url: 'https://yrgomeetup.onrender.com/students',
-        method: 'POST', 
+        url: "https://yrgomeetup.onrender.com/students",
+        method: "POST",
         data: formData,
-        withCredentials: true, 
+        withCredentials: true,
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
 
       console.log("Response:", response); // Log the entire response
@@ -202,18 +203,6 @@ function StudentRegForm() {
           `}
         >
           <label htmlFor="" style={label}>
-            E-mail
-          </label>
-          <input
-            type="text"
-            name="email"
-            style={input}
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="namn@gmail.com"
-            required
-          />
-          <label htmlFor="" style={label}>
             Förnamn
           </label>
           <input
@@ -224,7 +213,8 @@ function StudentRegForm() {
             onChange={handleChange}
             placeholder="Förnamn"
             required
-          />{" "}
+          />
+
           <label htmlFor="" style={label}>
             Efternamn
           </label>
@@ -237,8 +227,22 @@ function StudentRegForm() {
             placeholder="Efternamn"
             required
           />
+
           <label htmlFor="" style={label}>
-            Lösenord
+            E-mail
+          </label>
+          <input
+            type="text"
+            name="email"
+            style={input}
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="namn@gmail.com"
+            required
+          />
+
+          <label htmlFor="" style={label}>
+            Skapa lösenord
           </label>
           <input
             type="password"
@@ -249,18 +253,8 @@ function StudentRegForm() {
             placeholder="*****"
             required
           />
-          <label htmlFor="" style={label}>
-            Phone
-          </label>
-          <input
-            type="text"
-            name="phone"
-            style={input}
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="phone"
-          />
-          <label htmlFor="" style={label}>
+
+          {/* <label htmlFor="" style={label}>
             Linkedin
           </label>
           <input
@@ -281,7 +275,7 @@ function StudentRegForm() {
             value={formData.textfield}
             onChange={handleChange}
             placeholder="övrigt..."
-          />
+          /> */}
           <div
             css={css`
               display: flex;
