@@ -14,7 +14,7 @@ function UserProfileInfo(props) {
         fontSize: '34px',
         color: 'black', 
         fontFamily: 'inter',
-        fontWeight: 400,
+        fontWeight: '400',
     }
 
     const paragraph = {

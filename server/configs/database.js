@@ -54,31 +54,73 @@ export async function getCards() {
 }
 
 export async function createCompany(
-  company,
+  companyName,
+  website,
+  firstname,
+  lastname,
   email,
-  phone,
-  linkedin,
-  textfield,
-  web,
-  design
+  
 ) {
   try {
     const result = await pool.query(
-      `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
-      VALUES (? , ? , ?, ?, ?, ?, ?)`,
+      `INSERT INTO companys (companyName, website, firstname, lastname, email)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
-        company,
+        companyName,
+        website,
+        firstname,
+        lastname,
         email,
-        phone,
-        linkedin,
-        textfield,
-        web || false,
-        design || false,
       ]
     );
     return result;
   } catch (error) {
     console.error("Error creating company:", error);
+    throw error;
+  }
+}
+
+
+export async function updateCompanyDescription(
+  description,
+  services,
+  intern
+) {
+
+  const [latestCompany] = await pool.query(
+    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
+  );
+
+  try {
+    const result = await pool.query(
+      `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
+      [description, services, intern, latestCompany.id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating company description:", error);
+    throw error;
+  }
+}
+
+export async function updateCompanyCardDesign(
+  cardColor,
+  icon,
+  pattern
+) {
+
+  const [latestCompany] = await pool.query(
+    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
+  );
+
+  try {
+    const result = await pool.query(
+      `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
+      [cardColor, icon, pattern, latestCompany.id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating company card design:", error);
     throw error;
   }
 }

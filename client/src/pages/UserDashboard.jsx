@@ -1,77 +1,85 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Login from "./Login";
 import RedButton from "../components/RedButton";
+/* import Cookies from "js-cookie"; */
 
-function UserDashboard () {
+function UserDashboard() {
+  //if user is authorized, display user dashboard, else redirect to login page
+  const [authorized, setAuthorized] = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
 
-//if user is authorized, display user dashboard, else redirect to login page
-const [authorized, setAuthorized] = useState(false);
-const navigate = useNavigate();
-const [user, setUser] = useState('');
-const [userId, setUserId] = useState('');
-
-//verify the user
+  //verify the user
 useEffect(() => {
-    axios.get("https://yrgomeetup.onrender.com/verifyUser", { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            if (res.data.status === "success") {
-                setAuthorized(true);
-                setUserId(res.data.id);
-            } else {
-                navigate("/Login");
-            }
-        })
-        .catch((error) => {
-            console.error("Error fetching data:", error);
-        });
+  const fetchUser = async () => {
+    const token = localStorage.getItem('token');
+    console.log("token is:",token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    try {
+      const res = await axios({
+        url: "https://yrgomeetup.onrender.com/verifyUser",
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': '/json',
+          'Authorization': 'Bearer ' + token 
+        }
+      });
+
+      if (res.data.status === "success") {
+        setAuthorized(true);
+        const userId = res.data.id;
+        setUserId(userId);
+
+        const userRes = await axios.post("https://yrgomeetup.onrender.com/getUserInformation", { user: userId }, { withCredentials: true });
+        setUser(userRes.data);
+      } else {
+        navigate("/Login");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchUser();
 }, []);
 
-//get the user information
-useEffect(() => {
-    if (userId){
-        try{
-    axios.post("https://yrgomeetup.onrender.com/getUserInformation",{user:userId}, { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            setUser(res.data);
-           
-        })
-    } catch(error) {
-            console.error("Error fetching data:", error);
-        };
-    }
-    }, [userId]);
 
 
-//logout the user
-    const handleLogout = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.get("https://yrgomeetup.onrender.com/logout", { withCredentials: true });
+  //logout the user
+  const handleLogout = async (e) => {
+    console.log("logging out")
+    e.preventDefault();
+    try {
+        const response = await axios.get("https://yrgomeetup.onrender.com/logout", { withCredentials: true });
+
+            localStorage.removeItem('token');
             if (response.data.message === "success") {
-                location.reload("true")
-            }
-        }catch(error){
-            console.error('Error:', error);
+            location.reload("true")
         }
+    }catch(error){
+        console.error('Error:', error);
     }
-    return (
+  }
+  return (
     <div>
-        {authorized ? 
-            <div>
-            <h1></h1>
-            <p>Welcome {user.firstname} {user.lastname}</p>
-            <RedButton text="Logga ut" onClick={handleLogout} />
-          </div>
-         : 
-         <div>
-          {/* <Login/> */} 
-          </div>
-        }
+      {authorized ? (
+        <div>
+          <h1></h1>
+          <p>
+            Welcome {user.firstname} {user.lastname}
+          </p>
+          <RedButton text="Logga ut" onClick={handleLogout} />
+        </div>
+      ) : (
+        <div>{/* <Login/> */}</div>
+      )}
     </div>
   );
 };
 export default UserDashboard;   
+

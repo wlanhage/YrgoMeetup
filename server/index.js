@@ -7,6 +7,9 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
 
+import Cookies from "js-cookie";
+
+
 import {
   getCompanys,
   createCompany,
@@ -29,7 +32,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 app.use(express.json());
+
 //obs! Remember to change origin to the frontend url when deploying on netlify
+
 app.use(cors({
     origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["GET", "POST", "OPTIONS"],
@@ -82,16 +87,28 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { company, email, phone, linkedin, textfield, web, design } = req.body;
+  const { companyName, website, firstname, lastname, email, } = req.body;
   const createdCompany = await createCompany(
-    company,
+    companyName,
+    website,
+    firstname,
+    lastname,
     email,
-    phone,
-    linkedin,
-    textfield,
-    web,
-    design
+    
   );
+  res.json(createdCompany);
+});
+
+app.put("/companys/:id/description", async (req, res) => {
+  const { description, services, intern } = req.body;
+  const updatedCompany = await updateCompanyDescription(description, services, intern);
+  res.json(updatedCompany);
+});
+
+app.put("/companys/:id/design", async (req, res) => {
+  const { cardColor, icon, pattern } = req.body;
+  const updatedCompany = await updateCompanyCardDesign(cardColor, icon, pattern);
+  res.json(updatedCompany);
 });
 
 //validate email and password
@@ -208,7 +225,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
-
 //login function that compares the input to user email and their hashed password and creates a jwt
 app.post("/login", async (req, res) => {
   const email = req.body.email;
@@ -224,10 +240,12 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-/*       let expiryDate = new Date();
-         expiryDate.setMinutes(expiryDate.getMinutes() + 25);
-         res.cookie('token', token, { expires:expiryDate}); */
-         // expires in 25 minutes
+
+/*         let expiryDate = new Date();
+expiryDate.setMinutes(expiryDate.getMinutes() + 20);
+       res.cookie('token', token, { expires:expiryDate}); */
+ // expires in 24 hours
+
         return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });

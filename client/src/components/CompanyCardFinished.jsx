@@ -1,190 +1,311 @@
-import CompanyRegProgBar from "./CompanyRegProgBar";
-import CompanyCardContent from "./CompanyCardContent";
-import { useState } from "react";
-import "../App.css";
-import RedButton from "./RedButton";
-import { Link } from "react-router-dom";
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from '@emotion/styled';
+import CompanyRegProgBar from './CompanyRegProgBar';
+import CompanyCardContent from './CompanyCardContent';
+import RedButton from './RedButton';
+import { Link } from 'react-router-dom';
+import icon4 from '../assets/icon4.svg';
+import clock from '../assets/smallicons/clock.svg';
+import calendar from '../assets/smallicons/cal.svg';
+import location from '../assets/smallicons/location.svg';
+import download from '../assets/smallicons/download.svg';
+import html2canvas from 'html2canvas';
 
+const Phone = styled.div`
+  display: block;
 
+  @media (min-width: 900px) {
+    display: none;
+  }
+`;
 
-function CompanyCardFinished ({designData}) {
+const TextArea = styled.div`
+  width: 85%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+`;
 
-    const textArea = {
-        width: '85%',
-        display: 'flex',
-        flexDirection: 'column',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginTop: '30px'
-    }
-
-    const header = {
-        fontFamily: 'inter',
-        fontSize: '34px',
-        textAlign: 'start'
-
-    }
-
-    const flexRow = {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '30px',
-        
-    }
-
-    const smallText = {
-        fontSize: '16px',
-        fontFamily: 'inter',
-    }
-
-    const iconContainer = {
-        width: '25px',
-        height: '25px',
-        backgroundColor: 'gray',
-    }
-
-    const mailText = {
-        fontFamily: 'inter',
-        fontSize: '16px',
-    }
-
-    const cardContainer = {
-        position: 'relative',
-        width: '350px',
-        height: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginTop: '20px',
-    }
+const Header = styled.div`
+  font-family: inter;
+  font-size: 34px;
+  text-align: start;
+  weight: 200;
   
-      const card = {
-          width: '320px',
-          height: '200px',
-          backgroundColor: designData.color,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          border: '1.5px solid',
-          borderRadius: '9px 9px 9px 9px',
+`;
+
+const FlexRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+
+`;
+
+const FlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 8px;
+`;
+
+const SmallText = styled.div`
+  font-size: 16px;
+  font-family: inter;
+`;
+
+const CardContainer = styled.div`
+  position: relative;
+  width: 320px;
+  height: 100%;
+  margin: 20px auto;
+  margin-bottom: 270px;
+`;
+
+const Card = styled.div`
+  width: 320px;
+  height: 200px;
+  background-color: white;
+  margin: auto;
+  border: 1.5px solid;
+  border-radius: 9px;
+  position: absolute;
+  transform: translate(-12px, 12px);
+
+  /* @media (min-width: 900px) {
+    width: 450px;
+    height: 300px;
+  } */
+`;
+
+const CardBackside = styled.div`
+  width: 320px;
+  height: 200px;
+  background-color: ${props => props.color};
+  background-image: url(${props => props.pattern});
+  background-size: cover;
+  margin: auto;
+  border: 1.5px solid;
+  border-radius: 9px;
+  position: absolute;
+  transform: translate(12px, -12px);
+
+  /* @media (min-width: 900px) {
+    width: 450px;
+    height: 300px;
+  } */
+`;
+
+const CardBacksideText = styled.h3`
+  position: relative;
+  top: 110px;
+  right: 50px;
+  font-family: inter;
+  font-size: 30px;
+  color: 'white';
+`;
+
+const BottomText = styled.div`
+  width: 340px;
+  text-align: center;
   
-          position: 'absolute',
-          transform: 'translate(0px, 12px)',
-      } 
+  font-family: inter;
+  margin-left: auto;
+  margin-right: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 900px) {
+    
+  }
+`;
+
+const Icon = styled.img`
+  cursor: pointer;
+`;
+
+
+const Desktop = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 80px;
   
-      const cardBackside = {
-          width: '320px',
-          height: '200px',
-          backgroundColor: '#F52A3B',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          border: '1.5px solid',
-          borderRadius: '9px 9px 9px 9px',
-  
-          position: 'absolute',
-          transform: 'translate(25px, -12px)',
-      }
-  
-      const cardBacksideText = {
-        position: 'relative',
-        top: '30px',
-        fontFamily: 'inter',
-        fontSize: '40px',
-      }  
-     
-  
-      const emojiStyle = {
-          fontSize: '50px',
-          transform: 'rotate(20deg)',
-          position: 'absolute',
-          left: '85px',
-          bottom: '130px'
-      }
+  @media (max-width: 900px) {
+    display: none;
+  }
+  `;
 
-      const bottomText = {
-        
-        width: '340px',
-        textAlign: 'start',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        fontFamily: 'inter'
+  const DesktopWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  margin: 50px auto;
+  `;
 
-      }
+  const DesktopLeft = styled.div`
+    width: 45vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  `;
 
+  const DesktopLeftTextArea = styled.div`
+    margin-bottom: 60px;
 
+  `;
 
-    const [isFlipped, setIsFlipped] = useState(true);
-    const handleCardClick = () => {
-      setIsFlipped(!isFlipped);
-    }
+  const DesktopRight = styled.div`
+    width: 40vw;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #001A52;
+  `;
 
+function CompanyCardFinished({ designData }) {
 
-    return (
-        <>
-        <CompanyRegProgBar number={'3'} redBarWidth={'330px'} grayBarWidth={'0px'} />
+  if (!designData.icon) {
+    designData.icon = icon4; // if icon is not set, use icon4
+}
+if (!designData.color) {
+    designData.color = '#9C9A9A'; // if color is not set, use gray
+}
 
-        <div style={textArea}>
-            <div style={header}>Tack för din anmälan! Vi ses på eventet</div>
-            <div style={{...flexRow, ...smallText}} >
-                <div style={iconContainer}></div>Visual arena Lindholmen
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row' } }>
-                <div style={{...flexRow, ...smallText, marginRight: '30px', marginBottom: '30px'}}>
-                    <div style={iconContainer}></div>Onsdag 24 April
-                </div>
-                <div style={{...flexRow, ...smallText}}>
-                    <div style={iconContainer}></div>Kl 15 - 17
-                </div>
-            </div>
-            <div style={mailText}>Mail skickat</div>
+  const navigate = useNavigate();
+  const submittedData = JSON.parse(localStorage.getItem('submittedFormData'));
+  const [isFlipped, setIsFlipped] = useState(true);
+  const elementRef = useRef(null);
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
+
+  const downloadPNG = async () => {
+    const element = document.getElementById('cardContainer');
+    const canvas = await html2canvas(element);
+    const imgData = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = 'download.png';
+    link.href = imgData;
+    link.click();
+  };
+
+  return (
+    <>
+      <Phone>
+      <TextArea>
+        <Header>Tack för din anmälan! Vi ses på eventet</Header>
+        <FlexRow>
+          <Icon src={location} alt="locationPin" />
+          <SmallText>Visual arena Lindholmen</SmallText>
+        </FlexRow>
+      <FlexRowContainer>
+        <FlexRow>
+          <Icon src={calendar} alt="calendarPin" />
+          <SmallText>Onsdag 24 April</SmallText>
+        </FlexRow>
+        <FlexRow>
+          <Icon src={clock} alt="clockPin" />
+          <SmallText>Kl 15 - 17</SmallText>
+        </FlexRow>
+        </FlexRowContainer>
+        {/* <MailText>Mail skickat</MailText> */}
+      </TextArea>
+      
+      <CardContainer id="cardContainer" onClick={handleCardClick}>
+        {isFlipped ? (
+          <>
+            <CardBackside pattern={designData.pattern} color={designData.color}></CardBackside>
+            <Card>
+              <CompanyCardContent designData={designData} />
+            </Card>
+          </>
+        ) : (
+          <>
+            <Card>
+              <CompanyCardContent />
+            </Card>
+            <CardBackside pattern={designData.pattern} color={designData.color}>
+              <CardBacksideText>{submittedData.company}</CardBacksideText>
+            </CardBackside>
+          </>
+        )}
+      </CardContainer>
+      <FlexRow style={{ marginTop: '250px', width: '300px' }}>
+        <BottomText>Här är ditt visitkort</BottomText>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+          <Icon src={download} alt="downloadPin" onClick={downloadPNG} />
+          <Icon />
         </div>
+      </FlexRow>
+      <RedButton text={'Möt studenterna'} onClick={() => navigate('/Students')} style={{ marginTop: '15px' }} />
+      <Link to="/">
+        <RedButton text={'Till startsidan'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red' }} />
+      </Link>
+      </Phone>
 
-        
-        <div style={cardContainer} onClick={handleCardClick}>
-                  {isFlipped ? (
-                    <>
-                      <div style={cardBackside}></div>
-                      <div style={card}>
-                        <CompanyCardContent />
-                        <div style={emojiStyle}>
-                          {designData.emoji}
-                        </div> 
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={card}>
-                        <CompanyCardContent />
-                      </div>
-                      <div style={cardBackside}>
-                        <h3 style={cardBacksideText}>{submittedData.company}</h3>
-                      </div>
-                    </>
-                  )}
-                </div>
+      <Desktop>
+        <div style={{fontFamily: 'inter', fontSize: '60px', weight: '300'}}>
+          Tack för din anmälan! Vi ses på eventet!</div>
+        <DesktopWrapper>
+          <DesktopLeft>
+            <CardContainer id="cardContainer" onClick={handleCardClick}>
+          {isFlipped ? (
+            <>
+              <CardBackside pattern={designData.pattern} color={designData.color}></CardBackside>
+              <Card>
+                <CompanyCardContent designData={designData} />
+              </Card>
+            </>
+          ) : (
+            <>
+              <Card>
+                <CompanyCardContent />
+              </Card>
+              <CardBackside pattern={designData.pattern} color={designData.color}>
+                <CardBacksideText>{submittedData.company}</CardBacksideText>
+              </CardBackside>
+            </>
+          )}
+            </CardContainer>
+            <BottomText>Här är ditt visitkort</BottomText>
+          </DesktopLeft>
 
+          <DesktopRight>
+          <TextArea>
+        <Header>BRANSCHEVENT 2024</Header>
+        <FlexRow>
+          <Icon src={location} alt="locationPin" />
+          <SmallText>Visual arena Lindholmen</SmallText>
+        </FlexRow>
+      <FlexRowContainer>
+        <FlexRow>
+          <Icon src={calendar} alt="calendarPin" />
+          <SmallText>Onsdag 24 April</SmallText>
+        </FlexRow>
+        <FlexRow>
+          <Icon src={clock} alt="clockPin" />
+          <SmallText>Kl 15 - 17</SmallText>
+        </FlexRow>
+        </FlexRowContainer>
+        {/* <MailText>Mail skickat</MailText> */}
+      </TextArea>
 
-                <div style={{display: 'flex', flexDirection: 'row', marginTop: '250px', width: '300px', marginLeft: 'auto', marginRight: 'auto',}}>
-                    <div style={bottomText}>
-                    Här är ditt visitkort
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'row', gap: '8px'}}>
-                        <div style={iconContainer}></div>
-                        <div style={iconContainer}></div>
-                    </div>
-                </div>
+      <RedButton text={'Möt studenterna'} onClick={() => navigate('/Students')} style={{ marginTop: '15px' }} />
+      <Link to="/">
+        <RedButton text={'Till startsidan'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red' }} />
+      </Link>
+          
+          </DesktopRight>
+        </DesktopWrapper>
+      </Desktop>
 
-                <RedButton text={'Möt studenterna'} style={{marginTop: '15px',}} />
-                
-                <Link to="/Company" >
-                    <RedButton text={'backa'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
-                </Link> 
-
-
-        
-        
-        </>
-
-
-    )
+    </>
+  );
 }
 
 export default CompanyCardFinished;

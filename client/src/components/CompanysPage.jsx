@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import burgerMenu from "../assets/menu.svg";
-import yrgologo from "../assets/yrgo.svg";
+import yrgologo from "../assets/icon4.svg";
 import "../App.css";
 import RedButton from "./RedButton";
 
@@ -93,9 +93,16 @@ function CompanysPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://yrgomeetup.onrender.com/companys"
-        );
+          const response = await axios({
+          url: 'https://yrgomeetup.onrender.com/companys',
+          method: 'GET',
+          withCredentials: true, 
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          }
+        });
+
         //    console.log(response.data[0]);
         setCompanyData(response.data[0]);
       } catch (error) {
@@ -105,7 +112,6 @@ function CompanysPage() {
 
     fetchData();
   }, []);
-  //   console.log(companyData);
   return (
     <div style={companyCardContainer}>
       <header style={header}>
