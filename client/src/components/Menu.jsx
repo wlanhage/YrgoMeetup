@@ -7,22 +7,9 @@ import heart from "../assets/heart.svg";
 import logout from "../assets/logout.svg";
 import chevron from "../assets/chevron_right.svg";
 import menublack from "../assets/menu_black.svg";
+/** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
-
-const menuWrapper = {
-  position: "absolute",
-  right: 0,
-  height: "100vh",
-  width: "65%",
-
-  fontFamily: "inter",
-  fontWeight: "400",
-  fontSize: "16px",
-
-  padding: "32px 32px",
-
-  border: "1px solid #E5E5E5",
-};
+import { css } from "@emotion/react";
 
 const header = {
   display: "flex",
@@ -63,10 +50,33 @@ const h2 = {
   marginBottom: "0px",
 };
 
+const breakpoints = [576, 768, 900, 1200];
+
+const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
 function Menu() {
   return (
     <>
-      <div style={menuWrapper}>
+      <div
+        css={css`
+          position: absolute;
+          right: 0;
+          height: 100vh;
+          width: 55%;
+
+          font-family: "inter";
+          font-weight: 400;
+          font-size: 16px;
+
+          padding: 32px 32px;
+
+          border: 1px solid #e5e5e5;
+
+          ${mq[2]} {
+            width: 35%;
+          }
+        `}
+      >
         <section style={header}>
           <img src={menublack}></img>
         </section>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import burgerMenu from "../assets/menu.svg";
-
+import yrgologo from "../assets/icon4.svg";
 import "../App.css";
 import RedButton from "./RedButton";
 
@@ -105,7 +105,6 @@ function CompanysPage() {
 
     fetchData();
   }, []);
-  //   console.log(companyData);
   return (
     <div style={companyCardContainer}>
       <header style={header}>

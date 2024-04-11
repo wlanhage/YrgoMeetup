@@ -4,8 +4,14 @@ import axios from "axios";
 import RedButton from "../components/RedButton";
 import Cookies from "js-cookie";
 
-function UserDashboard () {
-
+function UserDashboard() {
+  //if user is authorized, display user dashboard, else redirect to login page
+  const [authorized, setAuthorized] = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
+  
+  
   //if user is authorized, display user dashboard, else redirect to login page
   const [authorized, setAuthorized] = useState(false);
   const navigate = useNavigate();
@@ -49,7 +55,6 @@ useEffect(() => {
   fetchUser();
 }, []);
 
-  //get the user information
 
 
   //logout the user
@@ -69,18 +74,19 @@ useEffect(() => {
   }
   return (
     <div>
-        {authorized ? 
-            <div>
-            <h1></h1>
-            <p>Welcome {user.firstname} {user.lastname}</p>
-            <RedButton text="Logga ut" onClick={handleLogout} />
-          </div>
-         :
-         <div>
-          {/* <Login/> */} 
-          </div>
-        }
+      {authorized ? (
+        <div>
+          <h1></h1>
+          <p>
+            Welcome {user.firstname} {user.lastname}
+          </p>
+          <RedButton text="Logga ut" onClick={handleLogout} />
+        </div>
+      ) : (
+        <div>{/* <Login/> */}</div>
+      )}
     </div>
   );
 };
 export default UserDashboard;   
+
