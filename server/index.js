@@ -6,7 +6,6 @@ import he from "he";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 import {
   getCompanys,
