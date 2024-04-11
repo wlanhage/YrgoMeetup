@@ -95,6 +95,31 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
     }
   };
 
+
+    const handleCardSubmit = async () => {
+      const cardData = {
+        icon, pattern, cardColor,
+      }
+  
+      try {
+        const response = await axios({
+          url: 'https://yrgomeetup.onrender.com/companys',
+          method: 'POST', 
+          data: cardData,
+          withCredentials: true, 
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          }
+        });
+
+
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+    };
+
+
   const Phone = styled.div`
   display: block;
 

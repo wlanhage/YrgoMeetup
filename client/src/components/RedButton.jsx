@@ -1,8 +1,7 @@
-import { onClick } from 'react';
-function RedButton ({text, style: additionalStyle, onClick }) {
-
-
-    const style = {
+import { onClick } from "react";
+function RedButton({ text, style: additionalStyle, onClick }) {
+  
+  const style = {
         backgroundColor: '#F52A3B',
         color: 'white',
         border: 'none',

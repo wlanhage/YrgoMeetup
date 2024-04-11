@@ -2,115 +2,147 @@ import RedButton from "./RedButton";
 import "../App.css";
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate }from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function LoginForm() {
-    const [formData, setFormData] = useState({
-        email: 'karlsson@email.com',
-        password: '123ABCabc'
-    });
-    const navigate = useNavigate();
-    const input = {
-        backgroundColor: '#828282',
-        width: '310px',
-        height: '36px',
-        padding: '8px',
-        fontSize: '16px',
-        color: 'white',
-        fontFamily: 'inter',
-        border: "none",
-        borderRadius: "4px 4px 4px 4px",
-    };
+  const [formData, setFormData] = useState({
+    email: "karlsson@email.com",
+    password: "123ABCabc",
+  });
+  const navigate = useNavigate();
+  const input = {
+    backgroundColor: "#ffffff",
+    padding: "10px",
+    fontSize: "16px",
+    color: "black",
+    fontFamily: "inter",
+    marginBottom: "20px",
+    textAlign: "left",
+    border: "1px solid #000000",
+    borderRadius: "4px, 4px, 4px, 4px",
+  };
 
-    const header = {
-        fontSize: "36px",
-        color: "black",
-        fontFamily: "inter",
-        fontWeight: 400,
-    };
-    const label = {
-        fontSize: "16px",
-        color: "black",
-        fontFamily: "inter",
-        fontWeight: 400,
-    };
+  const header = {
+    fontSize: "36px",
+    color: "black",
+    fontFamily: "inter",
+    fontWeight: 400,
+  };
+  const label = {
+    fontSize: "16px",
+    color: "black",
+    fontFamily: "inter",
+    fontWeight: 400,
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState, 
-            [name]: value
-        }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const register = (e) => {
+    e.preventDefault();
+    try {
+      navigate("/Register");
+    } catch (error) {
+      console.error("Error:", error);
     }
-
-    const register = (e) => {
-        e.preventDefault();
-        try{
-            navigate('/Register');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-
+  };
     const handleSubmit = async (e) => {
         console.log('Making request...');
         e.preventDefault();
         try {
-            console.log('Making request...'); // This will log "Making request..." before the request is made
-            const response = await axios.post( 'https://yrgomeetup.onrender.com/login', formData, { withCredentials: true });
+           // try to login user with the provided email and password
+            const response = await axios({
+                url: 'https://yrgomeetup.onrender.com/login',
+                method: 'POST', 
+                data: formData,
+                withCredentials: true, 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            });
             console.log('Request:', formData);
             console.log('Response:', response); 
             console.log('Response status:', response.data); 
-
+    
             const token = response.data.token;
 
-            // Set the token in the request headers for subsequent requests
+            localStorage.setItem('token', token);
+    
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            //if token exists, navigate to UserDashboard
+    
             if(response.data.status === "success"){
-              console.log("Login successful!")
-              console.log(response.data);
-              navigate('/UserDashboard'); 
+                console.log("Login successful!")
+                console.log(response.data);
+                navigate('/UserDashboard'); 
             }
-        }catch (error) {
-            console.error('Error submitting form:', error);
-            if (error.response && error.response.data.message === 'User not found') {
-                console.error('Error: The user does not exist. Please check your email and try again.');
-            } else {
-                console.error('Error submitting form:', error.response);
-            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    }
+    };
 
-    return (
-        <>
+  return (
+    <>
+      <section
+        css={css`
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 2rem;
+
+          ${mq[2]} {
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin: 2rem;
+          }
+        `}
+      >
         <h2 style={header}>Logga In</h2>
         <form onSubmit={handleSubmit}>
-                <label htmlFor="email" style={label} >e-mail</label><br />
-                <input type="text" 
-                style={input} 
-                name="email"
-                value={formData.email}
-                onChange={handleChange}     
-                placeholder="example@email.com" /> <br /><br />
-
-                <label htmlFor="password" style={label}>Lösenord</label><br />
-                <input type="password" 
-                style={input} 
-                name="password"
-                value={formData.password}
-                onChange={handleChange}     
-                placeholder="*****" /> <br /><br />
-
-        <RedButton text="Logga In" type="submit" />
-        <br />
-        <br />
+          <label htmlFor="email" style={label}>
+            e-mail
+          </label>
+          <br />
+          <input
+            type="text"
+            style={input}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="example@email.com"
+          />{" "}
+          <br />
+          <br />
+          <label htmlFor="password" style={label}>
+            Lösenord
+          </label>
+          <br />
+          <input
+            type="password"
+            style={input}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="*****"
+          />{" "}
+          <br />
+          <br />
+          <RedButton text="Logga In" type="submit" />
+          <br />
+          <br />
         </form>
         <RedButton text="Inte medlem? Skapa konto" onClick={register} />
-
-        </>
-    );
+      </section>
+    </>
+  );
 }
 
 export default LoginForm;
