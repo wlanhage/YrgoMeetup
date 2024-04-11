@@ -61,9 +61,17 @@ export async function createCompany(
 ) {
   try {
     const result = await pool.query(
-      `INSERT INTO companys (company, email, phone, linkedin, textfield)
-      VALUES (? , ? , ?, ?, ?, ?, ?)`,
-      [companyName, website, firstname, lastname, email]
+
+      `INSERT INTO companys (companyName, website, firstname, lastname, email)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        companyName,
+        website,
+        firstname,
+        lastname,
+        email,
+      ]
+
     );
     return result;
   } catch (error) {
@@ -72,11 +80,21 @@ export async function createCompany(
   }
 }
 
-export async function updateCompanyDescription(description, services, intern) {
+
+export async function updateCompanyDescription(
+  description,
+  services,
+  intern
+) {
+
+  const [latestCompany] = await pool.query(
+    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
+  );
+
   try {
     const result = await pool.query(
-      `UPDATE companys SET description = ?, services = ?, intern = ?`,
-      [description, services, intern]
+      `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
+      [description, services, intern, latestCompany.id]
     );
     return result;
   } catch (error) {
@@ -86,15 +104,19 @@ export async function updateCompanyDescription(description, services, intern) {
 }
 
 export async function updateCompanyCardDesign(
-  companyId,
   cardColor,
   icon,
   pattern
 ) {
+
+  const [latestCompany] = await pool.query(
+    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
+  );
+
   try {
     const result = await pool.query(
       `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
-      [cardColor, icon, pattern, companyId]
+      [cardColor, icon, pattern, latestCompany.id]
     );
     return result;
   } catch (error) {
