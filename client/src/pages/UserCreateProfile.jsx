@@ -16,18 +16,18 @@ const UserCreateProfile= () => {
         fontSize: "16px",
         fontWeight: 400,
         color: "black",
-        textAlign: "center",
+        
         marginLeft: "2rem",
         marginRight: "2rem",
         display: "flex",
         flexDirection: "column",
         textAlign: "left",
     }
-    const style = {
+    /* const style = {
     display: "flex", 
     flexDirection: "row",
     marginBottom: "60px",
-    }
+    } */
     const header = {
         fontSize: "33px", 
         fontWeight: 400,

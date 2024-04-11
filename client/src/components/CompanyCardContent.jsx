@@ -1,42 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import '../App.css';
-import icon4 from "../assets/icon4.svg"
-
+import styled from '@emotion/styled';
+import icon4 from "../assets/icon4.svg";
 import RedButton from "./RedButton";
 
+const CardsWrapper = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+`;
 
-function CompanyCardContent ({ designData = {}, icon }) {
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 110px;
+  gap: 20px;
+  margin-top: 40px;
+
+  @media (min-width: 900px) {
+    align-items: center;
+  }
+`;
+
+const CompanyInfo = styled.div`
+  width: 50%;
+  text-align: left;
+  font-family: inter;
+`;
+
+const CompanyText = styled.p`
+  margin: 6px;
+
+  
+`;
+
+const Icon = styled.img`
+  width: 100px;
+  height: 100px;
+
+  
+`;
+
+function CompanyCardContent ({ designData = {}, icon, style }) {
     if (!designData.icon) {
         designData.icon = icon;
     }
     
-    
-    const cardsWrapper = {
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        gap: "24px",
-        
-      };
-    
-      const companyInfo = {
-        width: "50%",
-        textAlign: "left",
-
-        fontFamily: 'inter',
-
-      };
-    
-      const wrapper = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "110px",
-        gap: "20px",
-        marginTop: '40px',
-      };
-
     const [submittedData, setSubmittedData] = useState({});
 
     useEffect(() => {
@@ -45,32 +56,31 @@ function CompanyCardContent ({ designData = {}, icon }) {
         if (formData) {
             setSubmittedData(JSON.parse(formData));
         }
-      }, []);
-
-
+    }, []);
 
     return (
-        
-        <section style={cardsWrapper}>
-            <div style={wrapper}>
-            <img src={designData.icon} />
-              <div style={companyInfo}>
-                <p style={{ margin: "6px" }}>{submittedData.company}</p>
-                <p style={{ margin: "6px" }}>{submittedData.email}</p>
-                <p style={{ margin: "6px" }}>{submittedData.phone}</p>
-                <p style={{ width: "50px", margin: "6px" }}> </p>
-                <a href={submittedData.linkedin}><RedButton 
-                  text={"Ta reda på mer"}
-                  style={{
-                    width: "100%",
-                    padding: "5px",
-                    height: "auto",
-                  }}
-                /> </a>
-              </div>
-            </div>
-      </section>
-    )
+        <CardsWrapper>
+            <Wrapper>
+                <Icon src={designData.icon} alt="Company Icon" />
+                <CompanyInfo>
+                    <CompanyText>{submittedData.company}</CompanyText>
+                    <CompanyText>{submittedData.email}</CompanyText>
+                    <CompanyText>{submittedData.phone}</CompanyText>
+                    <CompanyText style={{ width: "50px" }}> </CompanyText>
+                    <a href={submittedData.linkedin}>
+                        <RedButton 
+                            text={"Ta reda på mer"}
+                            style={{
+                                width: "100%",
+                                padding: "5px",
+                                height: "auto",
+                            }}
+                        />
+                    </a>
+                </CompanyInfo>
+            </Wrapper>
+        </CardsWrapper>
+    );
 }
 
 export default CompanyCardContent;

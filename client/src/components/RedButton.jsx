@@ -7,7 +7,7 @@ function RedButton ({text, style: additionalStyle, onClick }) {
         color: 'white',
         border: 'none',
         borderRadius: '35px 35px 35px 35px',
-        width: 'calc(100vw - 4rem)',
+        width: '90%',
         height: '56px',
         padding: '16px 24px',
         justifyContent: 'space-between',
