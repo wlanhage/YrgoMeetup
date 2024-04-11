@@ -55,37 +55,31 @@ function CompanyRegForm() {
     }));
   };
 
-
- 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios({
-        url: 'https://yrgomeetup.onrender.com/companys',
-        method: 'POST', 
+        url: "https://yrgomeetup.onrender.com/companys",
+        method: "POST",
         data: formData,
-        withCredentials: true, 
+        withCredentials: true,
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
-        console.log(response);
-        localStorage.setItem("submittedFormData", JSON.stringify(formData)),
-
+      console.log(response);
+      localStorage.setItem("submittedFormData", JSON.stringify(formData)),
         setFormData({
-          company: "",
-          email: "",
+          companyName: "",
+          website: "",
           phone: "",
           linkedin: "",
           textfield: "",
           web: false,
           design: false,
         }),
-
-        navigate("/CompanyCard")
+        navigate("/CompanyCard");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
