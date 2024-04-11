@@ -5,8 +5,8 @@ import bcrypt from "bcryptjs";
 import he from "he";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import session from 'express-session';
-
+import axios from "axios";
+import Cookies from "js-cookie";
 
 import {
   getCompanys,
@@ -30,32 +30,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 app.use(express.json());
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    proxy: true,
-    name: 'MyCoolWebAppCookieName',
-    cookie: {
-      secure: true,
-      httpOnly: false,
-      sameSite: 'none'
-    }
-}));
 //obs! Remember to change origin to the frontend url when deploying
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
-
-
-    methods: ["POST", "GET"],
+app.use(cors({
+    origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-  })
-);
-
+    allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"]
+}));
 app.options('*', cors())
 app.use(cookieParser());
 app.use(express.static("public"));
+axios.defaults.withCredentials = true;
 
 app.get("/companys", async (req, res) => {
   const companys = await getCompanys();
@@ -240,9 +225,11 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
-      res.cookie('token', token, { expiresIn:"20m", sameSite: 'None' });
+/*         let expiryDate = new Date();
+expiryDate.setMinutes(expiryDate.getMinutes() + 20);
+       res.cookie('token', token, { expires:expiryDate}); */
  // expires in 24 hours
-        return res.json({ status: "success" });
+        return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });
       }
@@ -258,16 +245,18 @@ app.post("/login", async (req, res) => {
 //make sure there is a token and request the user credetials by decrypting the token
 const verifyUser = (req, res, next) => {
   console.log("trying to verify user...");
-  const token = req.cookies.token;
-  if (!token) {
-    console.log("there is no token");
+  const authHeader = req.headers.authorization;
+  console.log(authHeader);
+  if (!authHeader) {
+    console.log("there is no token.");
     return res.json({ message: "There is no token. Please provide one." });
   } else {
+    const token = authHeader.split(" ")[1];
     console.log("there is a token");
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.log("Token not valid");
-        return res.json({ message: "Web token not valid" });
+        console.log("Token not valid", token);
+        return res.json({ message: "Web token not valid", token: token});
       } else {
         console.log("token is valid");
         req.id = decoded.id;
@@ -323,10 +312,8 @@ app.post("/getUserSkills", async (req, res) => {
 //logout and clear the cookie
 app.get("/logout", (req, res) => {
   try {
-    res.clearCookie("token");
     res.json({ message: "success" });
   } catch (error) {
     console.error(error);
   }
 });
-

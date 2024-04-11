@@ -57,31 +57,36 @@ function LoginForm() {
         console.log('Making request...');
         e.preventDefault();
         try {
-            console.log('Making request...'); // This will log "Making request..." before the request is made
-            const response = await axios.post( 'https://yrgomeetup.onrender.com/login', formData, { withCredentials: true });
+           // try to login user with the provided email and password
+            const response = await axios({
+                url: 'https://yrgomeetup.onrender.com/login',
+                method: 'POST', 
+                data: formData,
+                withCredentials: true, 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            });
             console.log('Request:', formData);
             console.log('Response:', response); 
             console.log('Response status:', response.data); 
-
+    
             const token = response.data.token;
 
-            // Set the token in the request headers for subsequent requests
+            localStorage.setItem('token', token);
+    
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            //if token exists, navigate to UserDashboard
+    
             if(response.data.status === "success"){
-              console.log("Login successful!")
-              console.log(response.data);
-              navigate('/UserDashboard'); 
+                console.log("Login successful!")
+                console.log(response.data);
+                navigate('/UserDashboard'); 
             }
-        }catch (error) {
-            console.error('Error submitting form:', error);
-            if (error.response && error.response.data.message === 'User not found') {
-                console.error('Error: The user does not exist. Please check your email and try again.');
-            } else {
-                console.error('Error submitting form:', error.response);
-            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    }
+    };
 
     return (
         <>
