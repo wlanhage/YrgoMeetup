@@ -1,7 +1,10 @@
 import "../App.css";
+import leftArrow from "../assets/smallicons/leftarrow.svg";
+import { useNavigate } from "react-router-dom";
 
+function CompanyRegProgBar ({number, grayBarWidth, redBarWidth, link}) {
 
-function CompanyRegProgBar ({number, grayBarWidth, redBarWidth}) {
+    const navigate = useNavigate();
 
     const textStyle = {
         fontFamily: 'inter',
@@ -37,9 +40,27 @@ function CompanyRegProgBar ({number, grayBarWidth, redBarWidth}) {
         transition: 'width 0.7s ease-in-out',
     }
 
+    const container = {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    }
+
+    const empty = {
+        width: '20px',
+    }
+
     return (
         <>
-            <div style={textStyle}>Steg {number} av 3</div>
+            <div style={container}>
+                <div onClick={() => navigate(link)}>
+                    <img src={leftArrow} alt="leftArrow" />
+                </div>
+                <div style={textStyle}>
+                Steg {number} av 3
+                </div>
+                <div style={empty}></div>
+            </div>
             <div style={ProgBarContainer}>
                 <div style={redBar}></div>
                 <div style={grayBar}></div>

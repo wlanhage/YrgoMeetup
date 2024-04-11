@@ -54,31 +54,63 @@ export async function getCards() {
 }
 
 export async function createCompany(
-  company,
+  companyName,
+  website,
+  firstname,
+  lastname,
   email,
-  phone,
-  linkedin,
-  textfield,
-  web,
-  design
+  
 ) {
   try {
     const result = await pool.query(
-      `INSERT INTO companys (company, email, phone, linkedin, textfield, web, design)
+      `INSERT INTO companys (company, email, phone, linkedin, textfield)
       VALUES (? , ? , ?, ?, ?, ?, ?)`,
       [
-        company,
+        companyName,
+        website,
+        firstname,
+        lastname,
         email,
-        phone,
-        linkedin,
-        textfield,
-        web || false,
-        design || false,
       ]
     );
     return result;
   } catch (error) {
     console.error("Error creating company:", error);
+    throw error;
+  }
+}
+
+export async function updateCompanyDescription(
+  description,
+  services,
+  intern
+) {
+  try {
+    const result = await pool.query(
+      `UPDATE companys SET description = ?, services = ?, intern = ?`,
+      [description, services, intern]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating company description:", error);
+    throw error;
+  }
+}
+
+export async function updateCompanyCardDesign(
+  companyId,
+  cardColor,
+  icon,
+  pattern
+) {
+  try {
+    const result = await pool.query(
+      `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
+      [cardColor, icon, pattern, companyId]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating company card design:", error);
     throw error;
   }
 }

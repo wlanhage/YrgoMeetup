@@ -83,16 +83,30 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { company, email, phone, linkedin, textfield, web, design } = req.body;
+  const { companyName, website, firstname, lastname, email, } = req.body;
   const createdCompany = await createCompany(
-    company,
+    companyName,
+    website,
+    firstname,
+    lastname,
     email,
-    phone,
-    linkedin,
-    textfield,
-    web,
-    design
+    
   );
+  res.json(createdCompany);
+});
+
+app.put("/companys/:id/description", async (req, res) => {
+  const { description, services, intern } = req.body;
+  const { id } = req.params;
+  const updatedCompany = await updateCompanyDescription(id, description, services, intern);
+  res.json(updatedCompany);
+});
+
+app.put("/companys/:id/design", async (req, res) => {
+  const { cardColor, icon, pattern } = req.body;
+  const { id } = req.params;
+  const updatedCompany = await updateCompanyCardDesign(id, cardColor, icon, pattern);
+  res.json(updatedCompany);
 });
 
 //validate email and password

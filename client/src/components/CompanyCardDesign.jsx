@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import "../App.css";
@@ -20,87 +23,78 @@ import redBox from "../assets/redBox.svg";
 import blueBox from "../assets/blueBox.svg";
 import lightblueBox from "../assets/lightblueBox.svg";
 
-
 function CompanyCardDesign ({toggleDesign, setDesignData}) {
-// FUNKTIONER -------------
-const [submittedData, setSubmittedData] = useState({});
-    useEffect(() => {
-      // Retrieve formData from local storage
-      const formData = localStorage.getItem('submittedFormData');
-  let data = formData ? JSON.parse(formData) : {};
+  const [submittedData, setSubmittedData] = useState({});
+  useEffect(() => {
+    const formData = localStorage.getItem('submittedFormData');
+    let data = formData ? JSON.parse(formData) : {};
+    setSubmittedData(data);
+  }, []);
 
-  setSubmittedData(data);
-}, []);
+  const [selectedTitle, setSelectedTitle] = useState('Färg');
+  const [cardColor, setCardColor] = useState('#9C9A9A');
+  const [icon, setIcon] = useState(icon4);
+  const [pattern, setPattern] = useState('');
+  const [showColorButtons, setShowColorButtons] = useState(true);
+  const [showPatternButtons, setShowPatternButtons] = useState(false);
+  const [showIconButtons, setShowIconButtons] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(true);
 
-    
+  const handleColorChange = (event) => {
+    setCardColor(event.target.value)
+    setDesignData(prevState => ({ ...prevState, color: event.target.value }));
+  };
 
-    const [selectedTitle, setSelectedTitle] = useState('Färg');
-   /*  const [selectedButton, setSelectedButton] = useState(null);
+  const handleIconChange = (event) => {
+    setIcon(event.target.value)
+    setDesignData(prevState => ({ ...prevState, icon: event.target.value }));
+  };
 
-    const handleButtonClick = (event) => {
-      const selectedButtonValue = event.target.value;
-      setPattern(selectedButtonValue);
-    
-      const buttons = document.querySelectorAll(`input[type="radio"][name="${event.target.name}"]`);
-      buttons.forEach(button => {
-        button.style.border = 'none';
-        button.style.transform = 'scale(1)';
-      });
-    
-      event.target.style.border = '2px solid black';
-      event.target.style.transform = 'scale(0.7)';
+  const handlePatternChange = (event) => {
+    setPattern(event.target.value)
+    setDesignData(prevState => ({ ...prevState, pattern: event.target.value }))
+  };
+
+  const handleColorClick = () => {
+    setSelectedTitle('Färg');
+    setShowColorButtons(!showColorButtons);
+    setShowPatternButtons(false);
+    setShowIconButtons(false);
+  };
+
+  const handlePatternClick = () => {
+    setSelectedTitle('Mönster');
+    setShowPatternButtons(!showPatternButtons);
+    setShowColorButtons(false);
+    setShowIconButtons(false);
+  };
+
+  const handleIconClick = () => {
+    setSelectedTitle('Ikon');
+    setShowIconButtons(!showIconButtons);
+    setShowColorButtons(false);
+    setShowPatternButtons(false);
+  };
+
+  const handleCardClick = () => {
+    setIsFlipped(!isFlipped);
+  };
+
+  const handleCardSubmit = async () => {
+    const cardData = {
+      icon, pattern, cardColor,
     };
-    
-     */
-    
-    
 
-    const [cardColor, setCardColor] = useState('#9C9A9A');
-    const handleColorChange = (event) => {
-        setCardColor(event.target.value)
-        setDesignData(prevState => ({ ...prevState, color: event.target.value }));
-        
-    };
-
-    const [icon, setIcon] = useState(icon4);
-    const handleIconChange = (event) => {
-        setIcon(event.target.value)
-        setDesignData(prevState => ({ ...prevState, icon: event.target.value }));
+    try {
+      await axios.post(
+        "https://yrgomeetup.onrender.com/companys",
+        cardData,
+      );
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
+  };
 
-    const [pattern, setPattern] = useState('');
-    const handlePatternChange = (event) => {
-      setPattern(event.target.value)
-      setDesignData(prevState => ({ ...prevState, pattern: event.target.value }))
-    }
-
-    const [showColorButtons, setShowColorButtons] = useState(true);
-    const [showPatternButtons, setShowPatternButtons] = useState(false);
-    const [showIconButtons, setShowIconButtons] = useState(false);
-
-    const handleColorClick = () => {
-      setSelectedTitle('Färg');
-      setShowColorButtons(!showColorButtons);
-      setShowPatternButtons(false);
-      setShowIconButtons(false);
-    }
-     const handlePatternClick = () => {
-      setSelectedTitle('Mönster');
-      setShowPatternButtons(!showPatternButtons);
-      setShowColorButtons(false);
-      setShowIconButtons(false);
-    } 
-    const handleIconClick = () => {
-      setSelectedTitle('Ikon');
-      setShowIconButtons(!showIconButtons);
-      setShowColorButtons(false);
-      setShowPatternButtons(false);
-    }
-
-    const [isFlipped, setIsFlipped] = useState(true);
-    const handleCardClick = () => {
-      setIsFlipped(!isFlipped);
-    }
 
     const handleCardSubmit = async () => {
       const cardData = {
@@ -126,149 +120,170 @@ const [submittedData, setSubmittedData] = useState({});
     };
 
 
-    // STYLING -------------
+  const Phone = styled.div`
+  display: block;
 
-    const headerText = {
-        fontFamily: 'inter',
-        fontSize: '34px',
-        width: '320px',
-
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginTop: '70px',
-        marginBottom: '40px',
-        textAlign: 'start',
-    }
-
-    const cardContainer = {
-      position: 'relative',
-      width: '320px',
-      height: '200px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+  @media (min-width: 900px) {
+    display: none;
   }
+`;
 
-    const card = {
-        width: '320px',
-        height: '200px',
-        backgroundColor: 'white',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        border: '1.5px solid',
-        borderRadius: '9px 9px 9px 9px',
+  const HeaderText = styled.div`
+    font-family: 'inter';
+    font-size: 30px;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+    margin-bottom: 40px;
+    text-align: start;
+  `;
 
-        position: 'absolute',
-        transform: 'translate(-12px, 12px)',
-    } 
+  const CardContainer = styled.div`
+    position: relative;
+    width: 320px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+  `;
 
-    const cardBackside = {
-        width: '320px',
-        height: '200px',
-        backgroundColor: `${cardColor}`,
-        backgroundImage: `url(${pattern})`,
-        backgroundSize: 'cover',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        border: '1.5px solid',
-        borderRadius: '9px 9px 9px 9px',
+  const Card = styled.div`
+    width: 320px;
+    height: 200px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1.5px solid;
+    border-radius: 9px;
+    position: absolute;
+    transform: translate(-12px, 12px);
+  `;
 
-        position: 'absolute',
-        transform: 'translate(12px, -12px)',
-    }
+  const CardBackside = styled.div`
+    width: 320px;
+    height: 200px;
+    background-color: ${cardColor};
+    background-image: url(${pattern});
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1.5px solid;
+    border-radius: 9px;
+    position: absolute;
+    transform: translate(12px, -12px);
+  `;
 
-    const cardBacksideText = {
-      position: 'relative',
-      top: '115px',
-      right: '65px',
-      fontFamily: 'inter',
-      fontSize: '30px',
-      fontWeight: 'bold',
-      color: 'white'
-    }
+  const CardBacksideText = styled.p`
+    position: relative;
+    top: 115px;
+    right: 65px;
+    font-family: 'inter';
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
 
-    const selectionBar = {
-        marginTop: '20px',
-        marginBottom: '0px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        
+  `;
 
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '310px',
+  const SelectionBar = styled.div`
+    margin-top: 20px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 310px;
+    padding: 20px;
+  `;
 
-        padding: '20px',
-    }
+  const RadioButton = styled.input`
+    width: 50px;
+    height: 50px;
+    margin: 15px;
+    border: none;
+    background-image: url(${({ imageUrl }) => imageUrl});
+    background-size: cover;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
-    const radioButton = (imageUrl) => ({
-      width: '50px',
-      height: '50px',
-      margin: '15px',
-      border: 'none',
-      backgroundImage: `url(${imageUrl})`,
-      backgroundSize: 'cover',
-      outline: 'none',
-      appearance: 'none',
-      WebkitAppearance: 'none',
-      MozAppearance: 'none',
-    });
+    ${({ selected }) => selected && css`
+      width: 40px;
+      height: 40px;
+      border: 1px solid black;
+    `}
+  `;
 
-    const clickedButtonStyle = (buttonValue) => (
-      selectedButton === buttonValue 
-        ? { size: '95%', padding: '0px', border: '1px solid black' } 
-        : {}
-    );
-
-    const hiddenButton = {
-        display: 'none',
-    }
-
-    const buttonContainer = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '10px',
-
-        marginTop: '70px',
-        
-    }
-
-
-    // FRONT END KOD -------------
-
-    return (
-        <>
-            <Navbar />
-            <CompanyRegProgBar number={'2'} redBarWidth={'220px'} grayBarWidth={'110px'} />
-
-        <div style={headerText}>Designa ditt <br/> egna visitkort</div>
-
-        
-                <div style={cardContainer} onClick={handleCardClick}>
-                  {isFlipped ? (
-                    <>
-                      <div style={cardBackside}></div>
-                      <div style={card}>
-                        <CompanyCardContent icon={icon}/>
-                        
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={card}>
-                      <CompanyCardContent icon={icon}/>
-                      </div>
-                      <div style={cardBackside}>
-                        <p style={cardBacksideText}>{submittedData.company}</p>
-                      </div>
-                    </>
-                  )}
-                </div>
+  const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 70px;
+  `;
 
 
-        <div style={selectionBar}>
+  const Desktop = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  margin: 50px auto; /* Adjust this value as needed */
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+  `;
+
+  const DesktopLeft = styled.div`
+    width: 30vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  `;
+
+  const DesktopLeftTextArea = styled.div`
+    margin-bottom: 60px;
+
+  `;
+
+  const DesktopRight = styled.div`
+    width: 50vw;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #001A52;
+  `;
+
+
+  return (
+    <>
+      <Phone>
+      <Navbar />
+      <CompanyRegProgBar number={'3'} redBarWidth={'330px'} grayBarWidth={'0px'} />
+      <HeaderText>Designa ett visitkort</HeaderText>
+      <CardContainer onClick={handleCardClick}>
+        {isFlipped ? (
+          <>
+            <CardBackside></CardBackside>
+            <Card>
+              <CompanyCardContent icon={icon}/>
+            </Card>
+          </>
+        ) : (
+          <>
+            <Card>
+              <CompanyCardContent icon={icon}/>
+            </Card>
+            <CardBackside>
+              <CardBacksideText>{submittedData.company}</CardBacksideText>
+            </CardBackside>
+          </>
+        )}
+      </CardContainer>
+      <SelectionBar>
         <div 
           className="selectionBarTitle" 
           onClick={handleColorClick} 
@@ -290,132 +305,284 @@ const [submittedData, setSubmittedData] = useState({});
         >
           Ikon
         </div>
-        </div>
-
-
-        {showColorButtons && (
+      </SelectionBar>
+      {showColorButtons && (
         <div>
-            <input
-            style={radioButton(grayBox)}
+          <RadioButton
+            imageUrl={grayBox}
             type="radio"
             name="color"
             value='#9C9A9A'
             checked={cardColor === '#9C9A9A'}
             onChange={handleColorChange}
-            /* onClick={handleButtonClick} */
+            selected={cardColor === '#9C9A9A'}
           />
-        <input
-            style={{...radioButton(redBox), ...clickedButtonStyle}}
+          <RadioButton
+            imageUrl={redBox}
             type="radio"
             name="color"
             value='#F52A3B'
             onChange={handleColorChange}
-           
+            selected={cardColor === '#F52A3B'}
           />
-          <input 
-            style={radioButton(lightblueBox)}
+          <RadioButton 
+            imageUrl={lightblueBox}
             type="radio"
             name="color"
             value='#35D4D1'
             onChange={handleColorChange}
-            
+            selected={cardColor === '#35D4D1'}
           />
-          <input
-            style={radioButton(blueBox)}
+          <RadioButton
+            imageUrl={blueBox}
             type="radio"
             name="color"
             value='#314673'
             onChange={handleColorChange}
-            
+            selected={cardColor === '#314673'}
           />
         </div>
-        )}
-
-
-        {showPatternButtons && (
-          <div>
-            <input
-            style={radioButton(grayBox)}
+      )}
+      {showPatternButtons && (
+        <div>
+          <RadioButton
+            imageUrl={grayBox}
             type="radio"
             name="pattern"
             value=""
             checked={pattern === ""}
             onChange={handlePatternChange}
-            
           />
-        <input
-            style={radioButton(patternButton2)}
+          <RadioButton
+            imageUrl={patternButton2}
             type="radio"
             name="pattern"
             value={pattern1}
             onChange={handlePatternChange}
-            
           />
-          <input
-            style={radioButton(patternButton3)}
+          <RadioButton
+            imageUrl={patternButton3}
             type="radio"
             name="pattern"
             value={pattern2}
             onChange={handlePatternChange}
-            
           />
-          <input
-            style={radioButton(patternButton)}
+          <RadioButton
+            imageUrl={patternButton}
             type="radio"
             name="pattern"
             value={pattern3}
             onChange={handlePatternChange}
-            
           />
-
-          </div>
-)}
-
-    {showIconButtons && (
+        </div>
+      )}
+      {showIconButtons && (
         <div >
-            <input
-            style={radioButton(icon4)}
+          <RadioButton
+            imageUrl={icon4}
             type="radio"
             name="icon"
             value={icon4}
             checked={icon === icon4}
             onChange={handleIconChange}
-            
           />
-        <input
-            style={radioButton(icon1)}
+          <RadioButton
+            imageUrl={icon1}
             type="radio"
             name="icon"
             value={icon1}
             onChange={handleIconChange}
-            
-            
           />
-          <input
-            style={radioButton(icon2)}
+          <RadioButton
+            imageUrl={icon2}
             type="radio"
             name="icon"
             value={icon2}
             onChange={handleIconChange}
-            
           />
-          <input
-            style={radioButton(icon3)}
+          <RadioButton
+            imageUrl={icon3}
             type="radio"
             name="icon"
             value={icon3}
             onChange={handleIconChange}
-            
           />
         </div>
-        )}
+      )}
+      <ButtonContainer>
+        <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Skapa'}/>
+        <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Hoppa över'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
+      </ButtonContainer>
+      </Phone>
 
-        <div style={buttonContainer}>
-            <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Skapa'}/>
-            <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Hoppa över'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
-        </div>
-        </>
-    )
+      <Desktop>
+        <DesktopLeft>
+          <DesktopLeftTextArea>
+            <div style={{fontFamily: 'inter', fontSize: '60px', fontWeight: '300', textAlign: 'start'}}>
+              Anmälning till Branchevent 2024</div>
+            <div style={{fontFamily: 'inter', fontSize: '20px', weight: '400', textAlign: 'start'}}>
+              Informationen används i syfte för att eleverna ska ha möjlighet att lära känna ert företag innan dess att eventet sker</div>
+          </DesktopLeftTextArea>
+          <CardContainer onClick={handleCardClick}>
+          {isFlipped ? (
+            <>
+              <CardBackside></CardBackside>
+              <Card>
+                <CompanyCardContent icon={icon}/>
+              </Card>
+            </>
+          ) : (
+            <>
+              <Card>
+                <CompanyCardContent icon={icon}/>
+              </Card>
+              <CardBackside>
+                <CardBacksideText>{submittedData.company}</CardBacksideText>
+              </CardBackside>
+            </>
+          )}
+        </CardContainer>
+        </DesktopLeft>
+
+        <DesktopRight>
+        <Navbar />
+        <CompanyRegProgBar number={'3'} redBarWidth={'330px'} grayBarWidth={'0px'} />
+        <HeaderText>Designa ett visitkort</HeaderText>
+
+        <SelectionBar>
+          <div 
+            className="selectionBarTitle" 
+            onClick={handleColorClick} 
+            style={{ width:'70px', borderBottom: '3px solid', borderBottomColor: selectedTitle === 'Färg' ? 'red' : 'black', }}
+          >
+            Färg
+          </div>
+          <div 
+            className="selectionBarTitle" 
+            onClick={handlePatternClick}
+            style={{ width:'70px', borderBottom: '3px solid', borderBottomColor: selectedTitle === 'Mönster' ? 'red' : 'black', }}
+          >
+            Mönster
+          </div>
+          <div 
+            className="selectionBarTitle" 
+            onClick={handleIconClick} 
+            style={{ width:'70px', borderBottom: '3px solid', borderBottomColor: selectedTitle === 'Ikon' ? 'red' : 'black', }}
+          >
+            Ikon
+          </div>
+        </SelectionBar>
+        {showColorButtons && (
+          <div>
+            <RadioButton
+              imageUrl={grayBox}
+              type="radio"
+              name="color"
+              value='#9C9A9A'
+              checked={cardColor === '#9C9A9A'}
+              onChange={handleColorChange}
+              selected={cardColor === '#9C9A9A'}
+            />
+            <RadioButton
+              imageUrl={redBox}
+              type="radio"
+              name="color"
+              value='#F52A3B'
+              onChange={handleColorChange}
+              selected={cardColor === '#F52A3B'}
+            />
+            <RadioButton 
+              imageUrl={lightblueBox}
+              type="radio"
+              name="color"
+              value='#35D4D1'
+              onChange={handleColorChange}
+              selected={cardColor === '#35D4D1'}
+            />
+            <RadioButton
+              imageUrl={blueBox}
+              type="radio"
+              name="color"
+              value='#314673'
+              onChange={handleColorChange}
+              selected={cardColor === '#314673'}
+            />
+          </div>
+        )}
+        {showPatternButtons && (
+          <div>
+            <RadioButton
+              imageUrl={grayBox}
+              type="radio"
+              name="pattern"
+              value=""
+              checked={pattern === ""}
+              onChange={handlePatternChange}
+            />
+            <RadioButton
+              imageUrl={patternButton2}
+              type="radio"
+              name="pattern"
+              value={pattern1}
+              onChange={handlePatternChange}
+            />
+            <RadioButton
+              imageUrl={patternButton3}
+              type="radio"
+              name="pattern"
+              value={pattern2}
+              onChange={handlePatternChange}
+            />
+            <RadioButton
+              imageUrl={patternButton}
+              type="radio"
+              name="pattern"
+              value={pattern3}
+              onChange={handlePatternChange}
+            />
+          </div>
+        )}
+        {showIconButtons && (
+          <div >
+            <RadioButton
+              imageUrl={icon4}
+              type="radio"
+              name="icon"
+              value={icon4}
+              checked={icon === icon4}
+              onChange={handleIconChange}
+            />
+            <RadioButton
+              imageUrl={icon1}
+              type="radio"
+              name="icon"
+              value={icon1}
+              onChange={handleIconChange}
+            />
+            <RadioButton
+              imageUrl={icon2}
+              type="radio"
+              name="icon"
+              value={icon2}
+              onChange={handleIconChange}
+            />
+            <RadioButton
+              imageUrl={icon3}
+              type="radio"
+              name="icon"
+              value={icon3}
+              onChange={handleIconChange}
+            />
+          </div>
+        )}
+        <ButtonContainer>
+          <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Skapa'}/>
+          <RedButton onClick={() => {toggleDesign(); handleCardSubmit();}} text={'Hoppa över'} style={{ backgroundColor: 'white', border: '1px solid red', color: 'red', }}/>
+        </ButtonContainer>
+        </DesktopRight>
+      </Desktop>
+    </>
+  );
 }
 
 export default CompanyCardDesign;

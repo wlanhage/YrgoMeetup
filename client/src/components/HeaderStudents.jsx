@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import '../App.css'
 import { Link } from 'react-router-dom';
+import leftArrow from '../assets/smallicons/leftarrow.svg';
 
 function HeaderStudents ({setSelectedCategory, setFilteredStudents, students}) {
+
 
 
     const handleCategoryClick = (category) => {
@@ -19,7 +21,8 @@ function HeaderStudents ({setSelectedCategory, setFilteredStudents, students}) {
     const header = {     
         display: "flex",  
         flexDirection: 'column',   
-        alignItems: "center",          
+        alignItems: "center",
+                 
         color: "white",      
         width: "100%",     
         height: "180px",     
@@ -40,9 +43,8 @@ function HeaderStudents ({setSelectedCategory, setFilteredStudents, students}) {
     }
 
     const headerUpperIconContainer = {
-        width: '30px',
-        height: '30px',
-        backgroundColor: 'white',
+        marginRight: '20px',
+        marginTop: '8px'
     }
 
     const headerLower = {
@@ -80,7 +82,9 @@ function HeaderStudents ({setSelectedCategory, setFilteredStudents, students}) {
             <div style={header}>
                 <div style={headerUpper}>
                 <Link to="/" >
-                <div style={headerUpperIconContainer}></div>
+                <div style={headerUpperIconContainer}>
+                    <img src={leftArrow} alt="LeftArrow" />
+                </div>
                 </Link>
                     <div style={headerUpperText}>
                         Möt Studenterna
