@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { Axios } from 'axios';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
@@ -82,42 +83,23 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
 
   const handleCardSubmit = async () => {
     const cardData = {
-      icon, pattern, cardColor,
+      icon,
+      pattern,
+      cardColor,
     };
-
+  
     try {
-      await axios.post(
+      // await the axios post request
+      const response = await axios.post(
         "https://yrgomeetup.onrender.com/companys",
-        cardData,
+        cardData
       );
+      // Handle response if needed
+      console.log("Response:", response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-
-
-    const handleCardSubmit = async () => {
-      const cardData = {
-        icon, pattern, cardColor,
-      }
-  
-      try {
-        const response = await axios({
-          url: 'https://yrgomeetup.onrender.com/companys',
-          method: 'POST', 
-          data: cardData,
-          withCredentials: true, 
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-          }
-        });
-
-
-      } catch (error) {
-        console.error("Error submitting form:", error);
-      }
-    };
 
 
   const Phone = styled.div`
@@ -583,6 +565,6 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
       </Desktop>
     </>
   );
-}
 
+}
 export default CompanyCardDesign;
