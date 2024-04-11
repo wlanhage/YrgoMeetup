@@ -10,13 +10,6 @@ function UserDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [userId, setUserId] = useState("");
-  
-  
-  //if user is authorized, display user dashboard, else redirect to login page
-  const [authorized, setAuthorized] = useState(false);
-  const navigate = useNavigate();
-  const [user, setUser] = useState('');
-  const [userId, setUserId] = useState('');
 
   //verify the user
 useEffect(() => {
