@@ -4,16 +4,28 @@ import axios from "axios";
 function getUsers() {
   const [users, setUsers] = useState([]);
 
+
+
+
   useEffect(() => {
-    axios
-      .get("https://yrgomeetup.onrender.com/users")
-      .then((response) => {
+    const fetchUsers = async () => {
+      try{
+    const response = await axios({
+      url: 'https://yrgomeetup.onrender.com/users',
+      method: 'GET', 
+      withCredentials: true, 
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      }
+    });
         const users = response.data[0];
         setUsers(users);
-      })
-      .catch((error) => {
+      }catch(error) {
         console.error("Error:", error);
-      });
+      }
+    };
+    fetchUsers();
   }, []);
 
   return (

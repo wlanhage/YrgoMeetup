@@ -108,10 +108,18 @@ const [submittedData, setSubmittedData] = useState({});
       }
   
       try {
-        await axios.post(
-          "https://yrgomeetup.onrender.com/companys",
-          cardData,
-        );
+        const response = await axios({
+          url: 'https://yrgomeetup.onrender.com/companys',
+          method: 'POST', 
+          data: cardData,
+          withCredentials: true, 
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          }
+        });
+
+
       } catch (error) {
         console.error("Error submitting form:", error);
       }

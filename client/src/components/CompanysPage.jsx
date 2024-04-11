@@ -93,9 +93,16 @@ function CompanysPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://yrgomeetup.onrender.com/companys"
-        );
+          const response = await axios({
+          url: 'https://yrgomeetup.onrender.com/companys',
+          method: 'GET',
+          withCredentials: true, 
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          }
+        });
+
         //    console.log(response.data[0]);
         setCompanyData(response.data[0]);
       } catch (error) {

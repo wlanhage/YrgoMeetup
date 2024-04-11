@@ -44,11 +44,14 @@ function StudentRegForm() {
   //   marginBottom: "24px",
   // };
 
+
+  //both developer and designer are set to true by default just to make sure that the user is able to register before logic is added to the buttons
+
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    developer: false,
-    designer: false,
+    developer: true,
+    designer: true,
     email: "",
     linkedin: "",
     password: "",
@@ -117,10 +120,17 @@ function StudentRegForm() {
     } */
 
     try {
-      const response = await axios.post(
-        "https://yrgomeetup.onrender.com/students",
-        formData
-      );
+      const response = await axios({
+        url: 'https://yrgomeetup.onrender.com/students',
+        method: 'POST', 
+        data: formData,
+        withCredentials: true, 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+      });
+
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         navigate("/UserCreateProfile"); // Try navigating regardless of the response status
