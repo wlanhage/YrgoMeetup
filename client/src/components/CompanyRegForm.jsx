@@ -38,11 +38,11 @@ function CompanyRegForm() {
   /*  ---------  */
 
   const [formData, setFormData] = useState({
-    company: "",
+    companyName: "",
+    website: "",
+    firstname: "",
+    lastname: "",
     email: "",
-    phone: "",
-    linkedin: "",
-    textfield: "",
     web: false,
     design: false,
   });
@@ -76,11 +76,11 @@ function CompanyRegForm() {
         localStorage.setItem("submittedFormData", JSON.stringify(formData)),
 
         setFormData({
-          company: "",
+          companyName: "",
+          website: "",
+          firstname: "",
+          lastname: "",
           email: "",
-          phone: "",
-          linkedin: "",
-          textfield: "",
           web: false,
           design: false,
         }),
@@ -160,7 +160,7 @@ function CompanyRegForm() {
             /* padding: 2rem 2rem; */
             ${mq[2]} {
               border: 1px solid #000000;
-              width: 720px;
+              width: 620px;
               padding: 2rem 2rem;
             }
           `}
@@ -171,36 +171,47 @@ function CompanyRegForm() {
           <input
             type="text"
             style={input}
-            name="company"
-            value={formData.company}
+            name="companyName"
+            value={formData.companyName}
             onChange={handleChange}
-            placeholder="company..."
+            placeholder="Företagsnamn..."
             required
           />{" "}
           <label htmlFor="" style={label}>
-            Vilka är vi?
+            Hemsida
           </label>
           <input
             type="text"
-            style={largeInput}
-            name="textfield"
-            value={formData.textfield}
+            style={input}
+            name="website"
+            value={formData.website}
             onChange={handleChange}
-            placeholder="Text är..."
+            placeholder="URL till företaget"
           />
           <label htmlFor="" style={label}>
-            Phone
+            Förnamn
           </label>
           <input
             type="text"
-            style={largeInput}
-            name="phone"
-            value={formData.phone}
+            style={input}
+            name="firstname"
+            value={formData.firstname}
             onChange={handleChange}
-            placeholder="phone..."
+            placeholder="Namn"
           />
           <label htmlFor="" style={label}>
-            Email
+            Efternamn
+          </label>
+          <input
+            type="text"
+            style={input}
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            placeholder="Namn"
+          />
+          <label htmlFor="" style={label}>
+            Email för kontaker
           </label>
           <input
             type="email"
@@ -208,21 +219,7 @@ function CompanyRegForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="email..."
-          />
-          <label htmlFor="" style={label}>
-            Vad vi jobbar med
-          </label>
-          <label htmlFor="" style={label}>
-            Webbplats
-          </label>
-          <input
-            type="text"
-            style={input}
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-            placeholder="www."
+            placeholder="email@gmail.com"
             required
           />
           <label htmlFor="web" style={label}>

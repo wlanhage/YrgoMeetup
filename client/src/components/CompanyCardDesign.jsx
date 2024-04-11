@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Axios } from 'axios';
+import axios from 'axios';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
@@ -90,8 +90,8 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
   
     try {
       // await the axios post request
-      const response = await axios.post(
-        "https://yrgomeetup.onrender.com/companys",
+      const response = await axios.put(
+        `https://yrgomeetup.onrender.com/companys/${companyId}/design`,
         cardData
       );
       // Handle response if needed
