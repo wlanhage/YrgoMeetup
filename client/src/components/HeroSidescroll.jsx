@@ -102,8 +102,14 @@ function HeroSidescroll() {
               >
                 {company.companyname}
               </h2>
-              {/* <p>{company.email}</p>
-              <p>{company.phone}</p> */}
+              {console.log(company.icon)}
+              {/* <img src="../src/assets/icon3.svg" /> */}
+              <img
+                css={css`
+                  max-width: 30%;
+                `}
+                src={company.icon}
+              />
               <a href={company.linkedin}>Linkedin</a>
             </div>
           ))}
