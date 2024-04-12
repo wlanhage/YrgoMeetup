@@ -99,10 +99,10 @@ const CardBackside = styled.div`
 const CardBacksideText = styled.h3`
   position: relative;
   top: 110px;
-  right: 50px;
+  right: 60px;
   font-family: inter;
   font-size: 30px;
-  color: 'white';
+  color: white;
 `;
 
 const BottomText = styled.div`
@@ -230,7 +230,7 @@ if (!designData.color) {
               <CompanyCardContent />
             </Card>
             <CardBackside pattern={designData.pattern} color={designData.color}>
-              <CardBacksideText>{submittedData.company}</CardBacksideText>
+              <CardBacksideText>{submittedData.companyName}</CardBacksideText>
             </CardBackside>
           </>
         )}
@@ -267,7 +267,7 @@ if (!designData.color) {
                 <CompanyCardContent />
               </Card>
               <CardBackside pattern={designData.pattern} color={designData.color}>
-                <CardBacksideText>{submittedData.company}</CardBacksideText>
+                <CardBacksideText>{submittedData.companyName}</CardBacksideText>
               </CardBackside>
             </>
           )}

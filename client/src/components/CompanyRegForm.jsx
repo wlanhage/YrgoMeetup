@@ -67,7 +67,12 @@ function CompanyRegForm() {
         },
       });
       console.log(response);
+
+      const insertId = response.data[0].insertId;
+      console.log("Inserted ID:", insertId);
+
       localStorage.setItem("submittedFormData", JSON.stringify(formData)),
+      localStorage.setItem("insertId", insertId);
         setFormData({
           companyName: "",
           website: "",

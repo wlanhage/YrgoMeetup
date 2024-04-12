@@ -89,9 +89,10 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
     };
   
     try {
+      const insertId = localStorage.getItem("insertId");
       // await the axios post request
       const response = await axios.put(
-        `https://yrgomeetup.onrender.com/companys/${companyId}/design`,
+        `https://yrgomeetup.onrender.com/companys/${insertId}/design`,
         cardData
       );
       // Handle response if needed
@@ -260,7 +261,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
               <CompanyCardContent icon={icon}/>
             </Card>
             <CardBackside>
-              <CardBacksideText>{submittedData.company}</CardBacksideText>
+              <CardBacksideText>{submittedData.companyName}</CardBacksideText>
             </CardBackside>
           </>
         )}
@@ -419,7 +420,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
                 <CompanyCardContent icon={icon}/>
               </Card>
               <CardBackside>
-                <CardBacksideText>{submittedData.company}</CardBacksideText>
+                <CardBacksideText>{submittedData.companyName}</CardBacksideText>
               </CardBackside>
             </>
           )}
