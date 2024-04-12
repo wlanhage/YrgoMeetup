@@ -4,8 +4,8 @@ import ViewButtons from "./ViewButtons";
 
 export default function EventInformation() {
   const spec = {
-    marginLeft: "2rem",
-    marginRight: "2rem",
+    marginLeft: "1rem",
+    marginRight: "1rem",
     fontFamily: "inter",
     fontSize: "16px",
     fontWeight: "400",
@@ -21,50 +21,104 @@ export default function EventInformation() {
         css={css`
           display: flex;
           flex-direction: column;
-          align-items: center;
+          /* background-color: #9af52a; */
+
+          ${mq[1]} {
+            padding: 4rem;
+          }
         `}
       >
-        <h1>Branchevent 2024</h1>
+        <div
+          css={css`
+            text-align: left;
+            padding: 32px 32px 0 32px;
+            /* display: flex;
+            flex-direction: column;
+            align-items: center; */
+          `}
+        >
+          <h1
+            css={css`
+              font-family: "Inter";
+              font-size: 34px;
+              margin: 0;
+              font-weight: 400;
+              line-height: 40px;
+
+              ${mq[1]} {
+                font-size: 60px;
+
+                font-weight: 300;
+                line-height: 72px; /* 120% */
+                letter-spacing: -0.5px;
+              }
+            `}
+          >
+            Branchevent 2024
+          </h1>
+        </div>
+        <div></div>
         <div
           css={css`
             display: flex;
             flex-direction: column;
+            /* background-color: aliceblue; */
+            margin: 2rem;
           `}
         >
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="24"
-              viewBox="0 0 25 24"
-              fill="none"
+          <div
+            css={css`
+              /* background-color: #3c4e75; */
+              display: flex;
+            `}
+          >
+            <span
+              css={css`
+                display: flex;
+                align-items: center;
+              `}
             >
-              <mask
-                id="mask0_64_683"
-                maskUnits="userSpaceOnUse"
-                x="0"
-                y="0"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="24"
+                viewBox="0 0 25 24"
+                fill="none"
               >
-                <rect x="0.601562" width="24" height="24" fill="#D9D9D9" />
-              </mask>
-              <g mask={`url(#mask0_64_683)`}>
-                <path
-                  d="M12.6016 12C13.1516 12 13.6224 11.8042 14.0141 11.4125C14.4057 11.0208 14.6016 10.55 14.6016 10C14.6016 9.45 14.4057 8.97917 14.0141 8.5875C13.6224 8.19583 13.1516 8 12.6016 8C12.0516 8 11.5807 8.19583 11.1891 8.5875C10.7974 8.97917 10.6016 9.45 10.6016 10C10.6016 10.55 10.7974 11.0208 11.1891 11.4125C11.5807 11.8042 12.0516 12 12.6016 12ZM12.6016 19.35C14.6349 17.4833 16.1432 15.7875 17.1266 14.2625C18.1099 12.7375 18.6016 11.3833 18.6016 10.2C18.6016 8.38333 18.0224 6.89583 16.8641 5.7375C15.7057 4.57917 14.2849 4 12.6016 4C10.9182 4 9.4974 4.57917 8.33906 5.7375C7.18073 6.89583 6.60156 8.38333 6.60156 10.2C6.60156 11.3833 7.09323 12.7375 8.07656 14.2625C9.0599 15.7875 10.5682 17.4833 12.6016 19.35ZM12.6016 22C9.91823 19.7167 7.91406 17.5958 6.58906 15.6375C5.26406 13.6792 4.60156 11.8667 4.60156 10.2C4.60156 7.7 5.40573 5.70833 7.01406 4.225C8.6224 2.74167 10.4849 2 12.6016 2C14.7182 2 16.5807 2.74167 18.1891 4.225C19.7974 5.70833 20.6016 7.7 20.6016 10.2C20.6016 11.8667 19.9391 13.6792 18.6141 15.6375C17.2891 17.5958 15.2849 19.7167 12.6016 22Z"
-                  fill="#1C1B1F"
-                />
-              </g>
-            </svg>
-            <p style={spec}>Visual Arena Lindholmen</p>
-          </span>
+                <mask
+                  id="mask0_64_683"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="25"
+                  height="24"
+                >
+                  <rect x="0.601562" width="24" height="24" fill="#D9D9D9" />
+                </mask>
+                <g mask={`url(#mask0_64_683)`}>
+                  <path
+                    d="M12.6016 12C13.1516 12 13.6224 11.8042 14.0141 11.4125C14.4057 11.0208 14.6016 10.55 14.6016 10C14.6016 9.45 14.4057 8.97917 14.0141 8.5875C13.6224 8.19583 13.1516 8 12.6016 8C12.0516 8 11.5807 8.19583 11.1891 8.5875C10.7974 8.97917 10.6016 9.45 10.6016 10C10.6016 10.55 10.7974 11.0208 11.1891 11.4125C11.5807 11.8042 12.0516 12 12.6016 12ZM12.6016 19.35C14.6349 17.4833 16.1432 15.7875 17.1266 14.2625C18.1099 12.7375 18.6016 11.3833 18.6016 10.2C18.6016 8.38333 18.0224 6.89583 16.8641 5.7375C15.7057 4.57917 14.2849 4 12.6016 4C10.9182 4 9.4974 4.57917 8.33906 5.7375C7.18073 6.89583 6.60156 8.38333 6.60156 10.2C6.60156 11.3833 7.09323 12.7375 8.07656 14.2625C9.0599 15.7875 10.5682 17.4833 12.6016 19.35ZM12.6016 22C9.91823 19.7167 7.91406 17.5958 6.58906 15.6375C5.26406 13.6792 4.60156 11.8667 4.60156 10.2C4.60156 7.7 5.40573 5.70833 7.01406 4.225C8.6224 2.74167 10.4849 2 12.6016 2C14.7182 2 16.5807 2.74167 18.1891 4.225C19.7974 5.70833 20.6016 7.7 20.6016 10.2C20.6016 11.8667 19.9391 13.6792 18.6141 15.6375C17.2891 17.5958 15.2849 19.7167 12.6016 22Z"
+                    fill="#1C1B1F"
+                  />
+                </g>
+              </svg>
+              <p style={spec}>Visual Arena Lindholmen</p>
+            </span>
+          </div>
           <div
             css={css`
               display: flex;
               flex-direction: row;
+
+              /* background-color: #819dd9; */
             `}
           >
-            <span>
+            <span
+              css={css`
+                display: flex;
+                align-items: center;
+              `}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -92,7 +146,12 @@ export default function EventInformation() {
               <p style={spec}>Onsdag 24 April</p>
             </span>
 
-            <span>
+            <span
+              css={css`
+                display: flex;
+                align-items: center;
+              `}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -121,11 +180,11 @@ export default function EventInformation() {
             </span>
           </div>
         </div>
+
         <section
           css={css`
             display: flex;
             flex-direction: column;
-
             width: 100%;
             ${mq[1]} {
               flex-direction: row;
@@ -141,7 +200,7 @@ export default function EventInformation() {
               color: white;
               border: none;
               height: auto;
-              margin: 36px;
+              margin: 0 36px 36px 36px;
               justify-content: space-between;
               font-family: inter;
               font-size: 16px;
