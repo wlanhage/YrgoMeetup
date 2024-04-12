@@ -94,7 +94,6 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
       const response = await axios.put(`https://yrgomeetup.onrender.com/companys/${insertId}/design`, 
       cardData, 
       {
-      withCredentials: true,
       headers: {
       "Content-Type": "application/json",
       Accept: "application/json",

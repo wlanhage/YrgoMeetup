@@ -82,13 +82,7 @@ export async function createCompany(
 }
 
 
-export async function updateCompanyDescription(
-  id,
-  description,
-  services,
-  intern
-) {
-
+export async function updateCompanyDescription(id, description, services, intern) {
   try {
     const result = await pool.query(
       `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
