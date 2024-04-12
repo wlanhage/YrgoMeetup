@@ -82,6 +82,7 @@ export async function createCompany(
   }
 }
 
+
 export async function updateCompanyDescription(
   description,
   services,
@@ -125,6 +126,7 @@ export async function updateCompanyCardDesign(
     throw error;
   }
 }
+
 
 export async function createStudent(
   firstname,

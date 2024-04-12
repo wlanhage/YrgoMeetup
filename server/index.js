@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
 
+
 import {
   getCompanys,
   createCompany,
@@ -31,7 +32,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 app.use(express.json());
-//obs! Remember to change origin to the frontend url when deploying
+
+//obs! Remember to change origin to the frontend url when deploying on netlify
+
 app.use(cors({
     origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["GET", "POST", "OPTIONS"],
@@ -223,7 +226,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 //login function that compares the input to user email and their hashed password and creates a jwt
-
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -238,10 +240,12 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "20m",
         });
+
 /*         let expiryDate = new Date();
 expiryDate.setMinutes(expiryDate.getMinutes() + 20);
        res.cookie('token', token, { expires:expiryDate}); */
  // expires in 24 hours
+
         return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });
@@ -255,7 +259,7 @@ expiryDate.setMinutes(expiryDate.getMinutes() + 20);
   }
 });
 
-//make sure there is a token and request the user credetials by decrypting the token
+//make sure there is a token and request the user credentials by decrypting the token
 const verifyUser = (req, res, next) => {
   console.log("trying to verify user...");
   const authHeader = req.headers.authorization;
@@ -274,7 +278,6 @@ const verifyUser = (req, res, next) => {
         console.log("token is valid");
         req.id = decoded.id;
         console.log(req.id);
-        // Send the response inside the jwt.verify callback
         next();
       }
     });
@@ -284,7 +287,7 @@ app.get("/verifyUser", verifyUser, async (req, res) => {
   return res.json({ status: "success", id: req.id });
 });
 
-//get information form the verified user
+//get information from the verified user
 app.post("/getUserInformation", async (req, res) => {
   try {
     const id = req.body.user;
@@ -322,7 +325,7 @@ app.post("/getUserSkills", async (req, res) => {
   }
 });
 
-//logout and clear the cookie
+//logout
 app.get("/logout", (req, res) => {
   try {
     res.json({ message: "success" });
