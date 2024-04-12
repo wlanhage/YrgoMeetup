@@ -63,11 +63,11 @@ function CompanyCardContent ({ designData = {}, icon, style }) {
             <Wrapper>
                 <Icon src={designData.icon} alt="Company Icon" />
                 <CompanyInfo>
-                    <CompanyText>{submittedData.company}</CompanyText>
+                    <CompanyText>{submittedData.companyName}</CompanyText>
+                    <CompanyText>{submittedData.website}</CompanyText>
                     <CompanyText>{submittedData.email}</CompanyText>
-                    <CompanyText>{submittedData.phone}</CompanyText>
                     <CompanyText style={{ width: "50px" }}> </CompanyText>
-                    <a href={submittedData.linkedin}>
+                    <a href={submittedData.website}>
                         <RedButton 
                             text={"Ta reda på mer"}
                             style={{
