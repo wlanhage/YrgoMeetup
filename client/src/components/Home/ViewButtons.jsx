@@ -56,7 +56,7 @@ export default function ViewButtons() {
       css={css`
         color: black;
         border: none;
-        padding: 36px;
+        /* padding: 36px; */
         justify-content: left;
         margin: 32px;
         font-family: inter;

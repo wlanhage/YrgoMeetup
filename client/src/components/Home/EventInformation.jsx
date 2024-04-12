@@ -3,21 +3,6 @@ import { css } from "@emotion/react";
 import ViewButtons from "./ViewButtons";
 
 export default function EventInformation() {
-  const header = {
-    fontSize: "34px",
-    fontFamily: "inter",
-    fontWeight: "400",
-  };
-
-  const text = {
-    fontWeight: "300",
-    maxWidth: "500px",
-    fontFamily: "inter",
-    fontSize: "16px",
-    textAlign: "left",
-    lineHeight: "1.32rem",
-  };
-
   const spec = {
     marginLeft: "2rem",
     marginRight: "2rem",
@@ -31,21 +16,15 @@ export default function EventInformation() {
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
   return (
-    <div
-      css={css`
-        padding: 64px 32px 32px 32px;
-        /* background-color: #2b9fbc; */
-      `}
-    >
+    <div>
       <div
         css={css`
           display: flex;
           flex-direction: column;
           align-items: center;
-          /* background-color: #f52a3b; */
         `}
       >
-        <h1 style={header}>Branchevent 2024</h1>
+        <h1>Branchevent 2024</h1>
         <div
           css={css`
             display: flex;
@@ -174,20 +153,68 @@ export default function EventInformation() {
               }
             `}
           >
-            <p style={text}>
+            <p
+              css={css`
+                font-weight: 300;
+                max-width: 500px;
+                font-family: inter;
+                font-size: 16px;
+                text-align: left;
+                line-height: 1.32rem;
+
+                ${mq[1]} {
+                  font-size: 20px;
+                  line-height: 24px; /* 120% */
+                  letter-spacing: 0.15px;
+                  max-width: 600px;
+                }
+              `}
+            >
               Välkomna på mingelevent för att hitta framtida medarbetare i ert
               företag eller bara jobba tillsammans under LIA. Ni kommer att
               träffa Webbutvecklare och Digital Designers från Yrgo som vill
               visa vad de har jobbat med under året och vi hoppas att ni hittar
               en match.
             </p>
-            <p style={text}>
+            <p
+              css={css`
+                font-weight: 300;
+                max-width: 500px;
+                font-family: inter;
+                font-size: 16px;
+                text-align: left;
+                line-height: 1.32rem;
+
+                ${mq[1]} {
+                  font-size: 20px;
+                  line-height: 24px; /* 120% */
+                  letter-spacing: 0.15px;
+                  max-width: 600px;
+                }
+              `}
+            >
               Ni som företag kan med fördel ta med någon form av identifikation
               för synlighet. Vi kommer att ha stationer där företag och
               studerande kan träffas.
             </p>
 
-            <p style={text}>
+            <p
+              css={css`
+                font-weight: 300;
+                max-width: 500px;
+                font-family: inter;
+                font-size: 16px;
+                text-align: left;
+                line-height: 1.32rem;
+
+                ${mq[1]} {
+                  font-size: 20px;
+                  line-height: 24px; /* 120% */
+                  letter-spacing: 0.15px;
+                  max-width: 600px;
+                }
+              `}
+            >
               Varmt välkomna önskar Webbutvecklare och Digital Designer!
             </p>
           </div>

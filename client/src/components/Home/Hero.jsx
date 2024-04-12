@@ -4,18 +4,19 @@ import Redbutton from "../RedButton";
 import Herobutton from "../HeroButton";
 
 export default function Hero() {
-  const heroContainer = {
-    display: "flex",
-    width: "auto",
-    height: "100vh",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "128px 32px 48px 32px",
-    letterSpacing: "0.15px",
-    flexShrink: "0",
-    background: "linear-gradient(180deg, #F52A3B 34.13%, #F7A8AF 100%)",
-  };
+  // const heroContainer = {
+  //   display: "flex",
+  //   width: "auto",
+  //   height: "100vh",
+  //   flexDirection: "column",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  //   padding: "128px 32px 48px 32px",
+  //   letterSpacing: "0.15px",
+  //   flexShrink: "0",
+  //   background: "linear-gradient(180deg, #F52A3B 34.13%, #F7A8AF 100%)",
+  // };
+
   const heroHeader = {
     color: "white",
     display: "flex",
@@ -26,19 +27,37 @@ export default function Hero() {
     textAlign: "left",
   };
 
-  const heroTextThin = {
-    fontSize: "40px",
-    marign: "4px",
-    fontWeight: "200",
-  };
-
   const svgStyle = {
     width: "calc(100vw - 4rem)",
     height: "auto", // This will maintain the aspect ratio
     maxWidth: "500px",
+    marginBottom: "4rem",
   };
+
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
-    <div style={heroContainer}>
+    <div
+      css={css`
+        display: flex;
+        width: auto;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 128px 32px 48px 32px;
+        letter-spacing: 0.15px;
+        flex-shrink: 0;
+        background: linear-gradient(180deg, #f52a3b 34.13%, #f7a8af 100%);
+
+        ${mq[1]} {
+          padding: 6rem;
+          height: auto;
+        }
+      `}
+    >
       <div style={heroHeader}>
         <p>Välkommen till</p>
         <svg
@@ -55,7 +74,23 @@ export default function Hero() {
           />
         </svg>
 
-        <p style={heroTextThin}>BRANCHEVENT 2024</p>
+        <p
+          css={css`
+            font-size: 40px;
+            font-family: "Inter";
+            font-weight: 200;
+
+            ${mq[1]} {
+              font-size: 70px;
+              font-weight: 500;
+              line-height: 86px;
+              letter-spacing: -1.5px;
+              margin: 0 0 1rem 0;
+            }
+          `}
+        >
+          Branschevent 2024
+        </p>
         <p
           css={css`
             color: white;
@@ -65,10 +100,19 @@ export default function Hero() {
             font-weight: 300;
             line-height: 1.6rem;
             letter-spacing: 0.25px;
-            /* line-height: 24px; */
 
             font-family: "Inter";
             text-align: left;
+
+            ${mq[1]} {
+              font-family: Inter;
+              font-size: 70px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 86px; /* 122.857% */
+              letter-spacing: -1.5px;
+              margin: 0 0 48px 0;
+            }
           `}
         >
           Mingel mellan bransch och studerande Webbutvecklare och Digital

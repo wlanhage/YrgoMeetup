@@ -3,19 +3,28 @@ import { onClick } from "react";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 function HeroSidescroll() {
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
   return (
     <>
       <div
         css={css`
           display: flex;
           flex-direction: column;
+          /* margin-top: 4rem; */
         `}
       >
         <h2
           css={css`
             font-family: "Inter";
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 300;
+            margin: 4rem 0 4rem 0;
+
+            ${mq[1]} {
+              font-size: 48px;
+            }
           `}
         >
           Företag som anmält sig
@@ -35,7 +44,14 @@ function HeroSidescroll() {
               height: 100px;
               margin-right: 0.5rem;
               margin-left: 0.5rem;
-              background-color: gray;
+              background-color: rgba(228, 233, 235, 1);
+              border: 1px solid black;
+              border-radius: 4px;
+
+              ${mq[1]} {
+                width: 308px;
+                height: 200px;
+              }
             `}
           ></div>
           <div
@@ -45,7 +61,14 @@ function HeroSidescroll() {
               height: 100px;
               margin-right: 0.5rem;
               margin-left: 0.5rem;
-              background-color: gray;
+              background-color: rgba(228, 233, 235, 1);
+              border: 1px solid black;
+              border-radius: 4px;
+
+              ${mq[1]} {
+                width: 308px;
+                height: 200px;
+              }
             `}
           ></div>
           <div
@@ -55,7 +78,14 @@ function HeroSidescroll() {
               height: 100px;
               margin-right: 0.5rem;
               margin-left: 0.5rem;
-              background-color: gray;
+              background-color: rgba(228, 233, 235, 1);
+              border: 1px solid black;
+              border-radius: 4px;
+
+              ${mq[1]} {
+                width: 308px;
+                height: 200px;
+              }
             `}
           ></div>
           <div
@@ -65,7 +95,14 @@ function HeroSidescroll() {
               height: 100px;
               margin-right: 0.5rem;
               margin-left: 0.5rem;
-              background-color: gray;
+              background-color: rgba(228, 233, 235, 1);
+              border: 1px solid black;
+              border-radius: 4px;
+
+              ${mq[1]} {
+                width: 308px;
+                height: 200px;
+              }
             `}
           ></div>
           <div
@@ -75,7 +112,14 @@ function HeroSidescroll() {
               height: 100px;
               margin-right: 0.5rem;
               margin-left: 0.5rem;
-              background-color: gray;
+              background-color: rgba(228, 233, 235, 1);
+              border: 1px solid black;
+              border-radius: 4px;
+
+              ${mq[1]} {
+                width: 308px;
+                height: 200px;
+              }
             `}
           ></div>
         </div>
