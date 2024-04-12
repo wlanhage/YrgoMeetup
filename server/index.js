@@ -90,16 +90,13 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-
-  const { companyName, website, firstname, lastname, email, choice} = req.body;
-
+  const { companyName, website, firstname, lastname, email} = req.body;
   const createdCompany = await createCompany(
     companyName,
     website,
     firstname,
     lastname,
-    email,
-    choice
+    email
   );
   res.json(createdCompany);
 });
