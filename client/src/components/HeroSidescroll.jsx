@@ -6,13 +6,14 @@ function HeroSidescroll() {
   const breakpoints = [576, 768, 900, 1200];
 
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
     <>
       <div
         css={css`
           display: flex;
           flex-direction: column;
-          /* margin-top: 4rem; */
+          background-color: #8c5b5f;
         `}
       >
         <h2

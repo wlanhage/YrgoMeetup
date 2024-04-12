@@ -4,19 +4,6 @@ import Redbutton from "../RedButton";
 import Herobutton from "../HeroButton";
 
 export default function Hero() {
-  // const heroContainer = {
-  //   display: "flex",
-  //   width: "auto",
-  //   height: "100vh",
-  //   flexDirection: "column",
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  //   padding: "128px 32px 48px 32px",
-  //   letterSpacing: "0.15px",
-  //   flexShrink: "0",
-  //   background: "linear-gradient(180deg, #F52A3B 34.13%, #F7A8AF 100%)",
-  // };
-
   const heroHeader = {
     color: "white",
     display: "flex",

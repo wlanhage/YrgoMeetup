@@ -26,6 +26,7 @@ function CompanysPage() {
     color: "black",
     fontFamily: "inter",
   };
+
   const companyCard = {
     display: "flex",
     flexWrap: "wrap",
@@ -33,12 +34,12 @@ function CompanysPage() {
     alignItems: "center",
     justifyContent: "center",
 
-    height: "210px",
-    width: "340px",
+    width: "427px",
+    height: "278px",
     borderRadius: "8.04px",
-    border: "1px solid var(--Base-Black, #000)",
-    background: "var(--Base-White, #FFF)",
-    padding: "18px 22px",
+    border: "1px solid #000",
+    background: "var(--Base-White, #E4E9EB)",
+    // padding: "18px 22px",
     gap: "16px",
   };
 
@@ -143,7 +144,7 @@ function CompanysPage() {
               <img src={yrgologo}></img>
 
               <div style={companyInfo}>
-                <h2 style={{ margin: "6px" }}>{company.company}</h2>
+                <h2 style={{ margin: "6px" }}>{company.companyname}</h2>
                 <p style={{ margin: "6px" }}>{company.email}</p>
                 <p style={{ margin: "6px" }}>{company.phone}</p>
                 <p style={{ width: "50px", margin: "6px" }}>
