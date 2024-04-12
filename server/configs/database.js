@@ -57,19 +57,23 @@ export async function createCompany(
   website,
   firstname,
   lastname,
-  email
+
+  email,
+  choice
+  
 ) {
   try {
     const result = await pool.query(
+      `INSERT INTO companys (companyName, website, firstname, lastname, email, choice)
+      VALUES (?, ?, ?, ?, ?, ?)`,
 
-      `INSERT INTO companys (companyName, website, firstname, lastname, email)
-      VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         companyName,
         website,
         firstname,
         lastname,
         email,
+        choice
       ]
 
     );
@@ -124,6 +128,7 @@ export async function updateCompanyCardDesign(
     throw error;
   }
 }
+
 
 export async function createStudent(
   firstname,
