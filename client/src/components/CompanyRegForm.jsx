@@ -43,8 +43,6 @@ function CompanyRegForm() {
     firstname: "",
     lastname: "",
     email: "",
-    web: false,
-    design: false,
   });
 
   const handleChange = (e) => {
@@ -76,7 +74,6 @@ function CompanyRegForm() {
           firstname: "",
           lastname: "",
           email: "",
-          choice: "",
         }),
         navigate("/CompanyCard");
     } catch (error) {
@@ -215,24 +212,7 @@ function CompanyRegForm() {
             placeholder="email@gmail.com"
             required
           />
-          <label htmlFor="web" style={label}>
-            Web
-          </label>
-          <input
-            type="radio"
-            name="choice"
-            value={formData.web}
-            onChange={handleChange}
-          />
-          <label htmlFor="design" style={label}>
-            Design
-          </label>
-          <input
-            type="radio"
-            name="choice"
-            value={formData.design}
-            onChange={handleChange}
-          />
+          
           <RedButton onClick={handleSubmit} text="Submit" />
         </form>
       </section>
