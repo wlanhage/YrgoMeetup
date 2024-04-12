@@ -13,7 +13,7 @@ const Home = () => {
       <Navbar />
       <Hero />
       <EventInformation />
-      <ViewButtons />
+      {/* <ViewButtons /> */}
       <HeroSidescroll />
       <Footer />
     </div>

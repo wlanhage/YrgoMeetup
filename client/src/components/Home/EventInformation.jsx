@@ -9,27 +9,15 @@ export default function EventInformation() {
     fontWeight: "400",
   };
 
-  const blueBox = {
-    backgroundColor: "#001A52",
-    color: "white",
-    border: "none",
-    width: "100%-4rem",
-    height: "auto",
-    marginBottom: "36px",
-    marginTop: "36px",
-    justifyContent: "space-between",
-    fontFamily: "inter",
-    fontSize: "16px",
-    padding: "32px",
-  };
   const text = {
     fontWeight: "300",
-    maxWidth: "460px",
+    maxWidth: "500px",
     fontFamily: "inter",
     fontSize: "16px",
     textAlign: "left",
     lineHeight: "1.32rem",
   };
+
   const spec = {
     marginLeft: "2rem",
     marginRight: "2rem",
@@ -53,6 +41,8 @@ export default function EventInformation() {
         css={css`
           display: flex;
           flex-direction: column;
+          align-items: center;
+          /* background-color: #f52a3b; */
         `}
       >
         <h1 style={header}>Branchevent 2024</h1>
@@ -156,13 +146,34 @@ export default function EventInformation() {
           css={css`
             display: flex;
             flex-direction: column;
-            /* background-color: #982bbc; */
+
+            width: 100%;
             ${mq[1]} {
               flex-direction: row;
+
+              justify-content: center;
+              gap: 56px;
             }
           `}
         >
-          <div style={blueBox}>
+          <div
+            css={css`
+              background-color: #001a52;
+              color: white;
+              border: none;
+              height: auto;
+              margin: 36px;
+              justify-content: space-between;
+              font-family: inter;
+              font-size: 16px;
+              padding: 32px;
+
+              ${mq[1]} {
+                margin: 0;
+                padding: 60px;
+              }
+            `}
+          >
             <p style={text}>
               Välkomna på mingelevent för att hitta framtida medarbetare i ert
               företag eller bara jobba tillsammans under LIA. Ni kommer att

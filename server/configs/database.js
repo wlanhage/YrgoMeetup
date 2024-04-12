@@ -37,7 +37,6 @@ export async function getCompanySoftwares() {
   return result;
 }
 
-
 export async function getStudentSoftwares() {
   const result = await pool.query("SELECT * from student_softwares");
   return result;
@@ -58,6 +57,7 @@ export async function createCompany(
   website,
   firstname,
   lastname,
+
   email,
   choice
   
@@ -66,6 +66,7 @@ export async function createCompany(
     const result = await pool.query(
       `INSERT INTO companys (companyName, website, firstname, lastname, email, choice)
       VALUES (?, ?, ?, ?, ?, ?)`,
+
       [
         companyName,
         website,
@@ -74,6 +75,7 @@ export async function createCompany(
         email,
         choice
       ]
+
     );
     return result;
   } catch (error) {
@@ -131,24 +133,28 @@ export async function updateCompanyCardDesign(
 export async function createStudent(
   firstname,
   lastname,
-  developer,
-  designer,
   email,
+  password,
+  designer,
+  developer,
   linkedin,
-  password
+  portfolio,
+  textfield
 ) {
   try {
     const studentResult = await pool.query(
-      `INSERT INTO students (firstname, lastname, developer, designer, email, linkedin, password)
-  VALUES (? , ? , ?, ?, ?, ?, ?)`,
+      `INSERT INTO students (firstname, lastname, email, password, designer, developer, linkedin, portfolio, textfield)
+  VALUES (? , ? , ?, ?, ?, ?, ?,?,?)`,
       [
         firstname,
         lastname,
-        developer || false,
-        designer || false,
         email,
-        linkedin,
         password,
+        designer || false,
+        developer || false,
+        linkedin,
+        portfolio,
+        textfield,
       ]
     );
     return studentResult;
@@ -169,27 +175,36 @@ export async function getStudentCredentials(email) {
 }
 
 export async function getUserInformation(id) {
-  const result = await pool.query("SELECT * FROM students, student_languages, student_softwares WHERE id = ?", [id]);
+  const result = await pool.query(
+    "SELECT * FROM students, student_languages, student_softwares WHERE id = ?",
+    [id]
+  );
   return result;
 }
 
 export async function getUserSkills(id) {
   console.log(`Fetching skills for user with ID: ${id}`);
-  
-  const [softwares] = await pool.query(`
+
+  const [softwares] = await pool.query(
+    `
     SELECT * 
     FROM softwares
     INNER JOIN student_softwares ON student_softwares.software_id = softwares.id  
     WHERE student_softwares.student_id = ?
-  `, [id]);
+  `,
+    [id]
+  );
   console.log(`Fetched softwares: ${JSON.stringify(softwares)}`);
 
-  const [languages] = await pool.query(`
+  const [languages] = await pool.query(
+    `
     SELECT * 
     FROM languages 
     INNER JOIN student_languages ON student_languages.language_id = languages.id 
     WHERE student_languages.student_id = ?
-  `, [id]);
+  `,
+    [id]
+  );
   console.log(`Fetched languages: ${JSON.stringify(languages)}`);
 
   return [softwares, languages];
