@@ -76,9 +76,7 @@ function CompanyRegForm() {
           firstname: "",
           lastname: "",
           email: "",
-   
-          web: false,
-          design: false,
+          choice: "",
         }),
         navigate("/CompanyCard");
     } catch (error) {
@@ -221,18 +219,18 @@ function CompanyRegForm() {
             Web
           </label>
           <input
-            type="checkbox"
-            name="web"
-            checked={formData.web}
+            type="radio"
+            name="choice"
+            value={formData.web}
             onChange={handleChange}
           />
           <label htmlFor="design" style={label}>
             Design
           </label>
           <input
-            type="checkbox"
-            name="design"
-            checked={formData.design}
+            type="radio"
+            name="choice"
+            value={formData.design}
             onChange={handleChange}
           />
           <RedButton onClick={handleSubmit} text="Submit" />
