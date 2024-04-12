@@ -59,18 +59,20 @@ export async function createCompany(
   firstname,
   lastname,
   email,
+  choice
   
 ) {
   try {
     const result = await pool.query(
-      `INSERT INTO companys (companyName, website, firstname, lastname, email)
-      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO companys (companyName, website, firstname, lastname, email, choice)
+      VALUES (?, ?, ?, ?, ?, ?)`,
       [
         companyName,
         website,
         firstname,
         lastname,
         email,
+        choice
       ]
     );
     return result;
