@@ -7,12 +7,23 @@ const HeroFooter = styled.div`
   width: 100%;
   text-align: left;
   padding: 12px 32px 48px 32px;
+
+  @media (min-width: 768px) {
+    height: 275px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 `;
 
 const Paragraph = styled.p`
   font-family: "Inter";
   margin: 0.5rem 0 0.5rem 0;
 `;
+
+const breakpoints = [576, 768, 900, 1200];
+
+const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
 function Footer() {
   return (
