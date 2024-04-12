@@ -375,7 +375,6 @@ function StudentRegForm() {
                 </label>
               </div>
             </div>
-
             <RedButton text="Nästa" className="regButton" />
           </div>
           <div>
