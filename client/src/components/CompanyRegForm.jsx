@@ -8,7 +8,7 @@ import CompanyRegProgBar from "../components/CompanyRegProgBar";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function CompanyRegForm() {
+function CompanyRegForm({setIsFormSubmitted}) {
   const navigate = useNavigate();
 
   const input = {
@@ -80,7 +80,8 @@ function CompanyRegForm() {
           lastname: "",
           email: "",
         }),
-        navigate("/CompanyCard");
+        setIsFormSubmitted(true);
+        console.log(setIsFormSubmitted);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -92,58 +93,9 @@ function CompanyRegForm() {
 
   return (
     <>
-      <CompanyRegProgBar
-        number={"1"}
-        redBarWidth={"110px"}
-        grayBarWidth={"220px"}
-      />
-      <section
-        css={css`
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 2rem;
-
-          ${mq[2]} {
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: flex-start;
-            gap: 56px;
-            margin: 2rem;
-          }
-        `}
-      >
-        <div
-          css={css`
-            text-align: left;
-            /* padding: 0 2rem; */
-          `}
-        >
-          <h2
-            css={css`
-              font-size: 30px;
-              color: black;
-              font-family: "inter";
-              font-weight: 400;
-              margin: 0 0 20px 0;
-              flex-shrink: 1;
-            `}
-          >
-            Anmälningsformulär
-          </h2>
-          <p
-            css={css`
-              max-width: 400px;
-              font-family: "Inter";
-              font-size: 16px;
-            `}
-          >
-            Informationen används i syfte för att eleverna ska ha möjlighet att
-            lära känna ert företag innan dess att eventet sker
-          </p>
-        </div>
-
         <form
+      
+
           onSubmit={handleSubmit}
           css={css`
             display: flex;
@@ -220,7 +172,7 @@ function CompanyRegForm() {
           
           <RedButton onClick={handleSubmit} text="Submit" />
         </form>
-      </section>
+      
     </>
   );
 }
