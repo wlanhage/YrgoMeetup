@@ -4,6 +4,8 @@ import burgerMenu from "../assets/menu.svg";
 import yrgologo from "../assets/icon4.svg";
 import "../App.css";
 import RedButton from "./RedButton";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function CompanysPage() {
   const cardsWrapper = {
@@ -93,17 +95,15 @@ function CompanysPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-          const response = await axios({
-          url: 'https://yrgomeetup.onrender.com/companys',
-          method: 'GET',
-          withCredentials: true, 
+        const response = await axios({
+          url: "https://yrgomeetup.onrender.com/companys",
+          method: "GET",
+          withCredentials: true,
           headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-          }
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         });
-
-        //    console.log(response.data[0]);
         setCompanyData(response.data[0]);
       } catch (error) {
         console.error(error);
@@ -135,6 +135,7 @@ function CompanysPage() {
         <p>Söker DD</p>
         <p>Söker WU</p>
       </section>
+
       <section style={cardsWrapper}>
         {companyData.map((company, index) => (
           <div key={index} style={companyCard}>

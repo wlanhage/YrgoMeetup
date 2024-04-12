@@ -38,8 +38,7 @@ app.use(express.json());
 
 app.use(cors({
     origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
-
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
   })

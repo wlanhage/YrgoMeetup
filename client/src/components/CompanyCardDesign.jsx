@@ -83,18 +83,23 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
 
   const handleCardSubmit = async () => {
     const cardData = {
+      cardColor,
       icon,
       pattern,
-      cardColor,
     };
   
     try {
       const insertId = localStorage.getItem("insertId");
       // await the axios post request
-      const response = await axios.put(
-        `https://yrgomeetup.onrender.com/companys/${insertId}/design`,
-        cardData
-      );
+      const response = await axios.put(`https://yrgomeetup.onrender.com/companys/${insertId}/design`, 
+      cardData, 
+      {
+      withCredentials: true,
+      headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
       // Handle response if needed
       console.log("Response:", response.data);
     } catch (error) {
