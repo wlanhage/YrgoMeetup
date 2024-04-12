@@ -87,13 +87,14 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { companyName, website, firstname, lastname, email, } = req.body;
+  const { companyName, website, firstname, lastname, email, choice} = req.body;
   const createdCompany = await createCompany(
     companyName,
     website,
     firstname,
     lastname,
     email,
+    choice
     
   );
   res.json(createdCompany);
@@ -101,13 +102,15 @@ app.post("/companys", async (req, res) => {
 
 app.put("/companys/:id/description", async (req, res) => {
   const { description, services, intern } = req.body;
-  const updatedCompany = await updateCompanyDescription(description, services, intern);
+  const { id } = req.params;
+  const updatedCompany = await updateCompanyDescription(description, services, intern, id);
   res.json(updatedCompany);
 });
 
 app.put("/companys/:id/design", async (req, res) => {
   const { cardColor, icon, pattern } = req.body;
-  const updatedCompany = await updateCompanyCardDesign(cardColor, icon, pattern);
+  const { id } = req.params;
+  const updatedCompany = await updateCompanyCardDesign(cardColor, icon, pattern, id);
   res.json(updatedCompany);
 });
 
