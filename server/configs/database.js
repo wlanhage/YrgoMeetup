@@ -83,19 +83,16 @@ export async function createCompany(
 
 
 export async function updateCompanyDescription(
+  id,
   description,
   services,
   intern
 ) {
 
-  const [latestCompany] = await pool.query(
-    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
-  );
-
   try {
     const result = await pool.query(
       `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
-      [description, services, intern, latestCompany.id]
+      [description, services, intern, id]
     );
     return result;
   } catch (error) {
@@ -105,19 +102,16 @@ export async function updateCompanyDescription(
 }
 
 export async function updateCompanyCardDesign(
+  id,
   cardColor,
   icon,
   pattern
 ) {
 
-  const [latestCompany] = await pool.query(
-    `SELECT * FROM companys ORDER BY createdAt DESC LIMIT 1`
-  );
-
   try {
     const result = await pool.query(
       `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
-      [cardColor, icon, pattern, latestCompany.id]
+      [cardColor, icon, pattern, id]
     );
     return result;
   } catch (error) {

@@ -89,9 +89,10 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
     };
   
     try {
+      const insertId = localStorage.getItem("insertId");
       // await the axios post request
       const response = await axios.put(
-        `https://yrgomeetup.onrender.com/companys/${latestCompany.id}/design`,
+        `https://yrgomeetup.onrender.com/companys/${insertId}/design`,
         cardData
       );
       // Handle response if needed
