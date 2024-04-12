@@ -7,8 +7,6 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
 
-import Cookies from "js-cookie";
-
 
 import {
   getCompanys,
@@ -24,6 +22,8 @@ import {
   getUserInformation,
   getUserSkills,
   getCards,
+  updateCompanyDescription,
+  updateCompanyCardDesign,
 } from "./configs/database.js";
 
 const app = express();
