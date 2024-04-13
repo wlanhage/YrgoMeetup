@@ -25,6 +25,7 @@ import {
   updateCompanyCardDesign,
   updateStudent,
   insertStudentLanguages,
+  getLatestStudentId,
 } from "./configs/database.js";
 
 const app = express();
@@ -125,22 +126,53 @@ app.put("/companys/:id/design", async (req, res) => {
   res.json(updatedCompany);
 });
 
+// app.put("/students", async (req, res) => {
+//   const formData = req.body;
+
+//   try {
+//     const updateResult = await updateStudent(
+//       formData.linkedin,
+//       formData.portfolio,
+//       formData.id
+//     );
+
+//     // Insert the student's languages
+//     const insertLanguages = await insertStudentLanguages(
+//       formData.id,
+//       formData.languages
+//     );
+//     res.json({ updateResult, insertLanguages });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Server error");
+//   }
+// });
+
 app.put("/students", async (req, res) => {
-  const formData = req.body;
+  const { linkedin, portfolio } = req.body;
 
   try {
-    const updateResult = await updateStudent(
-      formData.linkedin,
-      formData.portfolio,
-      formData.id
-    );
+    // Fetch the ID of the most recent student
+    const id = await getLatestStudentId();
+
+    const updateResult = await updateStudent(linkedin, portfolio, id);
+    res.json(updateResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.post("/student_languages", async (req, res) => {
+  const { languages } = req.body;
+
+  try {
+    // Fetch the ID of the most recent student
+    const studentId = await getLatestStudentId();
 
     // Insert the student's languages
-    const insertLanguages = await insertStudentLanguages(
-      formData.id,
-      formData.languages
-    );
-    res.json({ updateResult, insertLanguages });
+    const insertLanguages = await insertStudentLanguages(studentId, languages);
+    res.json(insertLanguages);
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
