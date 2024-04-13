@@ -111,8 +111,18 @@ const UserCreateProfile = () => {
 
       console.log(response);
 
-      const insertId = response.data[0].insertId;
-      console.log("Inserted ID:", insertId);
+      const latestResponse = await axios.get(
+        "https://yrgomeetup.onrender.com/students/latest"
+      );
+      const latestStudentId = latestResponse.data[0].id;
+      console.log("Latest student ID:", latestStudentId);
+
+      for (const languageId of formData.languages) {
+        await axios.post("https://yrgomeetup.onrender.com/student_languages", {
+          studentId: latestStudentId,
+          languageId: languageId,
+        });
+      }
 
       localStorage.setItem("submittedFormData", JSON.stringify(formData));
       localStorage.setItem("insertId", insertId);
@@ -122,7 +132,6 @@ const UserCreateProfile = () => {
         languages: [],
       });
       setIsFormSubmitted(true);
-      // console.log(setIsFormSubmitted);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -216,7 +225,7 @@ const UserCreateProfile = () => {
             <div key={language.id}>
               <input
                 type="checkbox"
-                name={language.id.toString()} // Convert the ID to a string
+                name={language.id} // Convert the ID to a string
                 checked={formData.languages.includes(language.id)}
                 onChange={handleChange}
               />
