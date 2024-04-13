@@ -57,22 +57,14 @@ export async function createCompany(
   website,
   firstname,
   lastname,
-  email,
-  
+  email
 ) {
   try {
     const result = await pool.query(
       `INSERT INTO companys (companyName, website, firstname, lastname, email)
       VALUES (?, ?, ?, ?, ?)`,
 
-      [
-        companyName,
-        website,
-        firstname,
-        lastname,
-        email,
-      ]
-
+      [companyName, website, firstname, lastname, email]
     );
     return result;
   } catch (error) {
@@ -81,8 +73,12 @@ export async function createCompany(
   }
 }
 
-
-export async function updateCompanyDescription(id, description, services, intern) {
+export async function updateCompanyDescription(
+  id,
+  description,
+  services,
+  intern
+) {
   try {
     const result = await pool.query(
       `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
@@ -95,13 +91,7 @@ export async function updateCompanyDescription(id, description, services, intern
   }
 }
 
-export async function updateCompanyCardDesign(
-  id,
-  cardColor,
-  icon,
-  pattern
-) {
-
+export async function updateCompanyCardDesign(id, cardColor, icon, pattern) {
   try {
     const result = await pool.query(
       `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
@@ -113,7 +103,6 @@ export async function updateCompanyCardDesign(
     throw error;
   }
 }
-
 
 export async function createStudent(
   firstname,
@@ -193,4 +182,30 @@ export async function getUserSkills(id) {
   console.log(`Fetched languages: ${JSON.stringify(languages)}`);
 
   return [softwares, languages];
+}
+
+export async function updateStudent(linkedin, portfolio, id) {
+  try {
+    const result = await pool.query(
+      `UPDATE students SET linkedin = ?, portfolio = ? WHERE id = ?`,
+      [linkedin, portfolio, id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating student:", error);
+    throw error;
+  }
+}
+
+export async function insertStudentLanguages(studentId, languageIds) {
+  try {
+    const values = languageIds.map((id) => `(${studentId}, ${id})`).join(", ");
+    const result = await pool.query(
+      `INSERT INTO student_languages (student_id, language_id) VALUES ${values}`
+    );
+    return result;
+  } catch (error) {
+    console.error("Error inserting student languages:", error);
+    throw error;
+  }
 }

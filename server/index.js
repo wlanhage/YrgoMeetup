@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
 
-
 import {
   getCompanys,
   createCompany,
@@ -24,6 +23,7 @@ import {
   getCards,
   updateCompanyDescription,
   updateCompanyCardDesign,
+  updateStudent,
 } from "./configs/database.js";
 
 const app = express();
@@ -33,11 +33,11 @@ dotenv.config();
 
 app.use(express.json());
 
-
 //obs! Remember to change origin to the frontend url when deploying on netlify
 
-app.use(cors({
-    origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["GET", "POST", "PUT", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
@@ -89,7 +89,7 @@ app.get("/cards", async (req, res) => {
 });
 
 app.post("/companys", async (req, res) => {
-  const { companyName, website, firstname, lastname, email} = req.body;
+  const { companyName, website, firstname, lastname, email } = req.body;
   const createdCompany = await createCompany(
     companyName,
     website,
@@ -103,15 +103,47 @@ app.post("/companys", async (req, res) => {
 app.put("/companys/:id/description", async (req, res) => {
   const { description, services, intern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyDescription(id, description, services, intern);
+  const updatedCompany = await updateCompanyDescription(
+    id,
+    description,
+    services,
+    intern
+  );
   res.json(updatedCompany);
 });
 
 app.put("/companys/:id/design", async (req, res) => {
   const { cardColor, icon, pattern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyCardDesign(id, cardColor, icon, pattern);
+  const updatedCompany = await updateCompanyCardDesign(
+    id,
+    cardColor,
+    icon,
+    pattern
+  );
   res.json(updatedCompany);
+});
+
+app.put("/students", async (req, res) => {
+  const formData = req.body;
+
+  try {
+    const updateResult = await updateStudent(
+      formData.linkedin,
+      formData.portfolio,
+      formData.id
+    );
+
+    // Insert the student's languages
+    const insertLanguages = await insertStudentLanguages(
+      formData.id,
+      formData.languages
+    );
+    res.json({ updateResult, insertLanguages });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 });
 
 //validate email and password
@@ -244,10 +276,10 @@ app.post("/login", async (req, res) => {
           expiresIn: "20m",
         });
 
-/*         let expiryDate = new Date();
+        /*         let expiryDate = new Date();
 expiryDate.setMinutes(expiryDate.getMinutes() + 20);
        res.cookie('token', token, { expires:expiryDate}); */
- // expires in 24 hours
+        // expires in 24 hours
         return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });

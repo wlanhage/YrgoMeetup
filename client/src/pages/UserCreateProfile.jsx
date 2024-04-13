@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import UserProfileInfo from "../components/UserProfileInfo";
 import RedButton from "../components/RedButton";
-import ReturnButton from "../components/ReturnButton";
 import SecondaryButton from "../components/SecondaryButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -62,40 +61,90 @@ const UserCreateProfile = () => {
   const [formData, setFormData] = useState({
     linkedin: "",
     portfolio: "",
+    languages: [],
   });
 
   const handleChange = (e) => {
-    const { name, type, checked } = e.target;
-    let value = e.target.value;
+    const { name, type, checked, value } = e.target;
 
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prevState) => {
+      if (type === "checkbox") {
+        // If the checkbox is checked, add the language ID to the array
+        // If the checkbox is unchecked, remove the language ID from the array
+        const updatedLanguages = checked
+          ? [...prevState.languages, Number(name)]
+          : prevState.languages.filter((id) => id !== Number(name));
+
+        return { ...prevState, languages: updatedLanguages };
+      } else {
+        // For other input types, just update the value
+        return { ...prevState, [name]: value };
+      }
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios({
+        url: "https://yrgomeetup.onrender.com/students",
+        method: "PUT",
+        data: formData,
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      console.log(response);
+
+      const insertId = response.data[0].insertId;
+      console.log("Inserted ID:", insertId);
+
+      localStorage.setItem("submittedFormData", JSON.stringify(formData));
+      localStorage.setItem("insertId", insertId);
+      setFormData({
+        linkedin: "",
+        portfolio: "",
+        languages: [],
+      });
+      setIsFormSubmitted(true);
+      console.log(setIsFormSubmitted);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const breakpoints = [576, 768, 900, 1200];
 
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-  /* useEffect(() => {
-    const getSkills = async () => {
-    try {
-        const response = await axios.get('http://localhost:5000/api/getSkills');
-        const data = response.data;
-        setSkills(data);
-    
-    }
-    }
-}, []) */
+  const languages = [
+    { id: 1, name: "PHP" },
+    { id: 2, name: "C#" },
+    { id: 3, name: "HTML" },
+    { id: 4, name: "CSS" },
+    { id: 5, name: "Laravel" },
+    { id: 6, name: "Javascript" },
+    // ...
+  ];
 
   return (
     <div>
       <Navbar />
       <h1 style={header}>Skapa Profil</h1>
-      <form action="" style={basicStyle}>
-        <label htmlFor="" style={label}>
-          Förnamn
+      <form action="" style={basicStyle} onSubmit={handleSubmit}>
+        <label
+          htmlFor=""
+          css={css`
+            font-size: 16px;
+            color: black;
+            font-family: inter;
+            text-align: left;
+            margin-bottom: 10px;
+          `}
+        >
+          Länk till LinkedIn
         </label>
         <input
           type="text"
@@ -108,12 +157,21 @@ const UserCreateProfile = () => {
           `}
           value={formData.linkedin}
           onChange={handleChange}
-          placeholder="Förnamn"
+          placeholder="Linkedin"
           required
         />
 
-        <label htmlFor="" style={label}>
-          Efternamn
+        <label
+          htmlFor=""
+          css={css`
+            font-size: 16px;
+            color: black;
+            font-family: inter;
+            text-align: left;
+            margin-bottom: 10px;
+          `}
+        >
+          Länk till portfolio
         </label>
 
         <input
@@ -127,9 +185,10 @@ const UserCreateProfile = () => {
           `}
           value={formData.portfolio}
           onChange={handleChange}
-          placeholder="Efternamn"
+          placeholder="Portfolio"
           required
         />
+
         <p>Vilka kunskaper har du?</p>
 
         <section
@@ -137,129 +196,28 @@ const UserCreateProfile = () => {
             display: flex;
             flex-wrap: wrap;
             width: 100%;
-
             /* background-color: #ae6363; */
           `}
         >
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              PHP
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              C#
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Laravel
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Javascript
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              HTML
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              CSS
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Python
-            </label>
-          </div>
+          {languages.map((language) => (
+            <div key={language.id}>
+              <input
+                type="checkbox"
+                name={language.id.toString()} // Convert the ID to a string
+                checked={formData.languages.includes(language.id)}
+                onChange={handleChange}
+              />
+              <label htmlFor={language.id}>{language.name}</label>
+            </div>
+          ))}
         </section>
-        {/* <p>Jag vill synas för företagen</p>
-        <div style={style}>
-          <label htmlFor="Ja/nej">Ja</label>
-          <input type="radio" name="Ja/Nej" value="Ja" />
-          <label htmlFor="Ja/Nej">Nej</label>
-          <input type="radio" name="Ja/Nej" value="Nej" />
-        </div> */}
+
         <div
           css={css`
             margin-bottom: 1rem;
           `}
         >
-          <RedButton text="Skapa konto" />
+          <RedButton text="Skapa konto" onClick={handleSubmit} />
         </div>
         <div>
           <SecondaryButton text="Logga ut" />
