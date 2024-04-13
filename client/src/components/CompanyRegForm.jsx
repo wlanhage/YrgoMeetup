@@ -8,7 +8,7 @@ import CompanyRegProgBar from "../components/CompanyRegProgBar";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function CompanyRegForm({setIsFormSubmitted}) {
+function CompanyRegForm({ setIsFormSubmitted }) {
   const navigate = useNavigate();
 
   const input = {
@@ -72,16 +72,16 @@ function CompanyRegForm({setIsFormSubmitted}) {
       console.log("Inserted ID:", insertId);
 
       localStorage.setItem("submittedFormData", JSON.stringify(formData)),
-      localStorage.setItem("insertId", insertId);
-        setFormData({
-          companyName: "",
-          website: "",
-          firstname: "",
-          lastname: "",
-          email: "",
-        }),
+        localStorage.setItem("insertId", insertId);
+      setFormData({
+        companyName: "",
+        website: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+      }),
         setIsFormSubmitted(true);
-        console.log(setIsFormSubmitted);
+      console.log(setIsFormSubmitted);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -93,86 +93,81 @@ function CompanyRegForm({setIsFormSubmitted}) {
 
   return (
     <>
-        <form
-      
+      <form
+        onSubmit={handleSubmit}
+        css={css`
+          display: flex;
+          flex-direction: column;
 
-          onSubmit={handleSubmit}
-          css={css`
-            display: flex;
-            flex-direction: column;
+          justify-content: center;
+          gap: 8px;
 
-            justify-content: center;
-            gap: 8px;
-
-            /* padding: 2rem 2rem; */
-            ${mq[2]} {
-              border: 1px solid #000000;
-              width: 620px;
-              padding: 2rem 2rem;
-            }
-          `}
-        >
-          <label htmlFor="" style={label}>
-            Företagsnamn
-          </label>
-          <input
-            type="text"
-            style={input}
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleChange}
-            placeholder="Företagsnamn..."
-            required
-          />{" "}
-          <label htmlFor="" style={label}>
-            Hemsida
-          </label>
-          <input
-            type="text"
-            style={input}
-            name="website"
-            value={formData.website}
-            onChange={handleChange}
-            placeholder="URL till företaget"
-          />
-          <label htmlFor="" style={label}>
-            Förnamn
-          </label>
-          <input
-            type="text"
-            style={input}
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-            placeholder="Namn"
-          />
-          <label htmlFor="" style={label}>
-            Efternamn
-          </label>
-          <input
-            type="text"
-            style={input}
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-            placeholder="Namn"
-          />
-          <label htmlFor="" style={label}>
-            Email för kontaker
-          </label>
-          <input
-            type="email"
-            style={input}
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="email@gmail.com"
-            required
-          />
-          
-          <RedButton onClick={handleSubmit} text="Submit" />
-        </form>
-      
+          ${mq[2]} {
+            border: 1px solid #000000;
+            width: 620px;
+            padding: 2rem 2rem;
+          }
+        `}
+      >
+        <label htmlFor="" style={label}>
+          Företagsnamn
+        </label>
+        <input
+          type="text"
+          style={input}
+          name="companyName"
+          value={formData.companyName}
+          onChange={handleChange}
+          placeholder="Företagsnamn..."
+          required
+        />{" "}
+        <label htmlFor="" style={label}>
+          Hemsida
+        </label>
+        <input
+          type="text"
+          style={input}
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          placeholder="URL till företaget"
+        />
+        <label htmlFor="" style={label}>
+          Förnamn
+        </label>
+        <input
+          type="text"
+          style={input}
+          name="firstname"
+          value={formData.firstname}
+          onChange={handleChange}
+          placeholder="Namn"
+        />
+        <label htmlFor="" style={label}>
+          Efternamn
+        </label>
+        <input
+          type="text"
+          style={input}
+          name="lastname"
+          value={formData.lastname}
+          onChange={handleChange}
+          placeholder="Namn"
+        />
+        <label htmlFor="" style={label}>
+          Email för kontakter
+        </label>
+        <input
+          type="email"
+          style={input}
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="email@gmail.com"
+          required
+        />
+        <RedButton onClick={handleSubmit} text="Submit" />
+      </form>
     </>
   );
 }

@@ -170,14 +170,20 @@ function StudentRegForm() {
             /* justify-content: space-around; */
             gap: 4rem;
             align-items: flex-start;
+            padding: 3rem;
             /* margin: 2rem; */
           }
         `}
       >
         <div
           css={css`
-            width: 33%;
-            padding: 3rem 1rem;
+            width: 100%;
+            padding: 1rem 2rem;
+
+            ${mq[2]} {
+              width: 33%;
+              padding: 3rem 1rem;
+            }
           `}
         >
           <h2
@@ -200,11 +206,16 @@ function StudentRegForm() {
 
           <p
             css={css`
-              font-family: "inter";
-              text-align: left;
-              max-width: 100%;
-              font-size: 18px;
-              line-height: 24px;
+              display: none;
+
+              ${mq[2]} {
+                display: block;
+                font-family: "inter";
+                text-align: left;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 24px;
+              }
             `}
           >
             Denna profil kommer kunna ses av de anmälda företagen och du kommer
@@ -212,15 +223,21 @@ function StudentRegForm() {
           </p>
           <div
             css={css`
-              width: 100%;
-              height: 400px;
-              /* background-color: bisque; */
+              ${mq[2]} {
+                width: 100%;
+                height: 400px;
+                /* background-color: bisque; */
+              }
             `}
           >
             <img
               css={css`
-                width: 100%;
-                height: 100%;
+                display: none;
+                ${mq[2]} {
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                }
               `}
               src={iconMonitor}
             ></img>
