@@ -97,7 +97,7 @@ const UserCreateProfile = () => {
           Accept: "application/json",
         },
       });
-      console.log(response.data[0]);
+      console.log(response);
       return response;
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -125,7 +125,7 @@ const UserCreateProfile = () => {
       }
 
       localStorage.setItem("submittedFormData", JSON.stringify(formData));
-      localStorage.setItem("insertId", insertId);
+      localStorage.setItem("insertId", latestStudentId);
       setFormData({
         linkedin: "",
         portfolio: "",
