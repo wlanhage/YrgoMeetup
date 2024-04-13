@@ -131,28 +131,6 @@ app.put("/companys/:id/design", async (req, res) => {
   res.json(updatedCompany);
 });
 
-// app.put("/students", async (req, res) => {
-//   const formData = req.body;
-
-//   try {
-//     const updateResult = await updateStudent(
-//       formData.linkedin,
-//       formData.portfolio,
-//       formData.id
-//     );
-
-//     // Insert the student's languages
-//     const insertLanguages = await insertStudentLanguages(
-//       formData.id,
-//       formData.languages
-//     );
-//     res.json({ updateResult, insertLanguages });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Server error");
-//   }
-// });
-
 app.put("/students", async (req, res) => {
   const { linkedin, portfolio } = req.body;
 
@@ -357,6 +335,25 @@ const verifyUser = (req, res, next) => {
 };
 app.get("/verifyUser", verifyUser, async (req, res) => {
   return res.json({ status: "success", id: req.id });
+});
+
+// Add this import at the top of your index.js file
+import { getStudentById } from "./configs/database.js";
+
+// Add this route handler to your index.js file
+app.get("/students/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await getStudentById(id);
+    if (student) {
+      res.json(student);
+    } else {
+      res.status(404).send("Student not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 });
 
 //get information from the verified user

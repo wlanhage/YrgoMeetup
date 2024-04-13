@@ -58,37 +58,36 @@ const UserCreateProfile = () => {
     borderRadius: "4px, 4px, 4px, 4px",
   };
 
+  const handleChange = (e) => {
+    const { name, type, checked } = e.target;
+    let value = e.target.value;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const [formData, setFormData] = useState({
     linkedin: "",
     portfolio: "",
-    languages: [],
   });
 
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
 
-  const handleChange = (e) => {
-    const { name, type, checked, value } = e.target;
-
-    setFormData((prevState) => {
-      if (type === "checkbox") {
-        // If the checkbox is checked, add the language ID to the array
-        // If the checkbox is unchecked, remove the language ID from the array
-        const updatedLanguages = checked
-          ? [...prevState.languages, Number(name)]
-          : prevState.languages.filter((id) => id !== Number(name));
-
-        return { ...prevState, languages: updatedLanguages };
-      } else {
-        // For other input types, just update the value
-        return { ...prevState, [name]: value };
-      }
-    });
-  };
-
-  const createUserProfile = async (formData) => {
     try {
+      // Fetch the latest student ID
+      const responseLatest = await axios.get(
+        "https://yrgomeetup.onrender.com/students/latest"
+      );
+      const latestStudentId = responseLatest.data[0].id;
+      console.log("Latest student ID:", latestStudentId);
+
+      // Update the student's data
       const response = await axios({
-        url: "https://yrgomeetup.onrender.com/students",
+        url: `https://yrgomeetup.onrender.com/students/${latestStudentId}`,
         method: "PUT",
         data: formData,
         withCredentials: true,
@@ -97,43 +96,12 @@ const UserCreateProfile = () => {
           Accept: "application/json",
         },
       });
-      console.log(response);
-      return response;
+
+      console.log("Response:", response); // Log the entire response
+      console.log("Data:", response.data); // Log the data from the response
     } catch (error) {
       console.error("Error submitting form:", error);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await createUserProfile(formData);
-
-      console.log(response);
-
-      const latestResponse = await axios.get(
-        "https://yrgomeetup.onrender.com/students/latest"
-      );
-      const latestStudentId = latestResponse.data[0].id;
-      console.log("Latest student ID:", latestStudentId);
-
-      for (const languageId of formData.languages) {
-        await axios.post("https://yrgomeetup.onrender.com/student_languages", {
-          studentId: latestStudentId,
-          languageId: languageId,
-        });
-      }
-
-      localStorage.setItem("submittedFormData", JSON.stringify(formData));
-      localStorage.setItem("insertId", latestStudentId);
-      setFormData({
-        linkedin: "",
-        portfolio: "",
-        languages: [],
-      });
-      setIsFormSubmitted(true);
-    } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error details:", error.response);
     }
   };
 
@@ -221,17 +189,17 @@ const UserCreateProfile = () => {
             /* background-color: #ae6363; */
           `}
         >
-          {languages.map((language) => (
+          {/* {languages.map((language) => (
             <div key={language.id}>
               <input
                 type="checkbox"
-                name={language.id} // Convert the ID to a string
+                name={language.id.toString()} // Convert the ID to a string
                 checked={formData.languages.includes(language.id)}
                 onChange={handleChange}
               />
               <label htmlFor={language.id}>{language.name}</label>
             </div>
-          ))}
+          ))} */}
         </section>
 
         <div
