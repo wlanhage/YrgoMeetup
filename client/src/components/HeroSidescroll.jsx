@@ -102,8 +102,7 @@ function HeroSidescroll() {
               >
                 {company.companyname}
               </h2>
-              {console.log(company.icon)}
-              {/* <img src="../src/assets/icon3.svg" /> */}
+
               <img
                 css={css`
                   max-width: 30%;

@@ -64,6 +64,8 @@ const UserCreateProfile = () => {
     languages: [],
   });
 
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
 
@@ -83,8 +85,7 @@ const UserCreateProfile = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const createUserProfile = async (formData) => {
     try {
       const response = await axios({
         url: "https://yrgomeetup.onrender.com/students",
@@ -96,6 +97,17 @@ const UserCreateProfile = () => {
           Accept: "application/json",
         },
       });
+      return response;
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await createUserProfile(formData);
+
       console.log(response);
 
       const insertId = response.data[0].insertId;

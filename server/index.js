@@ -90,6 +90,11 @@ app.get("/cards", async (req, res) => {
   res.send(cards);
 });
 
+app.get("students/latest", async (req, res) => {
+  const latestStudent = await getLatestStudentId();
+  res.send(latestStudent);
+});
+
 app.post("/companys", async (req, res) => {
   const { companyName, website, firstname, lastname, email } = req.body;
   const createdCompany = await createCompany(
