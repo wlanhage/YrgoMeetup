@@ -12,6 +12,19 @@ const pool = mysql
   })
   .promise();
 
+// Add this function to your database.js file
+export async function getStudentById(id) {
+  try {
+    const [rows] = await pool.query("SELECT * FROM students WHERE id = ?", [
+      id,
+    ]);
+    return rows[0]; // Assuming the query returns at least one row
+  } catch (error) {
+    console.error("Error fetching student by ID:", error);
+    throw error;
+  }
+}
+
 export async function getStudents() {
   const result = await pool.query("SELECT * from students");
   return result;
