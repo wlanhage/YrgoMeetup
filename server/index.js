@@ -146,6 +146,23 @@ app.put("/students", async (req, res) => {
   }
 });
 
+app.put("/students/:id", async (req, res) => {
+  const { linkedin, portfolio } = req.body;
+  const { id } = req.params;
+
+  try {
+    const updateResult = await updateStudent(linkedin, portfolio, id);
+    if (updateResult.affectedRows > 0) {
+      res.json({ message: "Student updated successfully" });
+    } else {
+      res.status(404).send("Student not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
 app.post("/student_languages", async (req, res) => {
   const { languages } = req.body;
 
