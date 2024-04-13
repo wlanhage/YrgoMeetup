@@ -5,6 +5,7 @@ import { useState } from "react";
 import backarrow from "../assets/arrow_back.svg";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import iconMonitor from "../assets/icon3.svg";
 
 import SecondaryButton from "./SecondaryButton";
 import { useNavigate } from "react-router-dom";
@@ -38,11 +39,8 @@ function StudentRegForm() {
     color: "black",
     fontFamily: "inter",
     textAlign: "left",
+    marginLeft: "10px",
   };
-
-  // const form = {
-  //   marginBottom: "24px",
-  // };
 
   //both developer and designer are set to true by default just to make sure that the user is able to register before logic is added to the buttons
 
@@ -112,6 +110,7 @@ function StudentRegForm() {
       alert("Invalid linkedin-url");
       return;
     }
+
     /*     if (
       typeof formData.developer !== "bool" ||
       typeof formData.designer !== "bool"
@@ -168,23 +167,82 @@ function StudentRegForm() {
           justify-content: center;
           ${mq[2]} {
             flex-direction: row;
-            justify-content: space-around;
+            /* justify-content: space-around; */
+            gap: 4rem;
             align-items: flex-start;
-            margin: 2rem;
+            padding: 3rem;
+            /* margin: 2rem; */
           }
         `}
       >
-        <h2
+        <div
           css={css`
-            font-size: 36px;
-            color: black;
-            font-family: "inter";
-            font-weight: 400;
-            margin: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+
+            ${mq[2]} {
+              width: 33%;
+              padding: 3rem 1rem;
+            }
           `}
         >
-          Skapa Konto
-        </h2>
+          <h2
+            css={css`
+              font-size: 36px;
+              color: black;
+              font-family: "inter";
+              text-align: left;
+              font-weight: 400;
+              margin: 0;
+
+              ${mq[2]} {
+                font-size: 60px;
+                font-weight: 300;
+              }
+            `}
+          >
+            Skapa Konto
+          </h2>
+
+          <p
+            css={css`
+              display: none;
+
+              ${mq[2]} {
+                display: block;
+                font-family: "inter";
+                text-align: left;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 24px;
+              }
+            `}
+          >
+            Denna profil kommer kunna ses av de anmälda företagen och du kommer
+            att kunna se alla deltagare i eventet.
+          </p>
+          <div
+            css={css`
+              ${mq[2]} {
+                width: 100%;
+                height: 400px;
+                /* background-color: bisque; */
+              }
+            `}
+          >
+            <img
+              css={css`
+                display: none;
+                ${mq[2]} {
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                }
+              `}
+              src={iconMonitor}
+            ></img>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit}
           css={css`
@@ -209,6 +267,11 @@ function StudentRegForm() {
             type="text"
             name="firstname"
             style={input}
+            css={css`
+              ${mq[2]} {
+                width: 50%;
+              }
+            `}
             value={formData.firstname}
             onChange={handleChange}
             placeholder="Förnamn"
@@ -218,10 +281,16 @@ function StudentRegForm() {
           <label htmlFor="" style={label}>
             Efternamn
           </label>
+
           <input
             type="text"
             name="lastname"
             style={input}
+            css={css`
+              ${mq[2]} {
+                width: 50%;
+              }
+            `}
             value={formData.lastname}
             onChange={handleChange}
             placeholder="Efternamn"
@@ -253,29 +322,6 @@ function StudentRegForm() {
             placeholder="*****"
             required
           />
-
-          {/* <label htmlFor="" style={label}>
-            Linkedin
-          </label>
-          <input
-            type="text"
-            name="linkedin"
-            style={input}
-            value={formData.linkedin}
-            onChange={handleChange}
-            placeholder="linkedin"
-          />
-          <label htmlFor="" style={label}>
-            Övrigt
-          </label>
-          <input
-            type="text"
-            style={largeInput}
-            name="textfield"
-            value={formData.textfield}
-            onChange={handleChange}
-            placeholder="övrigt..."
-          /> */}
           <div
             css={css`
               display: flex;
@@ -287,13 +333,18 @@ function StudentRegForm() {
               margin-bottom: 20px;
             `}
           >
-            <div>
+            <div
+              css={css`
+                width: 100%;
+              `}
+            >
               <h3
                 css={css`
                   font-size: 16px;
                   color: black;
                   font-family: "inter";
                   text-align: left;
+
                   font-weight: 400;
                 `}
               >
@@ -303,32 +354,55 @@ function StudentRegForm() {
             <div
               css={css`
                 display: flex;
-                align-items: center;
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+
                 gap: 1rem;
+                /* background-color: #574d4d; */
+                ${mq[2]} {
+                  flex-direction: row;
+                }
               `}
             >
-              <input
-                type="checkbox"
-                name="developer"
-                checked={formData.developer}
-                onChange={handleChange}
-              />
-              <label htmlFor="developer" style={label}>
-                Webbutvecklare
-              </label>
-
-              <input
-                type="checkbox"
-                name="designer"
-                checked={formData.designer}
-                onChange={handleChange}
-              />
-              <label htmlFor="designer" style={label}>
-                Digital designer
-              </label>
+              <div>
+                <input
+                  type="checkbox"
+                  name="developer"
+                  checked={formData.developer}
+                  onChange={handleChange}
+                />
+                <label htmlFor="developer" style={label}>
+                  Webbutvecklare
+                </label>
+              </div>
+              <div
+                css={css`
+                  margin-bottom: 20px;
+                `}
+              >
+                <input
+                  type="checkbox"
+                  name="designer"
+                  checked={formData.designer}
+                  onChange={handleChange}
+                />
+                <label htmlFor="designer" style={label}>
+                  Digital designer
+                </label>
+              </div>
             </div>
+            <RedButton text="Nästa" className="regButton" />
           </div>
-          <RedButton text="Nästa" className="regButton" />
+          <div>
+            <p
+              css={css`
+                font-family: "inter";
+              `}
+            >
+              Redan medlem? Logga in
+            </p>
+          </div>
         </form>
       </section>
     </>
