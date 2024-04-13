@@ -97,6 +97,7 @@ const UserCreateProfile = () => {
           Accept: "application/json",
         },
       });
+      console.log(response.data[0]);
       return response;
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -121,7 +122,7 @@ const UserCreateProfile = () => {
         languages: [],
       });
       setIsFormSubmitted(true);
-      console.log(setIsFormSubmitted);
+      // console.log(setIsFormSubmitted);
     } catch (error) {
       console.error("Error submitting form:", error);
     }

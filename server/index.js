@@ -90,7 +90,7 @@ app.get("/cards", async (req, res) => {
   res.send(cards);
 });
 
-app.get("students/latest", async (req, res) => {
+app.get("/students/latest", async (req, res) => {
   const latestStudent = await getLatestStudentId();
   res.send(latestStudent);
 });
