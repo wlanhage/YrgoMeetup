@@ -24,6 +24,7 @@ import {
   updateCompanyDescription,
   updateCompanyCardDesign,
   updateStudent,
+  insertStudentLanguages,
 } from "./configs/database.js";
 
 const app = express();
