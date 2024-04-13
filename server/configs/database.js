@@ -213,5 +213,5 @@ export async function insertStudentLanguages(studentId, languageIds) {
 export async function getLatestStudentId() {
   const query = "SELECT id FROM students ORDER BY id DESC LIMIT 1";
   const [rows] = await pool.query(query);
-  return rows[0].id;
+  return rows;
 }
