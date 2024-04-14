@@ -210,15 +210,15 @@ export async function updateStudent(linkedin, portfolio, id) {
   }
 }
 
-export async function insertStudentLanguages(studentId, languageIds) {
+export async function insertStudentLanguage(studentId, languageId) {
   try {
-    const values = languageIds.map((id) => `(${studentId}, ${id})`).join(", ");
     const result = await pool.query(
-      `INSERT INTO student_languages (student_id, language_id) VALUES ${values}`
+      `INSERT INTO student_languages (student_id, language_id) VALUES ($1, $2)`,
+      [studentId, languageId]
     );
     return result;
   } catch (error) {
-    console.error("Error inserting student languages:", error);
+    console.error("Error inserting student language:", error);
     throw error;
   }
 }

@@ -164,15 +164,12 @@ app.put("/students/:id", async (req, res) => {
 });
 
 app.post("/student_languages", async (req, res) => {
-  const { languages } = req.body;
+  const { student_id, language_id } = req.body;
 
   try {
-    // Fetch the ID of the most recent student
-    const studentId = await getLatestStudentId();
-
-    // Insert the student's languages
-    const insertLanguages = await insertStudentLanguages(studentId, languages);
-    res.json(insertLanguages);
+    // Insert the student's language
+    const insertLanguage = await insertStudentLanguage(student_id, language_id);
+    res.json(insertLanguage);
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
