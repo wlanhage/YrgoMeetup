@@ -4,10 +4,16 @@ import UserProfileInfo from "../components/UserProfileInfo";
 import RedButton from "../components/RedButton";
 import SecondaryButton from "../components/SecondaryButton";
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 import axios from "axios";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+
+const Emptynav = styled.div`
+  height: 100px;
+  /* background-color: #f52a3b; */
+`;
 
 function Skills() {
   const handleChange = (e) => {
@@ -96,6 +102,8 @@ function Skills() {
   return (
     <>
       <Navbar />
+      <Emptynav />
+      <section></section>
       <section
         css={css`
           font-family: "Inter", sans-serif;
@@ -105,27 +113,78 @@ function Skills() {
           display: flex;
           flex-direction: column;
           padding: 2rem 2rem;
+
+          ${mq[2]} {
+            flex-direction: row;
+            gap: 4rem;
+            align-items: flex-start;
+            padding: 3rem;
+          }
         `}
       >
-        <h2
+        <div
           css={css`
-            font-size: 36px;
-            color: black;
-            font-family: "inter";
-            text-align: left;
-            font-weight: 400;
-            margin: 0;
-            margin: 1rem;
+            width: 100%;
+            padding: 1rem 0.5rem;
 
             ${mq[2]} {
-              font-size: 60px;
-              font-weight: 300;
+              width: 33%;
+              padding: 3rem 1rem;
             }
           `}
         >
-          Välj språk
-        </h2>
-        <form>
+          <h2
+            css={css`
+              font-size: 36px;
+              color: black;
+              font-family: "inter";
+              text-align: left;
+              font-weight: 400;
+              margin: 0;
+
+              ${mq[2]} {
+                font-size: 60px;
+                font-weight: 300;
+              }
+            `}
+          >
+            Välj språk
+          </h2>
+          <p
+            css={css`
+              display: none;
+
+              ${mq[2]} {
+                display: block;
+                font-family: "inter";
+                text-align: left;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 24px;
+              }
+            `}
+          >
+            Denna profil kommer kunna ses av de anmälda företagen och du kommer
+            att kunna se alla deltagare i eventet.
+          </p>
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          css={css`
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            gap: 8px;
+
+            /* padding: 2rem 2rem; */
+            ${mq[2]} {
+              border: 1px solid #000000;
+              padding: 2rem 2rem;
+              width: 720px;
+            }
+          `}
+        >
           <section
             css={css`
               display: flex;
@@ -141,7 +200,7 @@ function Skills() {
               <div
                 key={language.id}
                 css={css`
-                  padding: 1rem;
+                  padding: 1rem 0.5rem;
                 `}
               >
                 <input
@@ -170,6 +229,7 @@ function Skills() {
           </div>
         </form>
       </section>
+      <Footer />
     </>
   );
 }
