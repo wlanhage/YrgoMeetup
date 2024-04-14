@@ -19,7 +19,7 @@ import CompanyCardDesign from "./components/CompanyCardDesign.jsx";
 import UserCreateProfile from "./pages/UserCreateProfile.jsx";
 import Register from "./pages/Register.jsx";
 import MeetStudents from "./pages/MeetStudents.jsx";
-
+import Skills from "./components/Skills.jsx";
 
 function App() {
   return (
@@ -29,15 +29,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Company" element={<CompanyReg />} />
-      
-          <Route path="/Login" element={<Login/>} /> 
-          <Route path="/UserDashboard" element={<UserDashboard/>} />
-          <Route path="/CompanyCard" element={<CompanyCard />} /> 
+          <Route path="/Skills" element={<Skills />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/UserDashboard" element={<UserDashboard />} />
+          <Route path="/CompanyCard" element={<CompanyCard />} />
           <Route path="/Companys" element={<Companys />} />
           <Route path="/BurgerMenu" element={<BurgerMenu />} />
           <Route path="/CookiePopup" element={<CookiePopup />} />
           <Route path="/UserCreateProfile" element={<UserCreateProfile />} />
-          <Route path="/Students" element={<MeetStudents />} /> 
+          <Route path="/Students" element={<MeetStudents />} />
         </Routes>
       </div>
     </>
