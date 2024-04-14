@@ -71,7 +71,6 @@ const UserCreateProfile = () => {
   const [formData, setFormData] = useState({
     linkedin: "",
     portfolio: "",
-    languages: [],
   });
 
   const [languages, setLanguages] = useState([]);
@@ -144,16 +143,6 @@ const UserCreateProfile = () => {
   const breakpoints = [576, 768, 900, 1200];
 
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
-
-  // const languages = [
-  //   { id: 1, name: "PHP" },
-  //   { id: 2, name: "C#" },
-  //   { id: 3, name: "HTML" },
-  //   { id: 4, name: "CSS" },
-  //   { id: 5, name: "Laravel" },
-  //   { id: 6, name: "Javascript" },
-  //   // ...
-  // ];
 
   return (
     <div>
