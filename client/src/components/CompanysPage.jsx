@@ -27,27 +27,6 @@ function CompanysPage() {
     fontFamily: "inter",
   };
 
-  const companyCard = {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-
-    width: "427px",
-    height: "278px",
-    borderRadius: "8.04px",
-    border: "1px solid #000",
-    background: "var(--Base-White, #E4E9EB)",
-    // padding: "18px 22px",
-    gap: "16px",
-  };
-
-  const companyInfo = {
-    width: "50%",
-    textAlign: "left",
-  };
-
   const header = {
     display: "flex",
     alignItems: "center",
@@ -82,15 +61,6 @@ function CompanysPage() {
     padding: "0 0 0 0",
   };
 
-  const wrapper = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "110px",
-    gap: "20px",
-  };
-
   const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
@@ -113,18 +83,39 @@ function CompanysPage() {
 
     fetchData();
   }, []);
+
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
-    <div style={companyCardContainer}>
+    <div
+      style={companyCardContainer}
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        font-size: 14px;
+        color: black;
+        font-family: "inter";
+      `}
+    >
       <header style={header}>
         <nav style={nav}>
           <h1
-            style={{
-              fontFamily: "Inter",
-              fontSize: "33px",
-              FontStyle: "normal",
-              fontWeight: "300",
-              lineHeight: "32px",
-            }}
+            css={css`
+              font-family: "inter";
+              font-size: 33px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 32px;
+
+              ${mq[2]} {
+                font-size: 33px;
+              }
+            `}
           >
             Företagen
           </h1>
@@ -139,12 +130,78 @@ function CompanysPage() {
 
       <section style={cardsWrapper}>
         {companyData.map((company, index) => (
-          <div key={index} style={companyCard}>
-            <div style={wrapper}>
-              <img src={yrgologo}></img>
+          <div
+            key={index}
+            css={css`
+              display: flex;
+              flex-wrap: wrap;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              width: 308px;
+              height: 200px;
+              border-radius: 8.04px;
+              border: 1px solid #000;
+              background: #e4e9eb;
+              gap: 16px;
 
-              <div style={companyInfo}>
-                <h2 style={{ margin: "6px" }}>{company.companyname}</h2>
+              ${mq[2]} {
+                width: 427px;
+                height: 278px;
+                font-size: 14px;
+              }
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                width: 70%;
+                height: 110px;
+                gap: 20px;
+                padding: 0;
+
+                ${mq[2]} {
+                  padding: 20px;
+                  width: 100%;
+                  justify-content: center;
+                  align-items: center;
+                }
+              `}
+            >
+              <img
+                src={yrgologo}
+                css={css`
+                  display: none;
+
+                  ${mq[2]} {
+                    display: block;
+                  }
+                `}
+              ></img>
+
+              <div
+                css={css`
+                  width: 100%;
+                  text-align: left;
+
+                  ${mq[2]} {
+                    width: 50%;
+                  }
+                `}
+              >
+                <h2
+                  css={css`
+                    font-size: 26px;
+                    margin: 6px 0;
+                    ${mq[2]} {
+                      /* font-size: 30px; */
+                    }
+                  `}
+                >
+                  {company.companyname}
+                </h2>
                 <p style={{ margin: "6px" }}>{company.email}</p>
                 <p style={{ margin: "6px" }}>{company.phone}</p>
                 <p style={{ width: "50px", margin: "6px" }}>
