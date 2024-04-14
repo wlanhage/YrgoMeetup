@@ -71,7 +71,36 @@ const UserCreateProfile = () => {
   const [formData, setFormData] = useState({
     linkedin: "",
     portfolio: "",
+    languages: [],
   });
+
+  const [languages, setLanguages] = useState([]);
+
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      try {
+        const response = await axios.get(
+          "https://yrgomeetup.onrender.com/languages"
+        );
+        setLanguages(response.data[0]); // The languages are in the first array in the response data
+        console.log("Languages:", response.data[0]);
+      } catch (error) {
+        console.error("Error fetching languages:", error);
+      }
+    };
+
+    fetchLanguages();
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    const { value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      languages: prevState.languages.includes(value)
+        ? prevState.languages.filter((language) => language !== value)
+        : [...prevState.languages, value],
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,6 +126,13 @@ const UserCreateProfile = () => {
         },
       });
 
+      formData.languages.forEach(async (languageId) => {
+        await axios.post("/student_languages", {
+          student_id: studentId,
+          language_id: languageId,
+        });
+      });
+
       console.log("Response:", response); // Log the entire response
       console.log("Data:", response.data); // Log the data from the response
     } catch (error) {
@@ -109,15 +145,15 @@ const UserCreateProfile = () => {
 
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-  const languages = [
-    { id: 1, name: "PHP" },
-    { id: 2, name: "C#" },
-    { id: 3, name: "HTML" },
-    { id: 4, name: "CSS" },
-    { id: 5, name: "Laravel" },
-    { id: 6, name: "Javascript" },
-    // ...
-  ];
+  // const languages = [
+  //   { id: 1, name: "PHP" },
+  //   { id: 2, name: "C#" },
+  //   { id: 3, name: "HTML" },
+  //   { id: 4, name: "CSS" },
+  //   { id: 5, name: "Laravel" },
+  //   { id: 6, name: "Javascript" },
+  //   // ...
+  // ];
 
   return (
     <div>
@@ -189,17 +225,18 @@ const UserCreateProfile = () => {
             /* background-color: #ae6363; */
           `}
         >
-          {/* {languages.map((language) => (
+          {languages.map((language) => (
             <div key={language.id}>
               <input
                 type="checkbox"
-                name={language.id.toString()} // Convert the ID to a string
-                checked={formData.languages.includes(language.id)}
-                onChange={handleChange}
+                id={`language-${language.id}`}
+                name="language"
+                value={language.id}
+                onChange={handleCheckboxChange}
               />
-              <label htmlFor={language.id}>{language.name}</label>
+              <label htmlFor={`language-${language.id}`}>{language.name}</label>
             </div>
-          ))} */}
+          ))}
         </section>
 
         <div
