@@ -213,7 +213,7 @@ export async function updateStudent(linkedin, portfolio, id) {
 export async function insertStudentLanguage(studentId, languageId) {
   try {
     const result = await pool.query(
-      `INSERT INTO student_languages (student_id, language_id) VALUES ($1, $2)`,
+      `INSERT INTO student_languages (student_id, language_id) VALUES (?, ?)`,
       [studentId, languageId]
     );
     return result;
