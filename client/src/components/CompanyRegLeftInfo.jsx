@@ -9,6 +9,7 @@ import CompanyRegProgBar from "../components/CompanyRegProgBar";
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import CompanyCardContent from "./CompanyCardContent";
+import icon from "../assets/icon4.svg"
 
 
 function CompanyRegLeftInfo () {
