@@ -24,11 +24,7 @@ const UserCreateProfile = () => {
     flexDirection: "column",
     textAlign: "left",
   };
-  const style = {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: "60px",
-  };
+
   const header = {
     fontSize: "33px",
     fontWeight: 400,
@@ -36,14 +32,6 @@ const UserCreateProfile = () => {
     textAlign: "center",
     marginLeft: "2rem",
     marginRight: "2rem",
-  };
-
-  const label = {
-    fontSize: "16px",
-    color: "black",
-    fontFamily: "inter",
-    textAlign: "left",
-    marginLeft: "10px",
   };
 
   const input = {

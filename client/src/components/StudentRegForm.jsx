@@ -6,8 +6,6 @@ import backarrow from "../assets/arrow_back.svg";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
-
-import SecondaryButton from "./SecondaryButton";
 import { useNavigate } from "react-router-dom";
 
 function StudentRegForm() {
@@ -167,11 +165,9 @@ function StudentRegForm() {
           justify-content: center;
           ${mq[2]} {
             flex-direction: row;
-            /* justify-content: space-around; */
             gap: 4rem;
             align-items: flex-start;
             padding: 3rem;
-            /* margin: 2rem; */
           }
         `}
       >
@@ -226,7 +222,6 @@ function StudentRegForm() {
               ${mq[2]} {
                 width: 100%;
                 height: 400px;
-                /* background-color: bisque; */
               }
             `}
           >
@@ -344,7 +339,6 @@ function StudentRegForm() {
                   color: black;
                   font-family: "inter";
                   text-align: left;
-
                   font-weight: 400;
                 `}
               >

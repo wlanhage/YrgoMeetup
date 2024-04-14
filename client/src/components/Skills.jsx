@@ -89,43 +89,87 @@ function Skills() {
     // Continue with any other form submission logic...
   };
 
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
     <>
-      <div>
-        <h1>Hello, world!</h1>
-      </div>
+      <Navbar />
+      <section
+        css={css`
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 20px;
 
-      <form>
-        <section
+          display: flex;
+          flex-direction: column;
+          padding: 2rem 2rem;
+        `}
+      >
+        <h2
           css={css`
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            /* background-color: #ae6363; */
+            font-size: 36px;
+            color: black;
+            font-family: "inter";
+            text-align: left;
+            font-weight: 400;
+            margin: 0;
+            margin: 1rem;
+
+            ${mq[2]} {
+              font-size: 60px;
+              font-weight: 300;
+            }
           `}
         >
-          {languages.map((language) => (
-            <div key={language.id}>
-              <input
-                type="checkbox"
-                id={`language-${language.id}`}
-                name="language"
-                value={language.id}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor={`language-${language.id}`}>{language.name}</label>
-            </div>
-          ))}
-        </section>
+          Välj språk
+        </h2>
+        <form>
+          <section
+            css={css`
+              display: flex;
+              justify-content: flex-start;
+              align-items: left;
+              flex-wrap: wrap;
+              width: 100%;
+              margin: 0 0 2rem 0;
+              /* background-color: #ae6363; */
+            `}
+          >
+            {languages.map((language) => (
+              <div
+                key={language.id}
+                css={css`
+                  padding: 1rem;
+                `}
+              >
+                <input
+                  type="checkbox"
+                  id={`language-${language.id}`}
+                  name="language"
+                  value={language.id}
+                  onChange={handleCheckboxChange}
+                  css={css`
+                    margin-right: 0.5rem;
+                  `}
+                />
+                <label htmlFor={`language-${language.id}`}>
+                  {language.name}
+                </label>
+              </div>
+            ))}
+          </section>
 
-        <div
-          css={css`
-            margin-bottom: 1rem;
-          `}
-        >
-          <RedButton text="Skapa konto" onClick={handleSubmit} />
-        </div>
-      </form>
+          <div
+            css={css`
+              margin-bottom: 1rem;
+            `}
+          >
+            <RedButton text="Skapa konto" onClick={handleSubmit} />
+          </div>
+        </form>
+      </section>
     </>
   );
 }
