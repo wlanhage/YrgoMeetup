@@ -48,13 +48,17 @@ function CompanyRegForm({ setIsFormSubmitted }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://yrgomeetup.onrender.com/companys", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+      const response = await axios.post(
+        "https://yrgomeetup.onrender.com/companys",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
       console.log(response);
 
       const insertId = response.data[0].insertId;
@@ -75,8 +79,6 @@ function CompanyRegForm({ setIsFormSubmitted }) {
       console.error("Error submitting form:", error);
     }
   };
-
- 
 
   const breakpoints = [576, 768, 900, 1200];
 
@@ -101,8 +103,11 @@ function CompanyRegForm({ setIsFormSubmitted }) {
             }
           `}
         >
-
-          <CompanyRegProgBar number={"1"} redBarWidth={"110px"} grayBarWidth={"220px"} />
+          <CompanyRegProgBar
+            number={"1"}
+            redBarWidth={"110px"}
+            grayBarWidth={"220px"}
+          />
 
           <label htmlFor="companyName" style={label}>
             Företagsnamn
