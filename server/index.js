@@ -192,6 +192,10 @@ app.post("/students", async (req, res) => {
     portfolio,
     textfield,
   } = req.body;
+
+  const mysqlDesigner = designer ? 1 : 0;
+  const mysqlDeveloper = developer ? 1 : 0;
+
   //validate the password
   const validatePassword = (password) => {
     const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
@@ -269,6 +273,8 @@ app.post("/students", async (req, res) => {
       encodedLastname,
       email,
       hashedPassword,
+      mysqlDesigner,
+      mysqlDeveloper,
       linkedin,
       portfolio,
       textfield

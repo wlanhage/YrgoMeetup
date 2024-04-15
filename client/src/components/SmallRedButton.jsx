@@ -1,25 +1,27 @@
+import { onClick } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
-function SmallRedButton ({text}) {
+const SmallRedButtonStyled = styled.button`
+  background-color: #f52a3b;
+  color: white;
+  border: none;
+  border-radius: 35px 35px 35px 35px;
+  /* width: 100%;
+  height: 56px; */
+  padding: 0.5rem 2rem;
+  justify-content: space-between;
+  font-family: "inter";
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 
-    const style = {
-        backgroundColor: 'red',
-        color: 'white',
-        border: 'none',
-        borderRadius: '35px 35px 35px 35px',
-        width: 'calc(50vw - 4rem)',
-        height: '56px',
-        padding: '16px 24px',
-        justifyContent: 'space-between',
-        fontFamily: 'inter',
-        
-    };
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
-    return (
-        <button style={style}> 
-            {text}
-        </button>
-        
-    )
+function SmallRedButton({ text, onClick }) {
+  return <SmallRedButtonStyled onClick={onClick}>{text}</SmallRedButtonStyled>;
 }
 
 export default SmallRedButton;
