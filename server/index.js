@@ -376,10 +376,8 @@ app.post("/getUserInformation", async (req, res) => {
     console.log(req.body);
     const id = req.body.user;
     console.log(id);
-    const [users] = await getUserInformation(id);
-    if (users.length > 0) {
-      const user = users[0];
-      return res.json(user);
+    const user = await getUserInformation(id);
+    return res.json(user);
     }
   } catch (error) {
     console.error(error);
