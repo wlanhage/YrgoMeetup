@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Company" element={<CompanyReg />} />
-      
+      <Route path="/UserProfilePage" element={<UserProfilePage />} />
           <Route path="/Login" element={<Login/>} /> 
           <Route path="/UserDashboard" element={<UserDashboard/>} />
           <Route path="/CompanyCard" element={<CompanyCard />} /> 

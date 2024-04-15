@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RedButton from "../components/RedButton";
-/* import Cookies from "js-cookie"; */
+import Menu from "../components/Menu";
+import ReturnButton from "../components/ReturnButton";
+
 
 function UserDashboard() {
   //if user is authorized, display user dashboard, else redirect to login page
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(false); 
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const [userId, setUserId] = useState("");
+  let [userId, setUserId] = useState("");
 
   //verify the user
-useEffect(() => {
+  useEffect(() => {
   const fetchUser = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); 
     console.log("token is:",token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
@@ -28,35 +30,43 @@ useEffect(() => {
           'Content-Type': '/json',
           'Authorization': 'Bearer ' + token 
         }
-      });
+      }); 
 
       if (res.data.status === "success") {
         setAuthorized(true);
-        const userId = res.data.id;
+        userId = res.data.id;
         setUserId(userId);
 
-        const userRes = await axios.post("https://yrgomeetup.onrender.com/getUserInformation", { user: userId }, { withCredentials: true });
+
+        const userRes = await axios({
+          url: 'https://yrgomeetup.onrender.com/getUserInformation',
+          method: 'POST', 
+          data: { user: userId },
+          withCredentials: true, 
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+          },
+      });
         setUser(userRes.data);
       } else {
         navigate("/Login");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      navigate("/Login");
     }
   };
 
   fetchUser();
-}, []);
-
-
-
+}, []); 
   //logout the user
   const handleLogout = async (e) => {
     console.log("logging out")
     e.preventDefault();
     try {
         const response = await axios.get("https://yrgomeetup.onrender.com/logout", { withCredentials: true });
-
+        
             localStorage.removeItem('token');
             if (response.data.message === "success") {
             location.reload("true")
@@ -69,7 +79,14 @@ useEffect(() => {
     <div>
       {authorized ? (
         <div>
-          <h1></h1>
+          <div>
+                   {/*  //return button */}
+                <div onClick={() => navigate('/')}>
+                <ReturnButton />
+                </div> 
+                {/* settings button */}
+                </div>
+                <Menu />
           <p>
             Welcome {user.firstname} {user.lastname}
           </p>
