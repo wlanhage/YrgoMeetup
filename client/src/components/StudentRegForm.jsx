@@ -129,6 +129,9 @@ function StudentRegForm() {
         },
       });
 
+      // const insertId = response.data[0].insertId;
+      // console.log("Inserted ID:", insertId);
+      // localStorage.setItem("insertId", insertId);
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         navigate("/UserCreateProfile"); // Try navigating regardless of the response status
