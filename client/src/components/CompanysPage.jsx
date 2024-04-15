@@ -4,6 +4,7 @@ import burgerMenu from "../assets/menu.svg";
 import yrgologo from "../assets/icon4.svg";
 import "../App.css";
 import RedButton from "./RedButton";
+import SmallRedButton from "./SmallRedButton";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -207,14 +208,8 @@ function CompanysPage() {
                 <p style={{ width: "50px", margin: "6px" }}>
                   <a href={company.linkedin}>Linkedin</a>{" "}
                 </p>
-                <RedButton
-                  text={"Ta reda på mer"}
-                  style={{
-                    width: "100%",
-                    padding: "5px",
-                    height: "auto",
-                  }}
-                />
+
+                <SmallRedButton text={"Ta reda på mer"} />
               </div>
             </div>
           </div>
