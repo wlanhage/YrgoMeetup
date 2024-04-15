@@ -8,7 +8,13 @@ import styled from "@emotion/styled";
 export default function ViewButtons() {
   const navigate = useNavigate();
 
-  const box = {};
+  const handleClickCompany = () => {
+    navigate("/Company");
+  };
+
+  const handleClickStudent = () => {
+    navigate("/Register");
+  };
 
   const text = {
     marginRight: "2rem",
@@ -71,7 +77,9 @@ export default function ViewButtons() {
     >
       <p style={text}>Anmäl ditt företag till eventet</p>
 
-      <HeroButtonRed>Gå till formuläret</HeroButtonRed>
+      <HeroButtonRed onClick={handleClickCompany}>
+        Gå till formuläret
+      </HeroButtonRed>
       <p style={text}>Är du Student?</p>
       <HeroButtonWhiteView onClick={NavigateToUserDashboard}>
         {" "}
@@ -83,6 +91,7 @@ export default function ViewButtons() {
         css={css`
           text-decoration: underline;
         `}
+        onClick={handleClickStudent}
       >
         Skapa konto
       </p>

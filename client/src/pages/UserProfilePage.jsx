@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import RedButton from '../components/RedButton';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigationType } from 'react-router-dom';
 import ReturnButton from '../components/ReturnButton';
 import SettingsButton from '../components/SettingsButton';
 import ProfilePicture from '../components/ProfilePicture';
 import SkillsButton from '../components/SkillButton';
 import UserLinkedAccounts from '../components/UserLinkedAccounts';
+import SecondaryButton from '../components/SecondaryButton';
+import LinkIcon from '../components/LinkIcon';
 
 function UserProfilePage () {
      
          const header = {            
             /* Yrgo/Headline/H4-reg 34px */
             fontFamily: "Inter",
-            fontSize: "33px",
+            fontSize: "34px",
             fontWeight: 400,
             color: "black",
          }
@@ -35,26 +37,23 @@ function UserProfilePage () {
              color: 'black', 
              fontFamily: 'inter',
              fontWeight: 400,
-             textAlign: 'left',
-             marginLeft: '2rem',
+
          }
          const skillsGrid = {
             display:'grid',
             gap: '17px',
             gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 0.5fr))',
-            marginLeft: '2rem',
-            marginRight: '2rem',
             marginBottom: '1.5rem',
          }
 
-    const [authorized, setAuthorized] = useState(false);
+   const [authorized, setAuthorized] = useState(false); 
     const navigate = useNavigate();
     const [user, setUser] = useState('');
     const [userId, setUserId] = useState('');
     const [softwares, setSoftwares] = useState([]);
     const [languages, setLanguages] = useState([]);
     let skills = "";
-
+ 
     useEffect(() => {
         const verifyUser = async () => {
             try {
@@ -72,37 +71,70 @@ function UserProfilePage () {
         };
     
         verifyUser();
-    }, []);
+    }, []); 
     
     useEffect(() => {
         if (authorized) {
-            const fetchUserInformation = async () => {
+            const fetchUserInformation = async () => { 
                 try {
-                    const userResponse = await axios.post("https://yrgomeetup.onrender.com/getUserInformation", { user: userId }, { withCredentials: true });
+                    console.log(userId);
+                    const userResponse = await axios({
+                        url: 'https://yrgomeetup.onrender.com/getUserInformation',
+                        method: 'POST', 
+                        data:{ user: userId},
+                        withCredentials: true, 
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                    });
                     setUser(userResponse.data);
                 } catch (error) {
                     console.error("Error fetching user information:", error);
                     // Handle error appropriately
                 }
-            };
+            };      
     
             const fetchUserSkills = async () => {
                 try {
-                    const skillsResponse = await axios.post("https://yrgomeetup.onrender.com/getUserSkills", { user: userId }, { withCredentials: true });
+
+                    const skillsResponse = await axios({
+                        url: 'https://yrgomeetup.onrender.com/getUserSkills',
+                        method: 'POST', 
+                        data: { user: userId},
+                        withCredentials: true, 
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                    });
+                    if (skillsResponse.data.softwares ){
                     setSoftwares(skillsResponse.data.softwares);
+                    console.log(skillsResponse.data.softwares);
+                    } else {
+                        console.log("no skills found")
+                    }
+                    if (skillsResponse.data.languages) {
                     setLanguages(skillsResponse.data.languages);
+                    console.log(skillsResponse.data.languages);
+                } else {
+                    console.log("No skills found");
+                }
                 } catch (error) {
                     console.error("Error fetching user skills:", error);
                     // Handle error appropriately
                 }
             };
     
-            fetchUserInformation();
-            fetchUserSkills();
+            fetchUserInformation(userId);
+            fetchUserSkills(userId);
         }
     }, [userId, authorized]);
-    
-
+                
+        const editProfile = async (e) => {
+            e.preventDefault();
+            navigate("/EditProfile"); //soemthing like this
+        }
     //logout the user
         const handleLogout = async (e) => {
             e.preventDefault();
@@ -115,40 +147,53 @@ function UserProfilePage () {
                 console.error('Error:', error);
             }
         }
-        if (user.developer === 1) {
-            skills = "Webbutveckling";
-        }
-        if (user.designer === 1) {
-            skills = "Design";
-        }
+
+        console.log(user);
+
         
     return (
     <div>
         {authorized ? 
-            <div>
-                <div style={navButtons}>
+            <div style={{textAlign: 'left', marginLeft: '2rem', marginRight: '2rem'}}>
+                <div style={{...navButtons,  borderBottom: '2px solid #F52A3B', fontFamily: 'Inter', fontSize: '24px'}}>
                    {/*  //return button */}
-                <ReturnButton />
+                   <div onClick={ () => navigate(-1)}>
+                <ReturnButton  />
+                </div>
+                <p>STUDENTKONTO</p>
                 {/* settings button */}
                 <SettingsButton />
                 </div>
-                <ProfilePicture />
                 <h1 style={header} >{user.firstname} {user.lastname}</h1>
-                <p style={description}>Studerar {skills}</p>
-
+                <p style={description}> {user.designer ? "Digital Designer" : null} {user.developer ? "Webutvecklare" : null }</p>
+                <h2 style={paragraph}> Länkade Konton</h2>
+                <div style={{display: 'flex', flexDirection: 'row', width:'100%', alignItems: 'center'}}>
+                    <LinkIcon />
+                    {user.linkedin ?
+                    <UserLinkedAccounts link={user.linkedin} />
+                    : null }
+                    {user.portfolio ?
+                    <UserLinkedAccounts link={user.github} />
+                    : null }
+                </div>
                 <h2 style={paragraph}>Kunskaper</h2>
+                {softwares ? 
                 <div style={skillsGrid}>
                     {softwares && softwares.map(software =>
-                        <SkillsButton key={software.id} text={software.name}/> )}
+                        <SkillsButton key={software.id} text={software.name}/> ) }
+                </div>
+                  : null  }
+                  { languages ?
+                    <div style={skillsGrid}>
                     {languages && languages.map(language =>
                         <SkillsButton key={language.id} text={language.name}/> )}
-                </div>
-                <h2 style={paragraph}> Länkade Konton</h2>
-                <UserLinkedAccounts text="Linkedin" link="testTest" />
-                <UserLinkedAccounts text="Linkedin" link="testTest" />
-
+                    </div>
+                    : null }
                 {/* //log out button */}
-                <RedButton text="Logga ut" onClick={handleLogout} />
+                <SecondaryButton text="Hantera Lösenord" onClick={editProfile} />
+                <br />
+                <br />
+                <SecondaryButton text="Logga ut" onClick={handleLogout} />
    
             </div>
            

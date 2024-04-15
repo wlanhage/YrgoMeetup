@@ -6,9 +6,8 @@ import backarrow from "../assets/arrow_back.svg";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
-
-import SecondaryButton from "./SecondaryButton";
 import { useNavigate } from "react-router-dom";
+import CompanyRegProgBar from "./CompanyRegProgBar";
 
 function StudentRegForm() {
   const navigate = useNavigate();
@@ -131,6 +130,9 @@ function StudentRegForm() {
         },
       });
 
+      // const insertId = response.data[0].insertId;
+      // console.log("Inserted ID:", insertId);
+      // localStorage.setItem("insertId", insertId);
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         navigate("/UserCreateProfile"); // Try navigating regardless of the response status
@@ -167,11 +169,9 @@ function StudentRegForm() {
           justify-content: center;
           ${mq[2]} {
             flex-direction: row;
-            /* justify-content: space-around; */
             gap: 4rem;
             align-items: flex-start;
             padding: 3rem;
-            /* margin: 2rem; */
           }
         `}
       >
@@ -226,7 +226,6 @@ function StudentRegForm() {
               ${mq[2]} {
                 width: 100%;
                 height: 400px;
-                /* background-color: bisque; */
               }
             `}
           >
@@ -260,6 +259,11 @@ function StudentRegForm() {
             }
           `}
         >
+          <CompanyRegProgBar
+            number={"1"}
+            redBarWidth={"110px"}
+            grayBarWidth={"220px"}
+          />
           <label htmlFor="" style={label}>
             Förnamn
           </label>
@@ -344,7 +348,6 @@ function StudentRegForm() {
                   color: black;
                   font-family: "inter";
                   text-align: left;
-
                   font-weight: 400;
                 `}
               >

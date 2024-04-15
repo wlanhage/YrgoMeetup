@@ -1,112 +1,144 @@
 import "../App.css";
 import axios from 'axios';
 import { useState, useEffect } from "react";
+import LinkArrow from "../assets/linkArrow.svg";
+import { Link } from "react-router-dom";
 
-
-function StudentsLoop ({selectedCategory, filteredStudents}) {
+function StudentsLoop ({ selectedCategory, filteredStudents }) {
     const [studentData, setStudentData] = useState([]);
-    useEffect(() => { 
-        const fetchData = async () => { 
-            try { const response = await axios.get(
-                "https://yrgomeetup.onrender.com/students" 
-                ); 
-                console.log(response.data[0]); 
-                setStudentData(response.data[0]); 
-            } catch (error) {  
-                console.error(error); 
-            }}; 
-            fetchData(); 
-        }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("https://yrgomeetup.onrender.com/students");
+                console.log(response.data);
+                setStudentData(response.data[0]);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
 
+    
 
-        const container = {
-            width: '360px',
-            height: '180px',
-            paddingTop: '24px',
-            paddingBottom: '24px',
-            paddingLeft: '20px',
-            paddingRight: '20px',
+    const wrapper = {
+        display: 'flex',
+        flexWrap: 'wrap',
+        maxWidth: '1300px',
+        margin: 'auto',
+        marginTop: '20px',
+    };
 
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginBottom: '17px',
+    const container = {
+        width: '360px',
+        height: '230px',
+        paddingTop: '28px',
+        paddingBottom: '28px',
+        paddingLeft: '24px',
+        paddingRight: '24px',
 
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: '17px',
 
-            backgroundColor: '#E4E9EB'
-        }
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
 
-        const containerUpper = {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-        }
+        backgroundColor: '#E4E9EB',
+        border: '1px solid black',
+        borderRadius: '10px',
+    };
 
-        const containerUpperLeft = {
-            display: 'flex',
-            flexDirection: 'column'
-        }
+    const containerUpper = {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    };
 
-        const containerUpperRight = {
-            display: 'flex',
-            flexDirection: 'column',
-            
-        }
+    const containerUpperLeft = {
+        display: 'flex',
+        flexDirection: 'column'
+    };
 
-        const containerLower = {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            
-        }
+    const containerUpperRight = {
+        display: 'flex',
+        flexDirection: 'column',
+    };
 
-        const skillBoxes = {
-            border: 'solid 2px',
-            borderRadius: '20px',
-            padding: '6px',
-        }
+    const containerLower = {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    };
 
-        const nameText = {
-            fontFamily: 'inter',
-            fontSize: '30px',
-            textAlign: 'start',
-            maxWidth: '250px'
-        }
+    const skillBoxes = {
+        border: 'solid 2px',
+        fontSize: '14px',
+        fontFamily: 'inter',
 
-        const smallText = {
-            fontFamily: 'inter',
-            fontSize: '18',
-        }
+        borderRadius: '20px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        paddingTop: '8px',
+        paddingBottom: '8px',
+    };
 
-        const linkStyle = {
-            textDecoration: 'none',
-            color: 'inherit',
-        }
+    const nameText = {
+        fontFamily: 'inter',
+        fontWeight: '300',
+        fontSize: '30px',
+        textAlign: 'start',
+        maxWidth: '250px',
+        marginBottom: '0px',
+    };
+
+    const smallText = {
+        fontFamily: 'inter',
+        fontSize: '18',
+    };
+
+    const linkStyle = {
+        textDecoration: 'none',
+        color: 'inherit',
+    };
+
+    const flexRow = {
+        display: 'flex',
+        flexDirection: 'row',
+        marginBottom: '15px',
+        gap: '10px',
+    };
 
     return (
-        <>{studentData.map((student, index) => (
-        <div key={student.id} style={container}>
-            <div style={containerUpper}>
-                <div style={containerUpperLeft}>
-                    <div key={index} style={nameText}>{student.firstname} {student.lastname}</div>
-                    <div style={{...smallText, textAlign: 'start' }}>Program</div>
+        <div style={wrapper}>
+            {studentData.map((student) => (
+                <div key={student.id} style={container}>
+                    <div style={containerUpper}>
+                        <div style={containerUpperLeft}>
+                            <div style={nameText}>{student.firstname} {student.lastname}</div>
+                            <div style={{ ...smallText, textAlign: 'start' }}>
+                                {student.developer === 1 && <p>Studerar Webbutvecklare</p>}
+                                {student.designer === 1 && <p> Studerar Digital design</p>}
+                            </div>
+                        </div>
+                        <div style={containerUpperRight}>
+                            <div style={flexRow}>
+                                <a href={student.linkedin} style={{ ...smallText, ...linkStyle }}>Linkedin</a>
+                                <a href={student.linkedin}><img src={LinkArrow} alt="LinkArrow" /> </a>
+                            </div>
+                            <div style={flexRow}>
+                                <a href="" style={{ ...smallText, ...linkStyle }}>Portfolio</a>
+                                <a href={student.linkedin}><img src={LinkArrow} alt="LinkArrow" /> </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={containerLower}>
+                    
                 </div>
-                <div style={containerUpperRight}>
-                        <a href={student.linkedin} style={{...smallText, ...linkStyle}}>Linkedin</a>
-                        <a href="" style={{...smallText, ...linkStyle}}>Portfolio</a>
                 </div>
-            </div>
-            <div style={containerLower}>
-                <div style={skillBoxes}>HTML</div>
-                <div style={skillBoxes}>CSS</div>
-                <div style={skillBoxes}>HTML</div>
-                <div style={skillBoxes}>CSS</div>
-            </div>
+            ))}
         </div>
-        ))}
-        </>
     )
 }
 

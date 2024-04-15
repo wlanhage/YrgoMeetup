@@ -1,11 +1,12 @@
 import { onClick } from 'react';
 
-function SecondaryButton ({text, style: additionalStyle, onClick }) {
+function SecondaryButton ({text, style: additionalStyle, onClick, color}) {
 
     const style = {
         backgroundColor: 'transparent',
-        color: 'red',
-        border: 'solid 2px red',
+        color:color ? color : '#001A52',
+        border: 'solid 2px',
+        borderColor: color ? color : '#001A52',
         borderRadius: '35px 35px 35px 35px',
         width: 'calc(100vw - 4rem)',
         height: '56px',

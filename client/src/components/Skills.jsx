@@ -4,12 +4,21 @@ import UserProfileInfo from "../components/UserProfileInfo";
 import RedButton from "../components/RedButton";
 import SecondaryButton from "../components/SecondaryButton";
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 import axios from "axios";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
+import CompanyRegProgBar from "./CompanyRegProgBar";
+
+const Emptynav = styled.div`
+  height: 100px;
+  /* background-color: #f52a3b; */
+`;
 
 function Skills() {
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
     let value = e.target.value;
@@ -81,6 +90,7 @@ function Skills() {
           student_id: currentStudentId, // Replace with the current student's ID
           language_id: languageId,
         });
+        navigate("/Login");
       } catch (error) {
         console.error(`Error posting language ${languageId}:`, error);
       }
@@ -89,43 +99,145 @@ function Skills() {
     // Continue with any other form submission logic...
   };
 
+  const breakpoints = [576, 768, 900, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
   return (
     <>
-      <div>
-        <h1>Hello, world!</h1>
-      </div>
+      <Navbar />
+      <Emptynav />
+      <section
+        css={css`
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 20px;
 
-      <form>
-        <section
-          css={css`
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            /* background-color: #ae6363; */
-          `}
-        >
-          {languages.map((language) => (
-            <div key={language.id}>
-              <input
-                type="checkbox"
-                id={`language-${language.id}`}
-                name="language"
-                value={language.id}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor={`language-${language.id}`}>{language.name}</label>
-            </div>
-          ))}
-        </section>
+          display: flex;
+          flex-direction: column;
+          padding: 2rem 2rem;
 
+          ${mq[2]} {
+            flex-direction: row;
+            gap: 4rem;
+            align-items: flex-start;
+            padding: 3rem;
+          }
+        `}
+      >
         <div
           css={css`
-            margin-bottom: 1rem;
+            width: 100%;
+            padding: 1rem 0.5rem;
+
+            ${mq[2]} {
+              width: 33%;
+              padding: 3rem 1rem;
+            }
           `}
         >
-          <RedButton text="Skapa konto" onClick={handleSubmit} />
+          <h2
+            css={css`
+              font-size: 36px;
+              color: black;
+              font-family: "inter";
+              text-align: left;
+              font-weight: 400;
+              margin: 0;
+
+              ${mq[2]} {
+                font-size: 60px;
+                font-weight: 300;
+              }
+            `}
+          >
+            Välj språk
+          </h2>
+          <p
+            css={css`
+              display: none;
+
+              ${mq[2]} {
+                display: block;
+                font-family: "inter";
+                text-align: left;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 24px;
+              }
+            `}
+          >
+            Denna profil kommer kunna ses av de anmälda företagen och du kommer
+            att kunna se alla deltagare i eventet.
+          </p>
         </div>
-      </form>
+        <form
+          onSubmit={handleSubmit}
+          css={css`
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            gap: 8px;
+
+            /* padding: 2rem 2rem; */
+            ${mq[2]} {
+              border: 1px solid #000000;
+              padding: 2rem 2rem;
+              width: 720px;
+            }
+          `}
+        >
+          <CompanyRegProgBar
+            number={"3"}
+            redBarWidth={"330px"}
+            grayBarWidth={"0px"}
+          />
+          <section
+            css={css`
+              display: flex;
+              justify-content: flex-start;
+              align-items: left;
+              flex-wrap: wrap;
+              width: 100%;
+              margin: 0 0 2rem 0;
+              /* background-color: #ae6363; */
+            `}
+          >
+            {languages.map((language) => (
+              <div
+                key={language.id}
+                css={css`
+                  padding: 1rem 0.5rem;
+                `}
+              >
+                <input
+                  type="checkbox"
+                  id={`language-${language.id}`}
+                  name="language"
+                  value={language.id}
+                  onChange={handleCheckboxChange}
+                  css={css`
+                    margin-right: 0.5rem;
+                  `}
+                />
+                <label htmlFor={`language-${language.id}`}>
+                  {language.name}
+                </label>
+              </div>
+            ))}
+          </section>
+
+          <div
+            css={css`
+              margin-bottom: 1rem;
+            `}
+          >
+            <RedButton text="Skapa konto" onClick={handleSubmit} />
+          </div>
+        </form>
+      </section>
+      <Footer />
     </>
   );
 }

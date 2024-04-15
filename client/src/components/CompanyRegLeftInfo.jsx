@@ -9,6 +9,8 @@ import CompanyRegProgBar from "../components/CompanyRegProgBar";
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import CompanyCardContent from "./CompanyCardContent";
+import icon from "../assets/icon4.svg";
+import icon4 from "../assets/icon4.svg";
 
 
 function CompanyRegLeftInfo () {
@@ -43,8 +45,8 @@ function CompanyRegLeftInfo () {
   const CardBackside = styled.div`
     width: 320px;
     height: 200px;
-    background-color: white;
-    /* background-image: ; */
+    background-color: #E4E9EB;
+    
     background-size: cover;
     margin-left: auto;
     margin-right: auto;
@@ -104,13 +106,13 @@ function CompanyRegLeftInfo () {
             <>
               <CardBackside></CardBackside>
               <Card>
-                <CompanyCardContent />
+                <CompanyCardContent icon={icon4}/>
               </Card>
             </>
           ) : (
             <>
               <Card>
-                <CompanyCardContent />
+                <CompanyCardContent icon={icon4} />
               </Card>
               <CardBackside>
                 <CardBacksideText>{submittedData.companyName}</CardBacksideText>
