@@ -1,12 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RedButton from "../components/RedButton";
 import Menu from "../components/Menu";
 import ReturnButton from "../components/ReturnButton";
+import location from '../assets/smallicons/location.svg';
+import yrgologo from "../assets/icon4.svg";
+import "../App.css";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import HeaderCompanys from "../components/HeaderCompanys";
 
 
 function UserDashboard() {
+
+
+  const cardsWrapper = {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "24px",
+  };
+
+  const companyCardContainer = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "24px",
+
+    fontSize: "14px",
+    color: "black",
+    fontFamily: "inter",
+  };
+
+
+
+
   //if user is authorized, display user dashboard, else redirect to login page
   const [authorized, setAuthorized] = useState(false); 
   const navigate = useNavigate();
@@ -60,6 +90,34 @@ function UserDashboard() {
 
   fetchUser();
 }, []); 
+const [selectedCategory, setSelectedCategory] = useState(null);
+const [filteredCompanys, setFilteredCompanys] = useState([]);
+const [companyData, setCompanyData] = useState([]);
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios({
+        url: "https://yrgomeetup.onrender.com/companys",
+        method: "GET",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      setCompanyData(response.data[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+const breakpoints = [576, 768, 900, 1200];
+
+const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
   //logout the user
   const handleLogout = async (e) => {
     console.log("logging out")
@@ -75,22 +133,108 @@ function UserDashboard() {
         console.error('Error:', error);
     }
   }
+
   return (
     <div>
       {authorized ? (
         <div>
           <div>
-                   {/*  //return button */}
-                <div onClick={() => navigate('/')}>
-                <ReturnButton />
-                </div> 
-                {/* settings button */}
-                </div>
-                <Menu />
-          <p>
-            Welcome {user.firstname} {user.lastname}
-          </p>
+          <section style={cardsWrapper}>
+            <HeaderCompanys setSelectedCategory={setSelectedCategory} setFilteredStudents={setFilteredCompanys} students={companyData}/>
+        {companyData.map((company, index) => (
+          <div
+            key={index}
+            css={css`
+              display: flex;
+              flex-wrap: wrap;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              width: 308px;
+              height: 200px;
+              border-radius: 8.04px;
+              border: 1px solid #000;
+              background: #e4e9eb;
+              gap: 16px;
+              font-family: inter;
+
+              ${mq[2]} {
+                width: 427px;
+                height: 278px;
+                font-size: 14px;
+              }
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                width: 70%;
+                height: 110px;
+                gap: 20px;
+                padding: 0;
+
+                ${mq[2]} {
+                  padding: 20px;
+                  width: 100%;
+                  justify-content: center;
+                  align-items: center;
+                }
+              `}
+            >
+              <img
+                src={yrgologo}
+                css={css`
+                  display: none;
+
+                  ${mq[2]} {
+                    display: block;
+                  }
+                `}
+              ></img>
+
+              <div
+                css={css`
+                  width: 100%;
+                  text-align: left;
+
+                  ${mq[2]} {
+                    width: 50%;
+                  }
+                `}
+              >
+                <h2
+                  css={css`
+                    font-size: 26px;
+                    margin: 6px 0;
+                    ${mq[2]} {
+                      /* font-size: 30px; */
+                    }
+                  `}
+                >
+                  {company.companyname}
+                </h2>
+                <p style={{ margin: "6px" }}>{company.email}</p>
+                <p style={{ margin: "6px" }}>{company.phone}</p>
+                <p style={{ width: "50px", margin: "6px" }}>
+                  <a href={company.linkedin}>Linkedin</a>{" "}
+                </p>
+                <RedButton
+                  text={"Ta reda på mer"}
+                  style={{
+                    width: "100%",
+                    padding: "5px",
+                    height: "auto",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
           <RedButton text="Logga ut" onClick={handleLogout} />
+        </div>
         </div>
       ) : (
         <div>{/* <Login/> */}</div>

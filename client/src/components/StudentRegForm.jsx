@@ -7,6 +7,7 @@ import backarrow from "../assets/arrow_back.svg";
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
 import { useNavigate } from "react-router-dom";
+import SecondaryButton from "./SecondaryButton";
 
 function StudentRegForm() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function StudentRegForm() {
     linkedin: "",
     portfolio: "",
     textfield: "",
+    Gdpr: false,
   });
 
   const handleChange = (e) => {
@@ -65,6 +67,11 @@ function StudentRegForm() {
   };
 
   const handleSubmit = async (e) => {
+
+    if (!formData.Gdpr) {
+      alert("Du måste acceptera GDPR-villkoren för att kunna registrera dig");
+      return;
+    }
     // Validate first name, last name, email, password, and text field
     console.log(formData);
 
@@ -150,6 +157,8 @@ function StudentRegForm() {
       console.error("Error:", error);
     }
   };
+ 
+
 
   return (
     <>
@@ -389,16 +398,12 @@ function StudentRegForm() {
                 </label>
               </div>
             </div>
+            <div>
+                <input type="checkbox" required name="gdpr"/>
+                <label style={label} checked={formData.Gdpr} onChange={handleChange} htmlFor="gdpr">Jag accepterar GDPR-villkoren </label>
+            </div>
             <RedButton text="Nästa" className="regButton" />
-          </div>
-          <div>
-            <p
-              css={css`
-                font-family: "inter";
-              `}
-            >
-              Redan medlem? Logga in
-            </p>
+            <SecondaryButton text="Redan medlem? Logga in" className="regButton" />
           </div>
         </form>
       </section>
