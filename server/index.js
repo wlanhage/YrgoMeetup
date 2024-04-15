@@ -373,7 +373,9 @@ app.get("/students/:id", async (req, res) => {
 //get information from the verified user
 app.post("/getUserInformation", async (req, res) => {
   try {
-    const id = req.body.user;
+    console.log(req.body);
+    const id = req.body;
+    console.log(id);
     const [users] = await getUserInformation(id);
     if (users.length > 0) {
       const user = users[0];
