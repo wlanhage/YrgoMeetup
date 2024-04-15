@@ -163,7 +163,7 @@ export async function getStudentCredentials(email) {
 
 export async function getUserInformation(id) {
   const result = await pool.query(
-    "SELECT * FROM students, student_languages, student_softwares WHERE id = ?",
+    `SELECT * FROM students WHERE id = ?`,
     [id]
   );
   return result;
