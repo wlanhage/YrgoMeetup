@@ -10,6 +10,7 @@ import axios from "axios";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import CompanyRegProgBar from "./CompanyRegProgBar";
 
 const Emptynav = styled.div`
   height: 100px;
@@ -17,6 +18,7 @@ const Emptynav = styled.div`
 `;
 
 function Skills() {
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
     let value = e.target.value;
@@ -88,6 +90,7 @@ function Skills() {
           student_id: currentStudentId, // Replace with the current student's ID
           language_id: languageId,
         });
+        navigate("/Login");
       } catch (error) {
         console.error(`Error posting language ${languageId}:`, error);
       }
@@ -185,6 +188,11 @@ function Skills() {
             }
           `}
         >
+          <CompanyRegProgBar
+            number={"3"}
+            redBarWidth={"330px"}
+            grayBarWidth={"0px"}
+          />
           <section
             css={css`
               display: flex;

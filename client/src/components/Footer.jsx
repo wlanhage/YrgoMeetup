@@ -2,6 +2,7 @@ import { onClick } from "react";
 import styled from "@emotion/styled";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 const HeroFooter = styled.div`
   width: 100%;
@@ -26,6 +27,15 @@ const breakpoints = [576, 768, 900, 1200];
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
 function Footer() {
+  const navigate = useNavigate();
+
+  const handleClickCompany = () => {
+    navigate("/Company");
+  };
+
+  const handleClickStudent = () => {
+    navigate("/Register");
+  };
   return (
     <>
       <div
@@ -38,9 +48,11 @@ function Footer() {
       ></div>
       <HeroFooter>
         <Paragraph>Kontakt</Paragraph>
-        <Paragraph>Anmäl ditt företag här</Paragraph>
-        <Paragraph>Logga in som student</Paragraph>
-        <Paragraph>Hitta hit</Paragraph>
+        <Paragraph onClick={handleClickCompany}>
+          Anmäl ditt företag här
+        </Paragraph>
+        <Paragraph onClick={handleClickStudent}>Logga in som student</Paragraph>
+        <Paragraph>https://www.yrgo.se/</Paragraph>
       </HeroFooter>
     </>
   );
