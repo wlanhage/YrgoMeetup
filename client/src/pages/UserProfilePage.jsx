@@ -165,11 +165,16 @@ function UserProfilePage () {
                 <SettingsButton />
                 </div>
                 <h1 style={header} >{user.firstname} {user.lastname}</h1>
-                <p style={description}> {"Digital Developer"}</p>
+                <p style={description}> {user.designer ? "Digital Designer" : null} {user.developer ? "Webutvecklare" : null }</p>
                 <h2 style={paragraph}> Länkade Konton</h2>
                 <div style={{display: 'flex', flexDirection: 'row', width:'100%', alignItems: 'center'}}>
                     <LinkIcon />
-                    <UserLinkedAccounts link="testTest" />
+                    {user.linkedin ?
+                    <UserLinkedAccounts link={user.linkedin} />
+                    : null }
+                    {user.portfolio ?
+                    <UserLinkedAccounts link={user.github} />
+                    : null }
                 </div>
                 <h2 style={paragraph}>Kunskaper</h2>
                 {softwares ? 
