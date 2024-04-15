@@ -162,12 +162,18 @@ export async function getStudentCredentials(email) {
 }
 
 export async function getUserInformation(id) {
-  const result = await pool.query(
-    `SELECT * FROM students WHERE id = ?`,
-    [id]
-  );
-  return result;
+  try {
+    const [rows] = await pool.query(
+      `SELECT * FROM students WHERE id = ?`,
+      [id]
+    );
+    return rows[0];
+  } catch (error) {
+    console.error("Error fetching user information:", error);
+    throw error;
+  }
 }
+
 
 export async function getUserSkills(id) {
   console.log(`Fetching skills for user with ID: ${id}`);
