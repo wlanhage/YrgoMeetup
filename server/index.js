@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import axios from "axios";
 
-
 import {
   getCompanys,
   createCompany,
@@ -24,6 +23,9 @@ import {
   getCards,
   updateCompanyDescription,
   updateCompanyCardDesign,
+  updateStudent,
+  getLatestStudentId,
+  insertStudentLanguage,
 } from "./configs/database.js";
 
 const app = express();
@@ -33,11 +35,11 @@ dotenv.config();
 
 app.use(express.json());
 
-
 //obs! Remember to change origin to the frontend url when deploying on netlify
 
-app.use(cors({
-    origin: [ "http://localhost:5173", "https://yrgomeetup.onrender.com"],
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
     methods: ["GET", "POST", "PUT", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
@@ -88,8 +90,13 @@ app.get("/cards", async (req, res) => {
   res.send(cards);
 });
 
+app.get("/students/latest", async (req, res) => {
+  const latestStudent = await getLatestStudentId();
+  res.send(latestStudent);
+});
+
 app.post("/companys", async (req, res) => {
-  const { companyName, website, firstname, lastname, email} = req.body;
+  const { companyName, website, firstname, lastname, email } = req.body;
   const createdCompany = await createCompany(
     companyName,
     website,
@@ -103,15 +110,70 @@ app.post("/companys", async (req, res) => {
 app.put("/companys/:id/description", async (req, res) => {
   const { description, services, intern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyDescription(id, description, services, intern);
+  const updatedCompany = await updateCompanyDescription(
+    id,
+    description,
+    services,
+    intern
+  );
   res.json(updatedCompany);
 });
 
 app.put("/companys/:id/design", async (req, res) => {
   const { cardColor, icon, pattern } = req.body;
   const { id } = req.params;
-  const updatedCompany = await updateCompanyCardDesign(id, cardColor, icon, pattern);
+  const updatedCompany = await updateCompanyCardDesign(
+    id,
+    cardColor,
+    icon,
+    pattern
+  );
   res.json(updatedCompany);
+});
+
+app.put("/students", async (req, res) => {
+  const { linkedin, portfolio } = req.body;
+
+  try {
+    // Fetch the ID of the most recent student
+    const id = await getLatestStudentId();
+
+    const updateResult = await updateStudent(linkedin, portfolio, id);
+    res.json(updateResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.put("/students/:id", async (req, res) => {
+  const { linkedin, portfolio } = req.body;
+  const { id } = req.params;
+
+  try {
+    const updateResult = await updateStudent(linkedin, portfolio, id);
+    if (updateResult.affectedRows > 0) {
+      res.json({ message: "Student updated successfully" });
+    } else {
+      res.status(404).send("Student not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.post("/student_languages", async (req, res) => {
+  const { student_id, language_id } = req.body;
+
+  try {
+    // Insert the student's language
+    const insertLanguage = await insertStudentLanguage(student_id, language_id);
+    res.json(insertLanguage);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 });
 
 //validate email and password
@@ -244,10 +306,10 @@ app.post("/login", async (req, res) => {
           expiresIn: "20m",
         });
 
-/*         let expiryDate = new Date();
+        /*         let expiryDate = new Date();
 expiryDate.setMinutes(expiryDate.getMinutes() + 20);
        res.cookie('token', token, { expires:expiryDate}); */
- // expires in 24 hours
+        // expires in 24 hours
         return res.json({ status: "success", token: token });
       } else {
         return res.status(400).send({ message: "Wrong password" });
@@ -287,6 +349,25 @@ const verifyUser = (req, res, next) => {
 };
 app.get("/verifyUser", verifyUser, async (req, res) => {
   return res.json({ status: "success", id: req.id });
+});
+
+// Add this import at the top of your index.js file
+import { getStudentById } from "./configs/database.js";
+
+// Add this route handler to your index.js file
+app.get("/students/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await getStudentById(id);
+    if (student) {
+      res.json(student);
+    } else {
+      res.status(404).send("Student not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 });
 
 //get information from the verified user

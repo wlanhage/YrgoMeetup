@@ -6,8 +6,6 @@ import backarrow from "../assets/arrow_back.svg";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
-
-import SecondaryButton from "./SecondaryButton";
 import { useNavigate } from "react-router-dom";
 
 function StudentRegForm() {
@@ -131,6 +129,9 @@ function StudentRegForm() {
         },
       });
 
+      // const insertId = response.data[0].insertId;
+      // console.log("Inserted ID:", insertId);
+      // localStorage.setItem("insertId", insertId);
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         navigate("/UserCreateProfile"); // Try navigating regardless of the response status
@@ -167,17 +168,21 @@ function StudentRegForm() {
           justify-content: center;
           ${mq[2]} {
             flex-direction: row;
-            /* justify-content: space-around; */
             gap: 4rem;
             align-items: flex-start;
-            /* margin: 2rem; */
+            padding: 3rem;
           }
         `}
       >
         <div
           css={css`
-            width: 33%;
-            padding: 3rem 1rem;
+            width: 100%;
+            padding: 1rem 2rem;
+
+            ${mq[2]} {
+              width: 33%;
+              padding: 3rem 1rem;
+            }
           `}
         >
           <h2
@@ -200,11 +205,16 @@ function StudentRegForm() {
 
           <p
             css={css`
-              font-family: "inter";
-              text-align: left;
-              max-width: 100%;
-              font-size: 18px;
-              line-height: 24px;
+              display: none;
+
+              ${mq[2]} {
+                display: block;
+                font-family: "inter";
+                text-align: left;
+                max-width: 100%;
+                font-size: 18px;
+                line-height: 24px;
+              }
             `}
           >
             Denna profil kommer kunna ses av de anmälda företagen och du kommer
@@ -212,15 +222,20 @@ function StudentRegForm() {
           </p>
           <div
             css={css`
-              width: 100%;
-              height: 400px;
-              /* background-color: bisque; */
+              ${mq[2]} {
+                width: 100%;
+                height: 400px;
+              }
             `}
           >
             <img
               css={css`
-                width: 100%;
-                height: 100%;
+                display: none;
+                ${mq[2]} {
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                }
               `}
               src={iconMonitor}
             ></img>
@@ -327,7 +342,6 @@ function StudentRegForm() {
                   color: black;
                   font-family: "inter";
                   text-align: left;
-
                   font-weight: 400;
                 `}
               >

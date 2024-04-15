@@ -2,13 +2,13 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import UserProfileInfo from "../components/UserProfileInfo";
 import RedButton from "../components/RedButton";
-import ReturnButton from "../components/ReturnButton";
 import SecondaryButton from "../components/SecondaryButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 //user info page. later this will fetch the user's name, area etc from the database and display their info here
 
@@ -25,11 +25,7 @@ const UserCreateProfile = () => {
     flexDirection: "column",
     textAlign: "left",
   };
-  const style = {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: "60px",
-  };
+
   const header = {
     fontSize: "33px",
     fontWeight: 400,
@@ -37,14 +33,6 @@ const UserCreateProfile = () => {
     textAlign: "center",
     marginLeft: "2rem",
     marginRight: "2rem",
-  };
-
-  const label = {
-    fontSize: "16px",
-    color: "black",
-    fontFamily: "inter",
-    textAlign: "left",
-    marginLeft: "10px",
   };
 
   const input = {
@@ -59,10 +47,7 @@ const UserCreateProfile = () => {
     borderRadius: "4px, 4px, 4px, 4px",
   };
 
-  const [formData, setFormData] = useState({
-    linkedin: "",
-    portfolio: "",
-  });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
@@ -74,28 +59,101 @@ const UserCreateProfile = () => {
     }));
   };
 
+  const [formData, setFormData] = useState({
+    linkedin: "",
+    portfolio: "",
+  });
+
+  const [languages, setLanguages] = useState([]);
+
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      try {
+        const response = await axios.get(
+          "https://yrgomeetup.onrender.com/languages"
+        );
+        setLanguages(response.data[0]); // The languages are in the first array in the response data
+        console.log("Languages:", response.data[0]);
+      } catch (error) {
+        console.error("Error fetching languages:", error);
+      }
+    };
+
+    fetchLanguages();
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    const { value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      languages: prevState.languages.includes(value)
+        ? prevState.languages.filter((language) => language !== value)
+        : [...prevState.languages, value],
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    try {
+      // Fetch the latest student ID
+      const responseLatest = await axios.get({
+        url: "https://yrgomeetup.onrender.com/students/latest",
+        withCredentials: true,
+      });
+      const latestStudentId = responseLatest.data[0].id;
+      console.log("Latest student ID:", latestStudentId);
+
+      // Update the student's data
+      const response = await axios({
+        url: `https://yrgomeetup.onrender.com/students/${latestStudentId}`,
+        method: "PUT",
+        data: formData,
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      const studentId = localStorage.setItem("insertId", insertId);
+      formData.languages.forEach(async (languageId) => {
+        await axios.post("/student_languages", {
+          student_id: studentId,
+          language_id: languageId,
+        });
+      });
+      navigate("Skills");
+      console.log("Response:", response); // Log the entire response
+      console.log("Data:", response.data); // Log the data from the response
+      navigate("/Skills");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      console.error("Error details:", error.response);
+    }
+    navigate("/Skills");
+  };
+
   const breakpoints = [576, 768, 900, 1200];
 
   const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
-
-  /* useEffect(() => {
-    const getSkills = async () => {
-    try {
-        const response = await axios.get('http://localhost:5000/api/getSkills');
-        const data = response.data;
-        setSkills(data);
-    
-    }
-    }
-}, []) */
 
   return (
     <div>
       <Navbar />
       <h1 style={header}>Skapa Profil</h1>
-      <form action="" style={basicStyle}>
-        <label htmlFor="" style={label}>
-          Förnamn
+      <form action="" style={basicStyle} onSubmit={handleSubmit}>
+        <label
+          htmlFor=""
+          css={css`
+            font-size: 16px;
+            color: black;
+            font-family: inter;
+            text-align: left;
+            margin-bottom: 10px;
+          `}
+        >
+          Länk till LinkedIn
         </label>
         <input
           type="text"
@@ -108,12 +166,21 @@ const UserCreateProfile = () => {
           `}
           value={formData.linkedin}
           onChange={handleChange}
-          placeholder="Förnamn"
+          placeholder="Linkedin"
           required
         />
 
-        <label htmlFor="" style={label}>
-          Efternamn
+        <label
+          htmlFor=""
+          css={css`
+            font-size: 16px;
+            color: black;
+            font-family: inter;
+            text-align: left;
+            margin-bottom: 10px;
+          `}
+        >
+          Länk till portfolio
         </label>
 
         <input
@@ -127,139 +194,16 @@ const UserCreateProfile = () => {
           `}
           value={formData.portfolio}
           onChange={handleChange}
-          placeholder="Efternamn"
+          placeholder="Portfolio"
           required
         />
-        <p>Vilka kunskaper har du?</p>
 
-        <section
-          css={css`
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-
-            /* background-color: #ae6363; */
-          `}
-        >
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              PHP
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              C#
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Laravel
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Javascript
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              HTML
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              CSS
-            </label>
-          </div>
-          <div
-            css={css`
-              margin-bottom: 20px;
-            `}
-          >
-            <input
-              type="checkbox"
-              name="designer"
-              checked={formData.designer}
-              onChange={handleChange}
-            />
-            <label htmlFor="designer" style={label}>
-              Python
-            </label>
-          </div>
-        </section>
-        {/* <p>Jag vill synas för företagen</p>
-        <div style={style}>
-          <label htmlFor="Ja/nej">Ja</label>
-          <input type="radio" name="Ja/Nej" value="Ja" />
-          <label htmlFor="Ja/Nej">Nej</label>
-          <input type="radio" name="Ja/Nej" value="Nej" />
-        </div> */}
         <div
           css={css`
             margin-bottom: 1rem;
           `}
         >
-          <RedButton text="Skapa konto" />
+          <RedButton text="Skapa konto" onClick={handleSubmit} />
         </div>
         <div>
           <SecondaryButton text="Logga ut" />

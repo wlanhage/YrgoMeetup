@@ -12,6 +12,19 @@ const pool = mysql
   })
   .promise();
 
+// Add this function to your database.js file
+export async function getStudentById(id) {
+  try {
+    const [rows] = await pool.query("SELECT * FROM students WHERE id = ?", [
+      id,
+    ]);
+    return rows[0]; // Assuming the query returns at least one row
+  } catch (error) {
+    console.error("Error fetching student by ID:", error);
+    throw error;
+  }
+}
+
 export async function getStudents() {
   const result = await pool.query("SELECT * from students");
   return result;
@@ -57,22 +70,14 @@ export async function createCompany(
   website,
   firstname,
   lastname,
-  email,
-  
+  email
 ) {
   try {
     const result = await pool.query(
       `INSERT INTO companys (companyName, website, firstname, lastname, email)
       VALUES (?, ?, ?, ?, ?)`,
 
-      [
-        companyName,
-        website,
-        firstname,
-        lastname,
-        email,
-      ]
-
+      [companyName, website, firstname, lastname, email]
     );
     return result;
   } catch (error) {
@@ -81,8 +86,12 @@ export async function createCompany(
   }
 }
 
-
-export async function updateCompanyDescription(id, description, services, intern) {
+export async function updateCompanyDescription(
+  id,
+  description,
+  services,
+  intern
+) {
   try {
     const result = await pool.query(
       `UPDATE companys SET description = ?, services = ?, intern = ? WHERE id = ?`,
@@ -95,13 +104,7 @@ export async function updateCompanyDescription(id, description, services, intern
   }
 }
 
-export async function updateCompanyCardDesign(
-  id,
-  cardColor,
-  icon,
-  pattern
-) {
-
+export async function updateCompanyCardDesign(id, cardColor, icon, pattern) {
   try {
     const result = await pool.query(
       `UPDATE companys SET cardColor = ?, icon = ?, pattern = ? WHERE id = ?`,
@@ -113,7 +116,6 @@ export async function updateCompanyCardDesign(
     throw error;
   }
 }
-
 
 export async function createStudent(
   firstname,
@@ -193,4 +195,36 @@ export async function getUserSkills(id) {
   console.log(`Fetched languages: ${JSON.stringify(languages)}`);
 
   return [softwares, languages];
+}
+
+export async function updateStudent(linkedin, portfolio, id) {
+  try {
+    const result = await pool.query(
+      `UPDATE students SET linkedin = ?, portfolio = ? WHERE id = ?`,
+      [linkedin, portfolio, id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating student:", error);
+    throw error;
+  }
+}
+
+export async function insertStudentLanguage(studentId, languageId) {
+  try {
+    const result = await pool.query(
+      `INSERT INTO student_languages (student_id, language_id) VALUES (?, ?)`,
+      [studentId, languageId]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error inserting student language:", error);
+    throw error;
+  }
+}
+
+export async function getLatestStudentId() {
+  const query = "SELECT id FROM students ORDER BY id DESC LIMIT 1";
+  const [rows] = await pool.query(query);
+  return rows;
 }
