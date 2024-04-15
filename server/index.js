@@ -378,7 +378,6 @@ app.post("/getUserInformation", async (req, res) => {
     console.log(id);
     const user = await getUserInformation(id);
     return res.json(user);
-    }
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Server error" });
