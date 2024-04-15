@@ -1,23 +1,40 @@
 import { onClick } from "react";
-function RedButton({ text, style: additionalStyle, onClick }) {
-  const style = {
-    backgroundColor: "#F52A3B",
-    color: "white",
-    border: "none",
-    borderRadius: "35px 35px 35px 35px",
-    width: "100%",
-    height: "56px",
-    padding: "16px 24px",
-    justifyContent: "space-between",
-    fontFamily: "inter",
-    ...additionalStyle,
-  };
+import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
-  return (
-    <button onClick={onClick} style={style}>
-      {text}
-    </button>
-  );
+// const style = {
+//   backgroundColor: "#F52A3B",
+//   color: "white",
+//   border: "none",
+//   borderRadius: "35px 35px 35px 35px",
+//   width: "100%",
+//   height: "56px",
+//   padding: "16px 24px",
+//   justifyContent: "space-between",
+//   fontFamily: "inter",
+//   ...additionalStyle,
+// };
+
+const RedButtonStyled = styled.button`
+  background-color: #f52a3b;
+  color: white;
+  border: none;
+  border-radius: 35px 35px 35px 35px;
+  width: 100%;
+  height: 56px;
+  padding: 16px 24px;
+  justify-content: space-between;
+  font-family: inter;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+function RedButton({ text, onClick }) {
+  return <RedButtonStyled onClick={onClick}>{text}</RedButtonStyled>;
 }
 
 export default RedButton;

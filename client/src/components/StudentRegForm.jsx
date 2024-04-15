@@ -7,6 +7,7 @@ import backarrow from "../assets/arrow_back.svg";
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
 import { useNavigate } from "react-router-dom";
+import CompanyRegProgBar from "./CompanyRegProgBar";
 
 function StudentRegForm() {
   const navigate = useNavigate();
@@ -258,6 +259,11 @@ function StudentRegForm() {
             }
           `}
         >
+          <CompanyRegProgBar
+            number={"1"}
+            redBarWidth={"110px"}
+            grayBarWidth={"220px"}
+          />
           <label htmlFor="" style={label}>
             Förnamn
           </label>

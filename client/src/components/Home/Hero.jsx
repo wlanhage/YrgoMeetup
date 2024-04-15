@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import Redbutton from "../RedButton";
 import Herobutton from "../HeroButton";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
   const heroHeader = {
@@ -19,6 +20,12 @@ export default function Hero() {
     height: "auto", // This will maintain the aspect ratio
     maxWidth: "500px",
     marginBottom: "4rem",
+  };
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/Company");
   };
 
   const breakpoints = [576, 768, 900, 1200];
@@ -112,7 +119,7 @@ export default function Hero() {
             width: 320px;
           `}
         >
-          <Herobutton text="Anmäl ditt företag" />
+          <Herobutton text="Anmäl ditt företag" onClick={handleClick} />
           <p
             css={css`
               color: white;

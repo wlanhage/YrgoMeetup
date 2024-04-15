@@ -9,6 +9,7 @@ import axios from "axios";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import CompanyRegProgBar from "../components/CompanyRegProgBar";
 
 //user info page. later this will fetch the user's name, area etc from the database and display their info here
 
@@ -143,6 +144,11 @@ const UserCreateProfile = () => {
       <Navbar />
       <h1 style={header}>Skapa Profil</h1>
       <form action="" style={basicStyle} onSubmit={handleSubmit}>
+        <CompanyRegProgBar
+          number={"2"}
+          redBarWidth={"220px"}
+          grayBarWidth={"110px"}
+        />
         <label
           htmlFor=""
           css={css`
@@ -203,7 +209,7 @@ const UserCreateProfile = () => {
             margin-bottom: 1rem;
           `}
         >
-          <RedButton text="Skapa konto" onClick={handleSubmit} />
+          <RedButton text="Nästa steg" onClick={handleSubmit} />
         </div>
         <div>
           <SecondaryButton text="Logga ut" />

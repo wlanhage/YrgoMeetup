@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import ViewButtons from "./ViewButtons";
+import { useNavigate } from "react-router-dom";
 
 export default function EventInformation() {
   const spec = {
