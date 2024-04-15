@@ -33,7 +33,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
   }, []);
 
   const [selectedTitle, setSelectedTitle] = useState('Färg');
-  const [cardColor, setCardColor] = useState('#9C9A9A');
+  const [cardColor, setCardColor] = useState('#E4E9EB');
   const [icon, setIcon] = useState(icon4);
   const [pattern, setPattern] = useState('');
   const [showColorButtons, setShowColorButtons] = useState(true);
@@ -194,11 +194,12 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    cursor: pointer;
 
     ${({ selected }) => selected && css`
-      width: 40px;
-      height: 40px;
+      transform: scale(0.8);
       border: 1px solid black;
+      border-radius: 10px;
     `}
   `;
 
@@ -299,10 +300,10 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             imageUrl={grayBox}
             type="radio"
             name="color"
-            value='#9C9A9A'
-            checked={cardColor === '#9C9A9A'}
+            value='#E4E9EB'
+            checked={cardColor === '#E4E9EB'}
             onChange={handleColorChange}
-            selected={cardColor === '#9C9A9A'}
+            selected={cardColor === '#E4E9EB'}
           />
           <RadioButton
             imageUrl={redBox}
@@ -339,6 +340,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             value=""
             checked={pattern === ""}
             onChange={handlePatternChange}
+            selected={pattern === ""}
           />
           <RadioButton
             imageUrl={patternButton2}
@@ -346,6 +348,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="pattern"
             value={pattern1}
             onChange={handlePatternChange}
+            selected={pattern === pattern1}
           />
           <RadioButton
             imageUrl={patternButton3}
@@ -353,6 +356,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="pattern"
             value={pattern2}
             onChange={handlePatternChange}
+            selected={pattern === pattern2}
           />
           <RadioButton
             imageUrl={patternButton}
@@ -360,6 +364,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="pattern"
             value={pattern3}
             onChange={handlePatternChange}
+            selected={pattern === pattern3}
           />
         </div>
       )}
@@ -372,6 +377,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             value={icon4}
             checked={icon === icon4}
             onChange={handleIconChange}
+            selected={icon === icon4}
           />
           <RadioButton
             imageUrl={icon1}
@@ -379,6 +385,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="icon"
             value={icon1}
             onChange={handleIconChange}
+            selected={icon === icon1}
           />
           <RadioButton
             imageUrl={icon2}
@@ -386,6 +393,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="icon"
             value={icon2}
             onChange={handleIconChange}
+            selected={icon === icon2}
           />
           <RadioButton
             imageUrl={icon3}
@@ -393,6 +401,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             name="icon"
             value={icon3}
             onChange={handleIconChange}
+            selected={icon === icon3}
           />
         </div>
       )}
@@ -465,10 +474,10 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
               imageUrl={grayBox}
               type="radio"
               name="color"
-              value='#9C9A9A'
-              checked={cardColor === '#9C9A9A'}
+              value='#E4E9EB'
+              checked={cardColor === '#E4E9EB'}
               onChange={handleColorChange}
-              selected={cardColor === '#9C9A9A'}
+              selected={cardColor === '#E4E9EB'}
             />
             <RadioButton
               imageUrl={redBox}
