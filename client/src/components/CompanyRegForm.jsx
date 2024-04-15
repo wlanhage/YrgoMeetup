@@ -2,11 +2,10 @@ import RedButton from "./RedButton";
 import "../App.css";
 import axios from "axios";
 import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import CompanyRegProgBar from "../components/CompanyRegProgBar";
+import { useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import CompanyRegProgBar from "./CompanyRegProgBar";
 
 function CompanyRegForm({ setIsFormSubmitted }) {
   const navigate = useNavigate();
@@ -20,12 +19,7 @@ function CompanyRegForm({ setIsFormSubmitted }) {
     marginBottom: "20px",
     textAlign: "left",
     border: "1px solid #000000",
-    borderRadius: "4px, 4px, 4px, 4px",
-  };
-
-  const largeInput = {
-    ...input,
-    paddingBottom: "80px",
+    borderRadius: "4px",
   };
 
   const label = {
@@ -34,8 +28,6 @@ function CompanyRegForm({ setIsFormSubmitted }) {
     fontFamily: "inter",
     textAlign: "left",
   };
-
-  /*  ---------  */
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -46,20 +38,17 @@ function CompanyRegForm({ setIsFormSubmitted }) {
   });
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios({
-        url: "https://yrgomeetup.onrender.com/companys",
-        method: "POST",
-        data: formData,
+      const response = await axios.post("https://yrgomeetup.onrender.com/companys", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -71,21 +60,23 @@ function CompanyRegForm({ setIsFormSubmitted }) {
       const insertId = response.data[0].insertId;
       console.log("Inserted ID:", insertId);
 
-      localStorage.setItem("submittedFormData", JSON.stringify(formData)),
-        localStorage.setItem("insertId", insertId);
+      localStorage.setItem("submittedFormData", JSON.stringify(formData));
+      localStorage.setItem("insertId", insertId);
       setFormData({
         companyName: "",
         website: "",
         firstname: "",
         lastname: "",
         email: "",
-      }),
-        setIsFormSubmitted(true);
+      });
+      setIsFormSubmitted(true);
       console.log(setIsFormSubmitted);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
+
+ 
 
   const breakpoints = [576, 768, 900, 1200];
 
@@ -93,81 +84,91 @@ function CompanyRegForm({ setIsFormSubmitted }) {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        css={css`
-          display: flex;
-          flex-direction: column;
+      <section>
+        <form
+          onSubmit={handleSubmit}
+          css={css`
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
 
-          justify-content: center;
-          gap: 8px;
+            ${mq[2]} {
+              border: 1px solid #000000;
+              width: 45vw;
+              max-width: 620px;
+              padding: 2rem;
+            }
+          `}
+        >
 
-          ${mq[2]} {
-            border: 1px solid #000000;
-            width: 620px;
-            padding: 2rem 2rem;
-          }
-        `}
-      >
-        <label htmlFor="" style={label}>
-          Företagsnamn
-        </label>
-        <input
-          type="text"
-          style={input}
-          name="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-          placeholder="Företagsnamn..."
-          required
-        />{" "}
-        <label htmlFor="" style={label}>
-          Hemsida
-        </label>
-        <input
-          type="text"
-          style={input}
-          name="website"
-          value={formData.website}
-          onChange={handleChange}
-          placeholder="URL till företaget"
-        />
-        <label htmlFor="" style={label}>
-          Förnamn
-        </label>
-        <input
-          type="text"
-          style={input}
-          name="firstname"
-          value={formData.firstname}
-          onChange={handleChange}
-          placeholder="Namn"
-        />
-        <label htmlFor="" style={label}>
-          Efternamn
-        </label>
-        <input
-          type="text"
-          style={input}
-          name="lastname"
-          value={formData.lastname}
-          onChange={handleChange}
-          placeholder="Namn"
-        />
-        <label htmlFor="" style={label}>
-          Email för kontakter
-        </label>
-        <input
-          type="email"
-          style={input}
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="email@gmail.com"
-          required
-        />
-        <RedButton onClick={handleSubmit} text="Submit" />
-      </form>
+          <CompanyRegProgBar number={"1"} redBarWidth={"110px"} grayBarWidth={"220px"} />
+
+          <label htmlFor="companyName" style={label}>
+            Företagsnamn
+          </label>
+          <input
+            type="text"
+            style={input}
+            id="companyName"
+            name="companyName"
+            value={formData.companyName}
+            onChange={handleChange}
+            placeholder="Företagsnamn..."
+            required
+          />
+          <label htmlFor="website" style={label}>
+            Hemsida
+          </label>
+          <input
+            type="text"
+            style={input}
+            id="website"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            placeholder="URL till företaget"
+          />
+          <label htmlFor="firstname" style={label}>
+            Förnamn
+          </label>
+          <input
+            type="text"
+            style={input}
+            id="firstname"
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleChange}
+            placeholder="Namn"
+          />
+          <label htmlFor="lastname" style={label}>
+            Efternamn
+          </label>
+          <input
+            type="text"
+            style={input}
+            id="lastname"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            placeholder="Namn"
+          />
+          <label htmlFor="email" style={label}>
+            Email för kontaker
+          </label>
+          <input
+            type="email"
+            style={input}
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="email@gmail.com"
+            required
+          />
+          <RedButton text="Submit" />
+        </form>
+      </section>
     </>
   );
 }

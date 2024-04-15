@@ -21,8 +21,10 @@ function CompanyReg () {
     flex-direction: row;
 
     justify-content: space-around;
+      }
+  `;
 
-
+  const DisplayWrapper = styled.div`
     @media (max-width: 900px) {
         display: none;
       }
@@ -40,8 +42,10 @@ function CompanyReg () {
         <>
             <Navbar />
             <Wrapper>
-                <CompanyRegLeftInfo />
-                {isFormSubmitted ? <CompanyRegFormSecond /> : <CompanyRegForm setIsFormSubmitted={setIsFormSubmitted} />}
+                <DisplayWrapper>
+                    <CompanyRegLeftInfo />
+                </DisplayWrapper>
+                    {isFormSubmitted ? <CompanyRegFormSecond /> : <CompanyRegForm setIsFormSubmitted={setIsFormSubmitted} />}
             </Wrapper>
         </>
     );

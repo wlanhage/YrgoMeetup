@@ -92,7 +92,8 @@ function CompanyRegFormSecond () {
             /* padding: 2rem 2rem; */
             ${mq[2]} {
               border: 1px solid #000000;
-              width: 620px;
+              width: 45vw;
+              max-width: 620px;
               padding: 2rem 2rem;
             }
           `}
