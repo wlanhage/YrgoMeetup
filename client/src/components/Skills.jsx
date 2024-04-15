@@ -9,6 +9,7 @@ import axios from "axios";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 const Emptynav = styled.div`
   height: 100px;
@@ -103,7 +104,6 @@ function Skills() {
     <>
       <Navbar />
       <Emptynav />
-      <section></section>
       <section
         css={css`
           font-family: "Inter", sans-serif;

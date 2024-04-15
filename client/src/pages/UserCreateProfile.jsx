@@ -8,6 +8,7 @@ import axios from "axios";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 //user info page. later this will fetch the user's name, area etc from the database and display their info here
 
@@ -45,6 +46,8 @@ const UserCreateProfile = () => {
     border: "1px solid #000000",
     borderRadius: "4px, 4px, 4px, 4px",
   };
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
@@ -95,9 +98,10 @@ const UserCreateProfile = () => {
 
     try {
       // Fetch the latest student ID
-      const responseLatest = await axios.get(
-        "https://yrgomeetup.onrender.com/students/latest"
-      );
+      const responseLatest = await axios.get({
+        url: "https://yrgomeetup.onrender.com/students/latest",
+        withCredentials: true,
+      });
       const latestStudentId = responseLatest.data[0].id;
       console.log("Latest student ID:", latestStudentId);
 
@@ -112,20 +116,22 @@ const UserCreateProfile = () => {
           Accept: "application/json",
         },
       });
-
+      const studentId = localStorage.setItem("insertId", insertId);
       formData.languages.forEach(async (languageId) => {
         await axios.post("/student_languages", {
           student_id: studentId,
           language_id: languageId,
         });
       });
-
+      navigate("Skills");
       console.log("Response:", response); // Log the entire response
       console.log("Data:", response.data); // Log the data from the response
+      navigate("/Skills");
     } catch (error) {
       console.error("Error submitting form:", error);
       console.error("Error details:", error.response);
     }
+    navigate("/Skills");
   };
 
   const breakpoints = [576, 768, 900, 1200];
@@ -191,30 +197,6 @@ const UserCreateProfile = () => {
           placeholder="Portfolio"
           required
         />
-
-        <p>Vilka kunskaper har du?</p>
-
-        <section
-          css={css`
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            /* background-color: #ae6363; */
-          `}
-        >
-          {languages.map((language) => (
-            <div key={language.id}>
-              <input
-                type="checkbox"
-                id={`language-${language.id}`}
-                name="language"
-                value={language.id}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor={`language-${language.id}`}>{language.name}</label>
-            </div>
-          ))}
-        </section>
 
         <div
           css={css`
