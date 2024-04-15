@@ -374,7 +374,7 @@ app.get("/students/:id", async (req, res) => {
 app.post("/getUserInformation", async (req, res) => {
   try {
     console.log(req.body);
-    const id = req.body;
+    const id = req.body.user;
     console.log(id);
     const [users] = await getUserInformation(id);
     if (users.length > 0) {
