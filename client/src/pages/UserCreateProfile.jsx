@@ -10,7 +10,11 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import CompanyRegProgBar from "../components/CompanyRegProgBar";
+
+import Footer from "../components/Footer";
+
 import { useLocation } from 'react-router-dom';
+
 
 //user info page. later this will fetch the user's name, area etc from the database and display their info here
 
@@ -130,79 +134,143 @@ console.log(id);
   return (
     <div>
       <Navbar />
-      <h1 style={header}>Skapa Profil</h1>
-      <form action="" style={basicStyle} onSubmit={handleSubmit}>
-        <CompanyRegProgBar
-          number={"2"}
-          redBarWidth={"220px"}
-          grayBarWidth={"110px"}
-        />
-        <label
-          htmlFor=""
-          css={css`
-            font-size: 16px;
-            color: black;
-            font-family: inter;
-            text-align: left;
-            margin-bottom: 10px;
-          `}
-        >
-          Länk till LinkedIn
-        </label>
-        <input
-          type="text"
-          name="linkedin"
-          style={input}
-          css={css`
-            ${mq[2]} {
-              width: 50%;
-            }
-          `}
-          value={formData.linkedin}
-          onChange={handleChange}
-          placeholder="Linkedin"
-          required
-        />
+      <section
+        css={css`
+          display: flex;
+          justify-content: center;
 
-        <label
-          htmlFor=""
-          css={css`
-            font-size: 16px;
-            color: black;
-            font-family: inter;
-            text-align: left;
-            margin-bottom: 10px;
-          `}
-        >
-          Länk till portfolio
-        </label>
-
-        <input
-          type="text"
-          name="portfolio"
-          style={input}
-          css={css`
-            ${mq[2]} {
-              width: 50%;
-            }
-          `}
-          value={formData.portfolio}
-          onChange={handleChange}
-          placeholder="Portfolio"
-          required
-        />
-
+          flex-direction: column;
+          /* background-color: #cf8f8f; */
+          ${mq[2]} {
+            margin-top: 5rem;
+            flex-direction: row;
+            padding: 2rem 2rem;
+          }
+        `}
+      >
         <div
           css={css`
-            margin-bottom: 1rem;
+            width: 100%;
+            padding: 1rem 0.5rem;
+
+            ${mq[2]} {
+              width: 33%;
+              padding: 3rem 1rem;
+            }
           `}
         >
-          <RedButton text="Nästa steg" onClick={handleSubmit} />
+          <h1
+            css={css`
+              font-size: 36px;
+              color: black;
+              font-family: "inter";
+              text-align: left;
+              font-weight: 400;
+              margin: 0;
+
+              ${mq[2]} {
+                font-size: 60px;
+                font-weight: 300;
+              }
+            `}
+          >
+            Skapa Profil
+          </h1>
         </div>
-        <div>
-          <SecondaryButton text="Logga ut" />
-        </div>
-      </form>
+        <form
+          action=""
+          onSubmit={handleSubmit}
+          css={css`
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            gap: 8px;
+
+            padding: 2rem 2rem;
+            ${mq[2]} {
+              border: 1px solid #000000;
+              padding: 2rem 2rem;
+              width: 720px;
+            }
+          `}
+        >
+          <CompanyRegProgBar
+            number={"2"}
+            redBarWidth={"220px"}
+            grayBarWidth={"110px"}
+            link={"/Register"}
+          />
+          <label
+            htmlFor=""
+            css={css`
+              font-size: 16px;
+              color: black;
+              font-family: inter;
+              text-align: left;
+              margin-bottom: 10px;
+            `}
+          >
+            Länk till LinkedIn
+          </label>
+          <input
+            type="text"
+            name="linkedin"
+            style={input}
+            css={css`
+              width: 100%;
+              ${mq[2]} {
+                /* width: 50%; */
+              }
+            `}
+            value={formData.linkedin}
+            onChange={handleChange}
+            placeholder="Linkedin"
+            required
+          />
+
+          <label
+            htmlFor=""
+            css={css`
+              font-size: 16px;
+              color: black;
+              font-family: inter;
+              text-align: left;
+              margin-bottom: 10px;
+            `}
+          >
+            Länk till portfolio
+          </label>
+
+          <input
+            type="text"
+            name="portfolio"
+            style={input}
+            css={css`
+              width: 100%;
+              ${mq[2]} {
+                /* width: 50%; */
+              }
+            `}
+            value={formData.portfolio}
+            onChange={handleChange}
+            placeholder="Portfolio"
+            required
+          />
+
+          <div
+            css={css`
+              margin-bottom: 1rem;
+            `}
+          >
+            <RedButton text="Nästa steg" onClick={handleSubmit} />
+          </div>
+          <div>
+            <SecondaryButton text="Logga ut" />
+          </div>
+        </form>
+      </section>
+      <Footer />
     </div>
   );
 };

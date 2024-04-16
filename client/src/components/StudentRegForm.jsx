@@ -357,7 +357,6 @@ function StudentRegForm() {
             css={css`
               display: flex;
               flex-direction: column;
-          
               gap: 10px;
               width: 100%;
             `}

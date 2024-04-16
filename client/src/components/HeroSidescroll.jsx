@@ -58,6 +58,9 @@ function HeroSidescroll() {
 
             flex-wrap: nowrap;
             overflow-x: auto;
+            ::-webkit-scrollbar {
+              display: none;
+            }
           `}
         >
           {companyData.map((company, index) => (
