@@ -95,6 +95,17 @@ app.get("/students/latest", async (req, res) => {
   res.send(latestStudent);
 });
 
+router.get('/getStudentLanguagesFromId/:studentId', async (req, res) => {
+  try {
+      const studentId = req.params.studentId;
+      const languages = await getStudentLanguages(studentId);
+      res.json(languages);
+  } catch (error) {
+      console.error('Error fetching student languages:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post("/companys", async (req, res) => {
   const { companyName, website, firstname, lastname, email } = req.body;
   const createdCompany = await createCompany(

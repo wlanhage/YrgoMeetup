@@ -6,12 +6,23 @@ import { Link } from "react-router-dom";
 
 function StudentsLoop ({ selectedCategory, filteredStudents }) {
     const [studentData, setStudentData] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("https://yrgomeetup.onrender.com/students");
                 console.log(response.data);
-                setStudentData(response.data[0]);
+                
+        
+                // Loop through each student to fetch their languages
+                const studentsWithLanguages = await Promise.all(
+                    response.data[0].map(async (student) => {
+                        const languagesResponse = await axios.get(`https://yrgomeetup.onrender.com/getStudentLanguagesFromId/${student.id}`);
+                        const languages = languagesResponse.data;
+                        return { ...student, languages };
+                    })
+                );
+                setStudentData(studentsWithLanguages);
             } catch (error) {
                 console.error(error);
             }
@@ -112,7 +123,7 @@ function StudentsLoop ({ selectedCategory, filteredStudents }) {
 
     return (
         <div style={wrapper}>
-            {studentData.map((student) => (
+            {studentData.length > 0 && studentData.map((student) => (
                 <div key={student.id} style={container}>
                     <div style={containerUpper}>
                         <div style={containerUpperLeft}>
@@ -134,8 +145,13 @@ function StudentsLoop ({ selectedCategory, filteredStudents }) {
                         </div>
                     </div>
                     <div style={containerLower}>
-                    
-                </div>
+                        {/* Display student's languages */}
+                        <ul>
+                            {student.languages.map((language, index) => (
+                                <li key={index}>{language}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             ))}
         </div>
