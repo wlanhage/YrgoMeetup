@@ -101,48 +101,70 @@ function LoginForm() {
           justify-content: center;
           align-items: center;
           height: 100vh;
+          /* background-color: aquamarine; */
         `}
       >
         <section
           css={css`
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
             padding: 2rem;
+            width: 100%;
+            /* background-color: #b12424; */
 
             ${mq[2]} {
               flex-direction: column;
-              justify-content: center;
-              align-items: flex-start;
-              margin: 2rem;
+              /* justify-content: center; */
+              /* align-items: flex-start; */
+              /* margin: 2rem; */
             }
           `}
         >
-          <img src={backarrow} onClick={handleClickBack}></img>
-          <h2
+          <section
             css={css`
-              font-size: 36px;
-              color: black;
-              font-family: "inter";
-              text-align: left;
-              font-weight: 400;
-              margin: 0;
-              padding: 1rem 2rem;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              width: 100%;
+              /* background-color: #536f45; */
 
               ${mq[2]} {
-                font-size: 60px;
-                font-weight: 300;
+                width: 720px;
               }
             `}
           >
-            Logga In
-          </h2>
+            <div>
+              <img src={backarrow} onClick={handleClickBack}></img>
+            </div>
+            <h2
+              css={css`
+                font-size: 36px;
+                color: black;
+                font-family: "inter";
+                text-align: left;
+                font-weight: 400;
+                margin: 0;
+                padding: 1rem 2rem;
+
+                ${mq[2]} {
+                  font-size: 60px;
+                  font-weight: 300;
+                  padding: 2rem 2rem;
+                }
+              `}
+            >
+              Logga In
+            </h2>
+          </section>
           <form
             onSubmit={handleSubmit}
             css={css`
               display: flex;
               flex-direction: column;
-
+              /* background-color: #62c82b; */
+              width: 100%;
               justify-content: center;
               /* gap: 8px; */
 
