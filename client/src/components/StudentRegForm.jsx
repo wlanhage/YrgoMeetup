@@ -162,8 +162,10 @@ function StudentRegForm() {
 
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
+
         console.log("Student created successfully");
         navigate("/UserCreateProfile", { state: { data: response.data.id } });
+
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -358,8 +360,6 @@ function StudentRegForm() {
             css={css`
               display: flex;
               flex-direction: column;
-              /* align-items: center; */
-              /* justify-content: center; */
               gap: 10px;
               width: 100%;
             `}
@@ -395,18 +395,6 @@ function StudentRegForm() {
               `}
             >
               <div
-                css={css`
-                  /* display: flex; */
-                  /* width: 100%; */
-                  /* flex-direction: row; */
-                  /* align-items: flex-start; */
-                  /* gap: 1rem; */
-                  /* background-color: #792424; */
-
-                  ${mq[2]} {
-                    /* flex-direction: row; */
-                  }
-                `}
               >
                 <input
                   type="radio"
@@ -469,3 +457,4 @@ function StudentRegForm() {
 }
 
 export default StudentRegForm;
+

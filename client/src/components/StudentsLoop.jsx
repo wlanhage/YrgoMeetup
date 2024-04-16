@@ -14,21 +14,33 @@ function StudentsLoop({ selectedCategory, filteredStudents }) {
             try {
                 const response = await axios.get("https://yrgomeetup.onrender.com/students");
                 const studentsWithLanguages = response.data[0];
-        
                 const skillsPromises = studentsWithLanguages.map(async student => {
-                    const skillsResponse = await axios.get(
-                        'https://yrgomeetup.onrender.com/getStudentSkills',
-                        { params: { student: student.id } },
-                        { withCredentials: true, 
+
+                    try {
+
+                        const skillsResponse = await axios({
+                            url: 'https://yrgomeetup.onrender.com/getUserSkills',
+                            method: 'POST', 
+                            data: { user: student.id},
+                            withCredentials: true, 
                             headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
                             },
-                        }
-                    );
-        
-                    const languages = skillsResponse.data.languages.map(language => language.name).join(' ');
-                    console.log(`Languages for student with id ${student.id}: ${languages}`);
+                        });
+                        if (skillsResponse.data.languages) { 
+                            let languages= skillsResponse.data.languages.map(software => software.name);
+                            student.languageString = languages;
+                            console.log(languages);
+                        } else {
+                            console.log(`No softwares for student with id ${student.id}`);
+                            student.languageString=[];
+                    } 
+                    } catch (error) {
+                        console.error("Error fetching user skills:", error);
+                        // Handle error appropriately
+                    }
+
                 });
         
                 await Promise.all(skillsPromises);
@@ -155,9 +167,11 @@ function StudentsLoop({ selectedCategory, filteredStudents }) {
                             </div>
                         </div>
                     </div>
+                    {Array.isArray(student.languageString) && student.languageString.map((language) =>  
                     <div style={containerLower}>
-                        <div style={skillBoxes}>{student.languagesString}</div>
+                        <div style={skillBoxes}>{language}</div>
                     </div>
+                    )}
                 </div>
             ))}
         </div>
