@@ -203,6 +203,23 @@ export async function getUserSkills(id) {
   return [softwares, languages];
 }
 
+export async function getStudentLanguagesFromId(studentId) {
+  try {
+      const [result] = await pool.query(`
+          SELECT l.name AS language
+          FROM students s
+          JOIN student_languages sl ON s.id = sl.student_id
+          JOIN languages l ON sl.language_id = l.id
+          WHERE s.id = ?
+      `, [studentId]);
+
+      return result;
+  } catch (error) {
+      console.error('Error fetching student languages:', error);
+      throw error;
+  }
+}
+
 export async function updateStudent(linkedin, portfolio, id) {
   try {
     const result = await pool.query(
