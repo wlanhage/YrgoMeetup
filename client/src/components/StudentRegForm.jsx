@@ -380,11 +380,60 @@ function StudentRegForm() {
                 Vilket utbildning går du?
               </h3>
             </div>
+            <div
+              css={css`
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                ${mq[2]} {
+                  flex-direction: row;
+                }
+              `}
+            >
+              <input
+                type="radio"
+                name="profession"
+                value="developer"
+                checked={formData.developer}
+                onChange={handleChange}
+              />
+              <label htmlFor="developer" style={label}>
+                Webbutvecklare
+              </label>
+            </div>
+            <div
+              css={css`
+                margin-bottom: 20px;
+              `}
+            >
+              <input
+                type="radio"
+                name="profession"
+                value="designer"
+                checked={formData.designer}
+                onChange={handleChange}
+              />
+              <label htmlFor="designer" style={label}>
+                Digital designer
+              </label>
+            </div>
+             <div
+              css={css`
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                ${mq[2]} {
+
             <div>
               <div
                 css={css`
                   display: flex;
                   width: 100%;
+
                   flex-direction: row;
                   align-items: flex-start;
                   gap: 1rem;
@@ -444,5 +493,6 @@ function StudentRegForm() {
       </section>
     </>
   );
+}
 }
 export default StudentRegForm;
