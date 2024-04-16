@@ -27,6 +27,7 @@ import {
   getLatestStudentId,
   insertStudentLanguage,
   getStudentLanguagesFromId,
+  getStudentId
   getStudentSkills
 } from "./configs/database.js";
 
@@ -42,7 +43,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://yrgomeetup.onrender.com"],
-    methods: ["GET", "POST", "PUT", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
   })
@@ -292,9 +293,9 @@ app.post("/students", async (req, res) => {
       portfolio,
       textfield
     );
-    res
-      .status(201)
-      .json({ message: "student created", student: createdStudent });
+    const studentId = await getStudentId(req.body.email);
+
+    res.status(201).json({ message: "student created", student: createdStudent, id: studentId});
   } catch (error) {
     console.error("error creating student:", error);
     res.status(500).json({ message: "Error creating student" });
@@ -392,11 +393,12 @@ app.get("/students/:id", async (req, res) => {
 //get information from the verified user
 app.post("/getUserInformation", async (req, res) => {
   try {
-    console.log(req.body);
     const id = req.body.user;
-    console.log(id);
-    const user = await getUserInformation(id);
-    return res.json(user);
+    const [users] = await getUserInformation(id);
+    if (users.length > 0) {
+      const user = users[0];
+      return res.json(user);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Server error" });
@@ -453,5 +455,21 @@ app.get("/logout", (req, res) => {
     res.json({ message: "success" });
   } catch (error) {
     console.error(error);
+  }
+});
+
+app.put("/putLinks", async (req, res) => {
+  const { id, linkedin, portfolio } = req.body;
+  console.log(id, linkedin, portfolio);
+  try {
+    const updateResult = await updateStudent(linkedin, portfolio, id);
+    if (updateResult.affectedRows > 0) {
+      res.json({ message: "Student updated successfully" });
+    } else {
+      res.status(404).send("Student not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
   }
 });
