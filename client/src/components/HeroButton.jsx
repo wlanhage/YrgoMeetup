@@ -1,5 +1,5 @@
 import { onClick } from "react";
-import styled from "styled-components";
+
 function HeroButton({ text, style: additionalStyle, onClick }) {
   // const style = {
   //   backgroundColor: "transparent",
@@ -25,7 +25,7 @@ function HeroButton({ text, style: additionalStyle, onClick }) {
   // `;
 
   return (
-    <button onClick={onClick} style={style}>
+    <button onClick={onClick}>
       {text}
     </button>
   );

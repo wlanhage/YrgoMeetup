@@ -128,27 +128,30 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
 
   const CardContainer = styled.div`
     position: relative;
-    width: 320px;
-    height: 200px;
+    width: 384px;
+    height: 240px;
     margin-left: auto;
     margin-right: auto;
   `;
 
   const Card = styled.div`
-    width: 320px;
-    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 384px;
+    height: 240px;
     background-color: white;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
     border: 1.5px solid;
     border-radius: 9px;
-    position: absolute;
+    
     transform: translate(-12px, 12px);
   `;
 
   const CardBackside = styled.div`
-    width: 320px;
-    height: 200px;
+    width: 384px;
+    height: 240px;
     background-color: ${cardColor};
     background-image: url(${pattern});
     background-size: cover;
@@ -158,17 +161,17 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
     border-radius: 9px;
     position: absolute;
     transform: translate(12px, -12px);
+    
   `;
 
   const CardBacksideText = styled.p`
     position: relative;
     top: 115px;
     right: 65px;
-    font-family: 'inter';
+    font-family: "inter";
     font-size: 30px;
     font-weight: bold;
     color: white;
-
   `;
 
   const SelectionBar = styled.div`
@@ -249,7 +252,6 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
   return (
     <>
       <Phone>
-      <Navbar />
       <CompanyRegProgBar number={'3'} redBarWidth={'330px'} grayBarWidth={'0px'} />
       <HeaderText>Designa ett visitkort</HeaderText>
       <CardContainer onClick={handleCardClick}>
@@ -265,8 +267,8 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
             <Card>
               <CompanyCardContent icon={icon}/>
             </Card>
-            <CardBackside>
-              <CardBacksideText>{submittedData.companyName}</CardBacksideText>
+            <CardBackside style={{ transform: 'translate(10px, -250px)'}}>
+              <CardBacksideText  >{submittedData.companyName} </CardBacksideText>
             </CardBackside>
           </>
         )}
@@ -432,8 +434,8 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
               <Card>
                 <CompanyCardContent icon={icon}/>
               </Card>
-              <CardBackside>
-                <CardBacksideText>{submittedData.companyName}</CardBacksideText>
+              <CardBackside style={{ transform: 'translate(10px, -250px)'}}>
+                <CardBacksideText >{submittedData.companyName}</CardBacksideText>
               </CardBackside>
             </>
           )}
@@ -441,7 +443,7 @@ function CompanyCardDesign ({toggleDesign, setDesignData}) {
         </DesktopLeft>
 
         <DesktopRight>
-        <Navbar />
+        
         <CompanyRegProgBar number={'3'} redBarWidth={'330px'} grayBarWidth={'0px'} />
         <HeaderText>Designa ett visitkort</HeaderText>
 

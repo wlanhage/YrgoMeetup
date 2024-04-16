@@ -28,7 +28,6 @@ function CompanyReg() {
 
   return (
     <>
-      <Navbar />
       <Wrapper>
         <DisplayWrapper>
           <CompanyRegLeftInfo />

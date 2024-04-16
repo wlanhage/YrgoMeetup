@@ -55,69 +55,74 @@ const SmallText = styled.div`
 `;
 
 const CardContainer = styled.div`
-  position: relative;
-  width: 320px;
-  height: 100%;
-  margin: 20px auto;
-  margin-bottom: 270px;
-`;
-
-const Card = styled.div`
-  width: 320px;
-  height: 200px;
-  background-color: white;
-  margin: auto;
-  border: 1.5px solid;
-  border-radius: 9px;
-  position: absolute;
-  transform: translate(-12px, 12px);
-
-  @media (min-width: 900px) {
-    transform: scale(1.3) translate(-12px, 12px);
     
-  } 
-`;
+    width: 384px;
+    height: 240px;
+    margin-left: auto;
+    margin-right: auto;
+  `;
 
-const CardBackside = styled.div`
-  width: 320px;
-  height: 200px;
-  background-color: ${props => props.color};
+  const Card = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 384px;
+    height: 240px;
+    background-color: white;
+    /* margin-left: auto;
+    margin-right: auto; */
+    border: 1.5px solid;
+    border-radius: 9px;
+    
+    transform: translate(-12px, 12px);
+    margin-bottom: 0px;
+  `;
+
+  const CardBackside = styled.div`
+    width: 384px;
+    height: 240px;
+    background-color: ${props => props.color};
   background-image: url(${props => props.pattern});
   background-size: cover;
-  margin: auto;
-  border: 1.5px solid;
-  border-radius: 9px;
-  position: absolute;
-  transform: translate(12px, -12px);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1.5px solid;
+    border-radius: 9px;
+    position: absolute;
+    transform: translate(12px, -12px);
+    
+  `;
 
-  @media (min-width: 900px) {
-    transform: scale(1.3);
-  } 
-`;
-
-const CardBacksideText = styled.h3`
-  position: relative;
-  top: 110px;
-  right: 60px;
-  font-family: inter;
-  font-size: 30px;
-  color: white;
-`;
+  const CardBacksideText = styled.p`
+    position: relative;
+    top: 115px;
+    right: 65px;
+    font-family: "inter";
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+  `;
 
 const BottomText = styled.div`
+  
   width: 340px;
   text-align: center;
   
   font-family: inter;
-  margin-left: auto;
-  margin-right: auto;
+  
+  margin-right: 200px;
+  
+  margin-bottom: 10px;
+  
+  
 
   display: flex;
   justify-content: center;
   align-items: center;
+  
 
   @media (min-width: 900px) {
-    
+    margin-top: 50px;
   }
 `;
 
@@ -154,10 +159,7 @@ const Desktop = styled.div`
     flex-direction: column;
   `;
 
-  const DesktopLeftTextArea = styled.div`
-    margin-bottom: 60px;
-
-  `;
+  
 
   const DesktopRight = styled.div`
     width: 40vw;
@@ -187,15 +189,7 @@ if (!designData.color) {
     setIsFlipped(!isFlipped);
   };
 
-  const downloadPNG = async () => {
-    const element = document.getElementById('cardContainer');
-    const canvas = await html2canvas(element);
-    const imgData = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = 'download.png';
-    link.href = imgData;
-    link.click();
-  };
+  
 
   return (
     <>
@@ -232,16 +226,16 @@ if (!designData.color) {
             <Card>
               <CompanyCardContent />
             </Card>
-            <CardBackside pattern={designData.pattern} color={designData.color}>
-              <CardBacksideText>{submittedData.companyName}</CardBacksideText>
+            <CardBackside style={{ transform: 'translate(10px, -250px)'}} pattern={designData.pattern} color={designData.color}>
+              <CardBacksideText >{submittedData.companyName}</CardBacksideText>
             </CardBackside>
           </>
         )}
       </CardContainer>
-      <FlexRow style={{ marginTop: '250px', width: '300px' }}>
+      <FlexRow>
         <BottomText>Här är ditt visitkort</BottomText>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-          <Icon src={download} alt="downloadPin" onClick={downloadPNG} />
+          
           <Icon />
         </div>
       </FlexRow>
@@ -270,8 +264,8 @@ if (!designData.color) {
               <Card>
                 <CompanyCardContent />
               </Card>
-              <CardBackside pattern={designData.pattern} color={designData.color}>
-                <CardBacksideText>{submittedData.companyName}</CardBacksideText>
+              <CardBackside style={{ transform: 'translate(10px, -250px)'}} pattern={designData.pattern} color={designData.color}>
+                <CardBacksideText >{submittedData.companyName}</CardBacksideText>
               </CardBackside>
             </>
           )}
