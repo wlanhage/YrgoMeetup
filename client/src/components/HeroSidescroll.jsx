@@ -64,6 +64,8 @@ function HeroSidescroll() {
           `}
         >
           {companyData.map((company, index) => (
+            console.log(company.pattern),
+            
             <div
               key={index}
               css={css`
@@ -71,6 +73,7 @@ function HeroSidescroll() {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                position: relative;
 
                 font-family: "Inter";
                 font-weight: 300;
@@ -79,7 +82,9 @@ function HeroSidescroll() {
                 height: 100px;
                 margin-right: 0.5rem;
                 margin-left: 0.5rem;
-                background-color: rgba(228, 233, 235, 1);
+                background-image: url(${company.pattern});
+                background-color: #E4E9EB;
+                background-color: ${company.cardColor};
                 border: 1px solid black;
                 border-radius: 4px;
                 padding: 1rem;
@@ -93,26 +98,23 @@ function HeroSidescroll() {
               <h2
                 css={css`
                   font-size: 20px;
-                  font-weight: 300;
-                  margin: 0 0 0.5rem 0;
+                  font-weight: 500;
+                  position: absolute;
+                  top: 50px;
+                  left: 10px;
+                  
 
                   ${mq[1]} {
-                    font-size: 42px;
-                    font-weight: 200;
-                    margin: 0 0 1rem 0;
+                    font-size: 35px;
+                    font-weight: 500;
+                    top: 110px;
+                    left: 20px;
+                    
                   }
                 `}
               >
                 {company.companyname}
               </h2>
-
-              <img
-                css={css`
-                  max-width: 30%;
-                `}
-                src={company.icon}
-              />
-              <a href={company.linkedin}>Linkedin</a>
             </div>
           ))}
         </div>

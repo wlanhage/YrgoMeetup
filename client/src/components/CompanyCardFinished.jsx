@@ -72,10 +72,10 @@ const Card = styled.div`
   position: absolute;
   transform: translate(-12px, 12px);
 
-  /* @media (min-width: 900px) {
-    width: 450px;
-    height: 300px;
-  } */
+  @media (min-width: 900px) {
+    transform: scale(1.3) translate(-12px, 12px);
+    
+  } 
 `;
 
 const CardBackside = styled.div`
@@ -90,10 +90,9 @@ const CardBackside = styled.div`
   position: absolute;
   transform: translate(12px, -12px);
 
-  /* @media (min-width: 900px) {
-    width: 450px;
-    height: 300px;
-  } */
+  @media (min-width: 900px) {
+    transform: scale(1.3);
+  } 
 `;
 
 const CardBacksideText = styled.h3`
@@ -135,6 +134,7 @@ const Desktop = styled.div`
   
   @media (max-width: 900px) {
     display: none;
+    transform: scale(1.3);
   }
   `;
 
@@ -164,6 +164,9 @@ const Desktop = styled.div`
     align-items: center;
     padding: 20px;
     border: 1px solid #001A52;
+  `;
+  const Gap = styled.div`
+  margin: 10px;
   `;
 
 function CompanyCardFinished({ designData }) {
@@ -243,6 +246,7 @@ if (!designData.color) {
         </div>
       </FlexRow>
       <RedButton text={'Möt studenterna'} onClick={() => navigate('/Students')} style={{ marginTop: '15px' }} />
+      <Gap />
       <Link to="/">
         <RedButton text={'Till startsidan'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red' }} />
       </Link>
@@ -295,9 +299,10 @@ if (!designData.color) {
         {/* <MailText>Mail skickat</MailText> */}
       </TextArea>
 
-      <RedButton text={'Möt studenterna'} onClick={() => navigate('/Students')} style={{ marginTop: '15px' }} />
+      <RedButton text={'Möt studenterna'} onClick={() => navigate('/Students')} style={{ marginTop: '15px', width: '90%' }} />
+      <Gap />
       <Link to="/">
-        <RedButton text={'Till startsidan'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red' }} />
+        <RedButton text={'Till startsidan'} style={{ marginTop: '15px', backgroundColor: 'white', border: '1px solid red', color: 'red', width: '90%' }} />
       </Link>
           
           </DesktopRight>
