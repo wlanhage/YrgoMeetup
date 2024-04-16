@@ -28,6 +28,7 @@ import {
   insertStudentLanguage,
   getStudentLanguagesFromId,
   getStudentId
+  getStudentSkills
 } from "./configs/database.js";
 
 const app = express();
@@ -410,6 +411,27 @@ app.post("/getUserSkills", async (req, res) => {
   try {
     const id = req.body.user;
     let [softwares, languages] = await getUserSkills(id);
+    console.log(softwares);
+    console.log(languages);
+    if (languages.length > 0 && softwares.length > 0) {
+      return res.json({ languages, softwares });
+    } else if (languages.length > 0 && !softwares.length > 0) {
+      return res.json({ languages });
+    } else if (!languages.length > 0 && softwares.length > 0) {
+      return res.json({ softwares });
+    } else {
+      return res.status(400).send({ message: "No skills found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server error" });
+  }
+});
+
+app.get("/getStudentSkills", async (req, res) => {
+  try {
+    const id = req.query.user;
+    let [softwares, languages] = await getStudentSkills(id);
     console.log(softwares);
     console.log(languages);
     if (languages.length > 0 && softwares.length > 0) {

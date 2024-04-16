@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { ClassNames, css } from "@emotion/react";
+import backarrow from "../assets/arrow_back.svg";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,10 @@ function LoginForm() {
     password: "123ABCabc",
   });
   const navigate = useNavigate();
+  const handleClickBack = () => {
+    navigate("/");
+    console.log("pressed");
+  };
 
   const input = {
     backgroundColor: "#ffffff",
@@ -113,6 +118,7 @@ function LoginForm() {
             }
           `}
         >
+          <img src={backarrow} onClick={handleClickBack}></img>
           <h2
             css={css`
               font-size: 36px;
