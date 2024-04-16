@@ -96,14 +96,14 @@ app.get("/students/latest", async (req, res) => {
   res.send(latestStudent);
 });
 
-router.get('/getStudentLanguagesFromId/:studentId', async (req, res) => {
+app.get('/getStudentLanguagesFromId/:studentId', async (req, res) => {
+  const studentId = req.params.studentId;
+
   try {
-      const studentId = req.params.studentId;
-      const languages = await getStudentLanguagesFromId(studentId);
-      res.json(languages);
+    const studentInfo = await getStudentInfoWithLanguages(studentId);
+    res.json(studentInfo);
   } catch (error) {
-      console.error('Error fetching student languages:', error);
-      res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

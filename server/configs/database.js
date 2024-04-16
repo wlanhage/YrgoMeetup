@@ -199,18 +199,28 @@ export async function getUserSkills(id) {
 
 export async function getStudentLanguagesFromId(studentId) {
   try {
-      const [result] = await pool.query(`
-          SELECT l.name AS language
-          FROM students s
-          JOIN student_languages sl ON s.id = sl.student_id
-          JOIN languages l ON sl.language_id = l.id
-          WHERE s.id = ?
-      `, [studentId]);
+    const [result] = await pool.query(`
+      SELECT s.id, s.firstname, s.lastname, s.email, s.linkedin, l.name AS language
+      FROM students s
+      LEFT JOIN student_languages sl ON s.id = sl.student_id
+      LEFT JOIN languages l ON sl.language_id = l.id
+      WHERE s.id = ?
+    `, [studentId]);
 
-      return result;
+    // Grouping languages for each student
+    const studentInfo = {
+      id: result[0].id,
+      firstname: result[0].firstname,
+      lastname: result[0].lastname,
+      email: result[0].email,
+      linkedin: result[0].linkedin,
+      languages: result.map(row => row.language).filter(language => language !== null)
+    };
+
+    return studentInfo;
   } catch (error) {
-      console.error('Error fetching student languages:', error);
-      throw error;
+    console.error('Error fetching student info with languages:', error);
+    throw error;
   }
 }
 
