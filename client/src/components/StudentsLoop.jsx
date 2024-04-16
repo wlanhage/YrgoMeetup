@@ -4,33 +4,44 @@ import { useState, useEffect } from "react";
 import LinkArrow from "../assets/linkArrow.svg";
 import { Link } from "react-router-dom";
 
-function StudentsLoop ({ selectedCategory, filteredStudents }) {
+function StudentsLoop({ selectedCategory, filteredStudents }) {
     const [studentData, setStudentData] = useState([]);
+    const [softwares, setSoftwares] = useState([]);
+    const [languages, setLanguages] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("https://yrgomeetup.onrender.com/students");
-                console.log(response.data);
-                
+                const studentsWithLanguages = response.data[0];
         
-                // Loop through each student to fetch their languages
-                const studentsWithLanguages = await Promise.all(
-                    response.data[0].map(async (student) => {
-                        const languagesResponse = await axios.get(`https://yrgomeetup.onrender.com/getStudentLanguagesFromId/${student.id}`);
-                        const languages = languagesResponse.data;
-                        return { ...student, languages };
-                    })
-                );
-                setStudentData(studentsWithLanguages);
+                const skillsPromises = studentsWithLanguages.map(async student => {
+                    const skillsResponse = await axios.get(
+                        'https://yrgomeetup.onrender.com/getStudentSkills',
+                        { params: { student: student.id } },
+                        { withCredentials: true, 
+                            headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            },
+                        }
+                    );
+        
+                    const languages = skillsResponse.data.languages.map(language => language.name).join(' ');
+                    console.log(`Languages for student with id ${student.id}: ${languages}`);
+                });
+        
+                await Promise.all(skillsPromises);
+        
+                setStudentData(studentsWithLanguages); 
             } catch (error) {
                 console.error(error);
             }
         };
+        
         fetchData();
+        
     }, []);
-
-    
 
     const wrapper = {
         display: 'flex',
@@ -123,7 +134,7 @@ function StudentsLoop ({ selectedCategory, filteredStudents }) {
 
     return (
         <div style={wrapper}>
-            {studentData.length > 0 && studentData.map((student) => (
+            {studentData.map((student) => (
                 <div key={student.id} style={container}>
                     <div style={containerUpper}>
                         <div style={containerUpperLeft}>
@@ -145,17 +156,12 @@ function StudentsLoop ({ selectedCategory, filteredStudents }) {
                         </div>
                     </div>
                     <div style={containerLower}>
-                        {/* Display student's languages */}
-                        <ul>
-                            {student.languages.map((language, index) => (
-                                <li key={index}>{language}</li>
-                            ))}
-                        </ul>
+                        <div style={skillBoxes}>{student.languagesString}</div>
                     </div>
                 </div>
             ))}
         </div>
-    )
+    );
 }
 
 export default StudentsLoop;
