@@ -56,7 +56,7 @@ function StudentRegForm() {
     textfield: "",
     Gdpr: false,
   });
-
+  
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
 
@@ -67,6 +67,25 @@ function StudentRegForm() {
       ...prevState,
       [name]: value,
     }));
+  // };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prevFormData) => {
+      if (name === "profession") {
+        return {
+          ...prevFormData,
+          designer: value === "designer",
+          developer: value === "developer",
+        };
+      } else {
+        return {
+          ...prevFormData,
+          [name]: value,
+        };
+      }
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -142,9 +161,6 @@ function StudentRegForm() {
         },
       });
 
-      // const insertId = response.data[0].insertId;
-      // console.log("Inserted ID:", insertId);
-      // localStorage.setItem("insertId", insertId);
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         navigate("/UserCreateProfile"); // Try navigating regardless of the response status
@@ -374,9 +390,46 @@ function StudentRegForm() {
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
-
                 gap: 1rem;
-                /* background-color: #574d4d; */
+                ${mq[2]} {
+                  flex-direction: row;
+                }
+              `}
+            >
+              <input
+                type="radio"
+                name="profession"
+                value="developer"
+                checked={formData.developer}
+                onChange={handleChange}
+              />
+              <label htmlFor="developer" style={label}>
+                Webbutvecklare
+              </label>
+            </div>
+            <div
+              css={css`
+                margin-bottom: 20px;
+              `}
+            >
+              <input
+                type="radio"
+                name="profession"
+                value="designer"
+                checked={formData.designer}
+                onChange={handleChange}
+              />
+              <label htmlFor="designer" style={label}>
+                Digital designer
+              </label>
+            </div>
+            {/* <div
+              css={css`
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
                 ${mq[2]} {
                   flex-direction: row;
                 }
