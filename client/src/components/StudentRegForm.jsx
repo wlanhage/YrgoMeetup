@@ -162,10 +162,8 @@ function StudentRegForm() {
 
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
-
         console.log("Student created successfully");
         navigate("/UserCreateProfile", { state: { data: response.data.id } });
-
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -376,6 +374,7 @@ function StudentRegForm() {
                   font-family: "inter";
                   text-align: left;
                   font-weight: 400;
+                  margin: 0.2rem 0;
                 `}
               >
                 Vilken utbildning går du?
@@ -394,8 +393,7 @@ function StudentRegForm() {
                 /* background-color: #c28b8b; */
               `}
             >
-              <div
-              >
+              <div>
                 <input
                   type="radio"
                   name="profession"
@@ -457,4 +455,3 @@ function StudentRegForm() {
 }
 
 export default StudentRegForm;
-

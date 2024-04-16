@@ -17,7 +17,7 @@ export default function Hero() {
 
   const svgStyle = {
     width: "calc(100vw - 4rem)",
-    height: "auto", // This will maintain the aspect ratio
+    height: "auto",
     maxWidth: "500px",
     marginBottom: "4rem",
   };
@@ -130,6 +130,7 @@ export default function Hero() {
               line-height: 1.6rem;
               letter-spacing: 0.25px;
               margin-top: 20px;
+              margin-bottom: 10px;
 
               font-family: "Inter";
               text-align: center;
