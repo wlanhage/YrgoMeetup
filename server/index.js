@@ -26,6 +26,7 @@ import {
   updateStudent,
   getLatestStudentId,
   insertStudentLanguage,
+  getStudentLanguagesFromId
 } from "./configs/database.js";
 
 const app = express();
