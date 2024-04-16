@@ -6,9 +6,14 @@ import { useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import CompanyRegProgBar from "./CompanyRegProgBar";
+import GdprPopup from './Gdpr.jsx';
 
 function CompanyRegForm({ setIsFormSubmitted }) {
   const navigate = useNavigate();
+  const [isGdprPopupOpen, setIsGdprPopupOpen] = useState(false);
+
+  
+
 
   const input = {
     backgroundColor: "#ffffff",
@@ -88,7 +93,8 @@ function CompanyRegForm({ setIsFormSubmitted }) {
 
   return (
     <>
-      <section>
+    
+      <section style={{marginTop: '50px'}}>
         <form
           onSubmit={handleSubmit}
           css={css`
@@ -173,9 +179,12 @@ function CompanyRegForm({ setIsFormSubmitted }) {
             placeholder="email@gmail.com"
             required
           />
-          <div >
+          <div style={{display: 'flex', flexDirection: 'row',}}>
               <input type="checkbox" required name="gdpr"/>
-              <label style={label} checked={formData.Gdpr} onChange={handleChange} htmlFor="gdpr">Jag accepterar GDPR-villkoren </label>
+              <label style={label} checked={formData.Gdpr} onChange={handleChange} htmlFor="gdpr">
+                <div onClick={() => setIsGdprPopupOpen(true)}>Jag accepterar GDPR-villkoren</div>
+                {isGdprPopupOpen && <GdprPopup onClose={() => setIsGdprPopupOpen(false)} />}
+                </label>
           </div>
           <RedButton text="Submit" />
         </form>

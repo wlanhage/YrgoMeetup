@@ -8,6 +8,7 @@ const CardsWrapper = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  marginTop: 50px,
 
   gap: 24px;
 `;
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
   width: 100%;
   /* height: 110px; */
   gap: 20px;
-  /* margin-top: 40px; */
+  
 
   @media (min-width: 900px) {
     align-items: center;
@@ -41,7 +42,7 @@ const Icon = styled.img`
   height: 100px;
 `;
 
-function CompanyCardContent({ designData = {}, icon, style }) {
+function CompanyCardContent({ designData = {}, icon }) {
   if (!designData.icon) {
     designData.icon = icon;
   }
@@ -66,7 +67,7 @@ function CompanyCardContent({ designData = {}, icon, style }) {
           <CompanyText>{submittedData.email}</CompanyText>
           <CompanyText style={{ width: "50px" }}> </CompanyText>
           <a href={submittedData.website}>
-            <SmallRedButton text={"Ta reda på mer"} />
+            <SmallRedButton text={"Läs mer"} />
             {/* <RedButton
               text={"Ta reda på mer"}
               style={{

@@ -83,6 +83,7 @@ function CompanyRegFormSecond () {
         <form
           onSubmit={handleUpdateSubmit}
           css={css`
+          margin-top: 50px;
             display: flex;
             flex-direction: column;
 
@@ -128,9 +129,9 @@ function CompanyRegFormSecond () {
             onChange={handleServicesChange}
             placeholder="Kort om tekniker vi använder..."
           />
-          <label htmlFor="">
+          {/* <label htmlFor="">
             Kan ni ta emot en LIA student mellan Dec - Maj?
-          </label>
+          </label> */}
           {/* <input type="radio" value="No" name="intern" onChange={handleInternChange}/> Nej
           <input type="radio" value="Yes" name="intern" onChange={handleInternChange}/> Ja */}
           

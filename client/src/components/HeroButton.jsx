@@ -1,5 +1,6 @@
 import { onClick } from "react";
 import styled from "@emotion/styled";
+
 function HeroButton({ text, style: additionalStyle, onClick }) {
   const HeroButton = styled.button`
     background-color: transparent;
@@ -19,7 +20,24 @@ function HeroButton({ text, style: additionalStyle, onClick }) {
     }
   `;
 
-  return <HeroButton onClick={onClick}>Anmäl ditt företag</HeroButton>;
+
+  // const HeroButton = styled.button`
+  //   background-color: transparent;
+  //   color: white;
+  //   border: 1px solid white;
+  //   border-radius: 35px;
+  //   width: 100%;
+  //   height: 56px;
+  //   padding: 16px 24px;
+  //   font-family: inter;
+  // `;
+
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  );
+
 }
 
 export default HeroButton;

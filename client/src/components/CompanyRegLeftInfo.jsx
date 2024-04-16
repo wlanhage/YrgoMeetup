@@ -13,6 +13,7 @@ import icon from "../assets/icon4.svg";
 import icon4 from "../assets/icon4.svg";
 
 function CompanyRegLeftInfo() {
+  const [submittedData, setSubmittedData] = useState({ companyName: '' });
   const [isFlipped, setIsFlipped] = useState(true);
 
   const handleCardClick = () => {
@@ -38,7 +39,7 @@ function CompanyRegLeftInfo() {
     margin-right: auto; */
     border: 1.5px solid;
     border-radius: 9px;
-    /* position: absolute; */
+    
     transform: translate(-12px, 12px);
   `;
 
@@ -54,6 +55,7 @@ function CompanyRegLeftInfo() {
     border-radius: 9px;
     position: absolute;
     transform: translate(12px, -12px);
+    
   `;
 
   const CardBacksideText = styled.p`
@@ -71,7 +73,8 @@ function CompanyRegLeftInfo() {
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    margin: 50px auto; /* Adjust this value as needed */
+    margin: 50px auto;
+    
 
     @media (max-width: 900px) {
       display: none;
@@ -88,6 +91,7 @@ function CompanyRegLeftInfo() {
 
   const DesktopLeftTextArea = styled.div`
     margin-bottom: 60px;
+    margin: 50px;
   `;
 
   return (
@@ -121,7 +125,7 @@ function CompanyRegLeftInfo() {
             <>
               <CardBackside></CardBackside>
               <Card>
-                <CompanyCardContent icon={icon4} />
+                <CompanyCardContent icon={icon4} companyName="Företag"/>
               </Card>
             </>
           ) : (
@@ -129,8 +133,8 @@ function CompanyRegLeftInfo() {
               <Card>
                 <CompanyCardContent icon={icon4} />
               </Card>
-              <CardBackside>
-                <CardBacksideText>{submittedData.companyName}</CardBacksideText>
+              <CardBackside style={{ transform: 'translate(10px, -250px)'}}>
+                <CardBacksideText>Företagsnamn</CardBacksideText>
               </CardBackside>
             </>
           )}
