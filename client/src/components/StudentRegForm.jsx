@@ -9,20 +9,9 @@ import iconMonitor from "../assets/icon3.svg";
 import { useNavigate } from "react-router-dom";
 import SecondaryButton from "./SecondaryButton";
 import CompanyRegProgBar from "./CompanyRegProgBar";
-import styled from "@emotion/styled";
 
 function StudentRegForm() {
   const navigate = useNavigate();
-
-  const handleClickBack = () => {
-    navigate("/");
-    console.log("pressed");
-  };
-
-  const handleClickLogin = () => {
-    navigate("/Login");
-    console.log("pressed");
-  };
 
   const input = {
     backgroundColor: "#ffffff",
@@ -60,18 +49,28 @@ function StudentRegForm() {
     lastname: "",
     email: "",
     password: "",
-    designer: false,
-    developer: false,
+    designer: true,
+    developer: true,
     linkedin: "",
     portfolio: "",
     textfield: "",
     Gdpr: false,
   });
+  
+  const handleChange = (e) => {
+    const { name, type, checked } = e.target;
+
+    let value = type === "checkbox" ? checked : e.target.value;
+    console.log(value);
+    console.log(name);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  // };
 
   const handleChange = (event) => {
-    const { name, type, checked, value } = event.target;
-    console.log(name, type, checked, value);
-    let finalValue = type === "checkbox" ? checked : value;
+    const { name, value } = event.target;
 
     setFormData((prevFormData) => {
       if (name === "profession") {
@@ -83,13 +82,15 @@ function StudentRegForm() {
       } else {
         return {
           ...prevFormData,
-          [name]: finalValue,
+          [name]: value,
         };
       }
     });
   };
 
   const handleSubmit = async (e) => {
+
+
     if (!formData.Gdpr === true) {
       console.log(formData.Gdpr);
 
@@ -162,8 +163,7 @@ function StudentRegForm() {
 
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
-        console.log("Student created successfully");
-        navigate("/UserCreateProfile", { state: { data: response.data.id}});
+        navigate("/UserCreateProfile"); // Try navigating regardless of the response status
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -179,6 +179,8 @@ function StudentRegForm() {
       console.error("Error:", error);
     }
   };
+ 
+
 
   return (
     <>
@@ -187,7 +189,9 @@ function StudentRegForm() {
           display: flex;
           padding: 1rem;
         `}
-      ></header>
+      >
+        <img src={backarrow}></img>
+      </header>
       <section
         css={css`
           display: flex;
@@ -289,7 +293,6 @@ function StudentRegForm() {
             number={"1"}
             redBarWidth={"110px"}
             grayBarWidth={"220px"}
-            onClick={() => navigate("/")}
           />
           <label htmlFor="" style={label}>
             Förnamn
@@ -420,7 +423,7 @@ function StudentRegForm() {
                 Digital designer
               </label>
             </div>
-             <div
+            {/* <div
               css={css`
                 display: flex;
                 width: 100%;
@@ -428,25 +431,14 @@ function StudentRegForm() {
                 align-items: flex-start;
                 gap: 1rem;
                 ${mq[2]} {
-
-            <div>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-
                   flex-direction: row;
-                  align-items: flex-start;
-                  gap: 1rem;
-                  ${mq[2]} {
-                    flex-direction: row;
-                  }
-                `}
-              >
+                }
+              `}
+            >
+              <div>
                 <input
-                  type="radio"
-                  name="profession"
-                  value="developer"
+                  type="checkbox"
+                  name="developer"
                   checked={formData.developer}
                   onChange={handleChange}
                 />
@@ -460,9 +452,8 @@ function StudentRegForm() {
                 `}
               >
                 <input
-                  type="radio"
-                  name="profession"
-                  value="designer"
+                  type="checkbox"
+                  name="designer"
                   checked={formData.designer}
                   onChange={handleChange}
                 />
@@ -472,28 +463,15 @@ function StudentRegForm() {
               </div>
             </div>
             <div>
-              <input
-                type="checkbox"
-                value={formData.Gdpr}
-                onChange={handleChange}
-                name="Gdpr"
-                required
-              />
-              <label style={label} htmlFor="Gdpr">
-                Jag accepterar GDPR-villkoren{" "}
-              </label>
+                <input type="checkbox" value={formData.Gdpr} onChange={handleChange} name="Gdpr" required />
+                <label style={label}  htmlFor="Gdpr">Jag accepterar GDPR-villkoren </label>
             </div>
             <RedButton text="Nästa" className="regButton" />
-            <SecondaryButton
-              text="Redan medlem? Logga in"
-              onClick={handleClickLogin}
-              className="regButton"
-            />
+            <SecondaryButton text="Redan medlem? Logga in" className="regButton" />
           </div>
         </form>
       </section>
     </>
   );
-}
 }
 export default StudentRegForm;
