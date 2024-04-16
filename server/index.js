@@ -27,7 +27,7 @@ import {
   getLatestStudentId,
   insertStudentLanguage,
   getStudentLanguagesFromId,
-  getStudentId
+  getStudentId,
   getStudentSkills
 } from "./configs/database.js";
 
