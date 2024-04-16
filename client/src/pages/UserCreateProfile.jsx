@@ -10,10 +10,13 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import CompanyRegProgBar from "../components/CompanyRegProgBar";
+import { useLocation } from 'react-router-dom';
 
 //user info page. later this will fetch the user's name, area etc from the database and display their info here
 
 const UserCreateProfile = () => {
+
+  
   const basicStyle = {
     fontFamily: "Inter",
     fontSize: "16px",
@@ -93,47 +96,32 @@ const UserCreateProfile = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const location = useLocation();
+  const id = location.state.data.id;
+ const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-
+console.log(id);
     try {
-      // Fetch the latest student ID
-      const responseLatest = await axios.get({
-        url: "https://yrgomeetup.onrender.com/students/latest",
-        withCredentials: true,
-      });
-      const latestStudentId = responseLatest.data[0].id;
-      console.log("Latest student ID:", latestStudentId);
 
-      // Update the student's data
       const response = await axios({
-        url: `https://yrgomeetup.onrender.com/students/${latestStudentId}`,
+        url: `https://yrgomeetup.onrender.com/putLinks`,
         method: "PUT",
-        data: formData,
+        data: {id: id, linkedin: formData.linkedin, portfolio: formData.portfolio},
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       });
-      const studentId = localStorage.setItem("insertId", insertId);
-      formData.languages.forEach(async (languageId) => {
-        await axios.post("/student_languages", {
-          student_id: studentId,
-          language_id: languageId,
-        });
-      });
-      navigate("Skills");
       console.log("Response:", response); // Log the entire response
-      console.log("Data:", response.data); // Log the data from the response
-      navigate("/Skills");
+      console.log(id);
     } catch (error) {
       console.error("Error submitting form:", error);
       console.error("Error details:", error.response);
     }
-    navigate("/Skills");
-  };
+    navigate("/Skills",{state: { data: id}});
+  }; 
 
   const breakpoints = [576, 768, 900, 1200];
 
