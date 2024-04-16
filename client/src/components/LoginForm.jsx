@@ -24,7 +24,7 @@ function LoginForm() {
     fontSize: "16px",
     color: "black",
     fontFamily: "inter",
-    marginBottom: "20px",
+    // marginBottom: "20px",
     textAlign: "left",
     border: "1px solid #000000",
     borderRadius: "4px, 4px, 4px, 4px",
@@ -100,8 +100,6 @@ function LoginForm() {
           display: flex;
           justify-content: center;
           align-items: center;
-          height: 100vh;
-          /* background-color: aquamarine; */
         `}
       >
         <section
@@ -112,13 +110,9 @@ function LoginForm() {
             justify-content: center;
             padding: 2rem;
             width: 100%;
-            /* background-color: #b12424; */
 
             ${mq[2]} {
               flex-direction: column;
-              /* justify-content: center; */
-              /* align-items: flex-start; */
-              /* margin: 2rem; */
             }
           `}
         >
@@ -163,15 +157,14 @@ function LoginForm() {
             css={css`
               display: flex;
               flex-direction: column;
-              /* background-color: #62c82b; */
+              gap: 20px;
               width: 100%;
               justify-content: center;
-              /* gap: 8px; */
 
               padding: 2rem 2rem;
               ${mq[2]} {
                 border: 1px solid #000000;
-                padding: 2rem 2rem;
+                /* padding: 2rem 2rem; */
                 width: 720px;
               }
             `}
@@ -179,7 +172,6 @@ function LoginForm() {
             <label htmlFor="email" style={label}>
               e-mail
             </label>
-            <br />
             <input
               type="text"
               style={input}
@@ -188,12 +180,9 @@ function LoginForm() {
               onChange={handleChange}
               placeholder="example@email.com"
             />{" "}
-            <br />
-            <br />
             <label htmlFor="password" style={label}>
               Lösenord
             </label>
-            <br />
             <input
               type="password"
               style={input}
@@ -202,11 +191,7 @@ function LoginForm() {
               onChange={handleChange}
               placeholder="*****"
             />{" "}
-            <br />
-            <br />
             <RedButton text="Logga In" type="submit" />
-            <br />
-            <br />
             <RedButton text="Inte medlem? Skapa konto" onClick={register} />
           </form>
         </section>

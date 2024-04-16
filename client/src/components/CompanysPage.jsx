@@ -33,7 +33,6 @@ function CompanysPage() {
     alignItems: "center",
     justifyContent: "space-between",
     color: "white",
-
     width: "100%",
     height: "100px",
     backgroundColor: "#F52A3B",

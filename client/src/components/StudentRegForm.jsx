@@ -163,7 +163,7 @@ function StudentRegForm() {
       console.log("Response:", response); // Log the entire response
       if (response.status === 201) {
         console.log("Student created successfully");
-        navigate("/UserCreateProfile", { state: { data: response.data.id}});
+        navigate("/UserCreateProfile", { state: { data: response.data.id } });
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -467,5 +467,5 @@ function StudentRegForm() {
     </>
   );
 }
-}
+
 export default StudentRegForm;
