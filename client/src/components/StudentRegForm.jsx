@@ -423,7 +423,7 @@ function StudentRegForm() {
                 Digital designer
               </label>
             </div>
-            {/* <div
+             <div
               css={css`
                 display: flex;
                 width: 100%;
@@ -473,5 +473,6 @@ function StudentRegForm() {
       </section>
     </>
   );
+}
 }
 export default StudentRegForm;
