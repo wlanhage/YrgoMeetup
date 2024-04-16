@@ -26,7 +26,8 @@ import {
   updateStudent,
   getLatestStudentId,
   insertStudentLanguage,
-  getStudentLanguagesFromId
+  getStudentLanguagesFromId,
+  getStudentSkills
 } from "./configs/database.js";
 
 const app = express();
@@ -427,8 +428,8 @@ app.post("/getUserSkills", async (req, res) => {
 
 app.get("/getStudentSkills", async (req, res) => {
   try {
-    const id = req.body.user;
-    let [softwares, languages] = await getUserSkills(id);
+    const id = req.query.user;
+    let [softwares, languages] = await getStudentSkills(id);
     console.log(softwares);
     console.log(languages);
     if (languages.length > 0 && softwares.length > 0) {
