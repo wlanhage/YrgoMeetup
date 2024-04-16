@@ -18,7 +18,7 @@ function StudentsLoop({ selectedCategory, filteredStudents }) {
                 const skillsPromises = studentsWithLanguages.map(async student => {
                     const skillsResponse = await axios.get(
                         'https://yrgomeetup.onrender.com/getStudentSkills',
-                        { params: { user: student.id } },
+                        { params: { student: student.id } },
                         { withCredentials: true, 
                             headers: {
                             'Content-Type': 'application/json',
