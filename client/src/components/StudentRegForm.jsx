@@ -357,8 +357,7 @@ function StudentRegForm() {
             css={css`
               display: flex;
               flex-direction: column;
-              /* align-items: center; */
-              /* justify-content: center; */
+
               gap: 10px;
               width: 100%;
             `}
@@ -393,19 +392,7 @@ function StudentRegForm() {
                 /* background-color: #c28b8b; */
               `}
             >
-              <div
-                css={css`
-                  /* display: flex; */
-                  /* width: 100%; */
-                  /* flex-direction: row; */
-                  /* align-items: flex-start; */
-                  /* gap: 1rem; */
-                  /* background-color: #792424; */
-                  ${mq[2]} {
-                    /* flex-direction: row; */
-                  }
-                `}
-              >
+              <div>
                 <input
                   type="radio"
                   name="profession"
