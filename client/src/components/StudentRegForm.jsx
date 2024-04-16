@@ -49,40 +49,31 @@ function StudentRegForm() {
     lastname: "",
     email: "",
     password: "",
-    designer: true,
-    developer: true,
+    designer: false,
+    developer: false,
     linkedin: "",
     portfolio: "",
     textfield: "",
     Gdpr: false,
   });
   
-  const handleChange = (e) => {
-    const { name, type, checked } = e.target;
-
-    let value = type === "checkbox" ? checked : e.target.value;
-    console.log(value);
-    console.log(name);
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  // };
-
   const handleChange = (event) => {
-    const { name, value } = event.target;
-
+    const { name, type, checked, value } = event.target;
+  console.log(name, type, checked, value);
+    let finalValue = type === "checkbox" ? checked : value;
+  
     setFormData((prevFormData) => {
       if (name === "profession") {
         return {
           ...prevFormData,
           designer: value === "designer",
           developer: value === "developer",
+       
         };
       } else {
         return {
           ...prevFormData,
-          [name]: value,
+          [name]: finalValue,
         };
       }
     });
@@ -384,11 +375,12 @@ function StudentRegForm() {
                 Vilket utbildning går du?
               </h3>
             </div>
+            <div>
             <div
               css={css`
                 display: flex;
                 width: 100%;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: flex-start;
                 gap: 1rem;
                 ${mq[2]} {
@@ -423,44 +415,6 @@ function StudentRegForm() {
                 Digital designer
               </label>
             </div>
-            {/* <div
-              css={css`
-                display: flex;
-                width: 100%;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                ${mq[2]} {
-                  flex-direction: row;
-                }
-              `}
-            >
-              <div>
-                <input
-                  type="checkbox"
-                  name="developer"
-                  checked={formData.developer}
-                  onChange={handleChange}
-                />
-                <label htmlFor="developer" style={label}>
-                  Webbutvecklare
-                </label>
-              </div>
-              <div
-                css={css`
-                  margin-bottom: 20px;
-                `}
-              >
-                <input
-                  type="checkbox"
-                  name="designer"
-                  checked={formData.designer}
-                  onChange={handleChange}
-                />
-                <label htmlFor="designer" style={label}>
-                  Digital designer
-                </label>
-              </div>
             </div>
             <div>
                 <input type="checkbox" value={formData.Gdpr} onChange={handleChange} name="Gdpr" required />
