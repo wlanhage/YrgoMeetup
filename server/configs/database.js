@@ -283,3 +283,9 @@ export async function getLatestStudentId() {
   const [rows] = await pool.query(query);
   return rows;
 }
+
+export async function getStudentId(email) {
+  const query = `SELECT id FROM students WHERE email = ?`;
+  const [rows] = await pool.query(query, [email]);
+  return rows[0];
+}

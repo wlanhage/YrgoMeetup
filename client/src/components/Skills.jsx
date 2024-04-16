@@ -11,6 +11,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import CompanyRegProgBar from "./CompanyRegProgBar";
+import { useLocation } from 'react-router-dom';
 
 const Emptynav = styled.div`
   height: 100px;
@@ -65,7 +66,7 @@ function Skills() {
 
   const [currentStudentId, setCurrentStudentId] = useState(null);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchLatestStudentId = async () => {
       try {
         const response = await axios.get(
@@ -78,8 +79,10 @@ function Skills() {
     };
 
     fetchLatestStudentId();
-  }, []);
-
+  }, []); */
+  const location = useLocation();
+  const id = location.state.data;
+  console.log(id);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -87,7 +90,7 @@ function Skills() {
     for (const languageId of selectedLanguages) {
       try {
         await axios.post("https://yrgomeetup.onrender.com/student_languages", {
-          student_id: currentStudentId, // Replace with the current student's ID
+          student_id: id,
           language_id: languageId,
         });
         navigate("/Login");
