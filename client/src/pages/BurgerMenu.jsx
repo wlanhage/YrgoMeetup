@@ -6,7 +6,6 @@ import Menu from "../components/Menu.jsx";
 function burgerMenu() {
   return (
     <div>
-      <Navbar />
       <Menu />
     </div>
   );
