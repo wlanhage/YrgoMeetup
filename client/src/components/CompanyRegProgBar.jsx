@@ -1,6 +1,7 @@
 import "../App.css";
 import leftArrow from "../assets/smallicons/leftarrow.svg";
 import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
 function CompanyRegProgBar({ number, grayBarWidth, redBarWidth, link }) {
   const navigate = useNavigate();

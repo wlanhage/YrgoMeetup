@@ -288,7 +288,8 @@ function StudentRegForm() {
             number={"1"}
             redBarWidth={"110px"}
             grayBarWidth={"220px"}
-            onClick={() => navigate("/")}
+            // onClick={() => navigate("/")}
+            link={"/"}
           />
           <label htmlFor="" style={label}>
             Förnamn
@@ -299,7 +300,7 @@ function StudentRegForm() {
             style={input}
             css={css`
               ${mq[2]} {
-                width: 50%;
+                /* width: 50%; */
               }
             `}
             value={formData.firstname}
@@ -318,7 +319,7 @@ function StudentRegForm() {
             style={input}
             css={css`
               ${mq[2]} {
-                width: 50%;
+                /* width: 50%; */
               }
             `}
             value={formData.lastname}
@@ -356,11 +357,10 @@ function StudentRegForm() {
             css={css`
               display: flex;
               flex-direction: column;
-              align-items: center;
-              justify-content: center;
+              /* align-items: center; */
+              /* justify-content: center; */
               gap: 10px;
               width: 100%;
-              margin-bottom: 20px;
             `}
           >
             <div
@@ -377,19 +377,32 @@ function StudentRegForm() {
                   font-weight: 400;
                 `}
               >
-                Vilket utbildning går du?
+                Vilken utbildning går du?
               </h3>
             </div>
-            <div>
+
+            <div
+              css={css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 0.5rem;
+                align-items: flex-start;
+
+                width: 100%;
+                /* background-color: #c28b8b; */
+              `}
+            >
               <div
                 css={css`
-                  display: flex;
-                  width: 100%;
-                  flex-direction: row;
-                  align-items: flex-start;
-                  gap: 1rem;
+                  /* display: flex; */
+                  /* width: 100%; */
+                  /* flex-direction: row; */
+                  /* align-items: flex-start; */
+                  /* gap: 1rem; */
+                  /* background-color: #792424; */
                   ${mq[2]} {
-                    flex-direction: row;
+                    /* flex-direction: row; */
                   }
                 `}
               >
@@ -404,9 +417,11 @@ function StudentRegForm() {
                   Webbutvecklare
                 </label>
               </div>
+
               <div
                 css={css`
                   margin-bottom: 20px;
+                  /* background-color: #e3ea54; */
                 `}
               >
                 <input
@@ -421,7 +436,12 @@ function StudentRegForm() {
                 </label>
               </div>
             </div>
-            <div>
+
+            <div
+              css={css`
+                margin-bottom: 10px;
+              `}
+            >
               <input
                 type="checkbox"
                 value={formData.Gdpr}
