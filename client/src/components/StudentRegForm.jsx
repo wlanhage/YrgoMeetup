@@ -58,8 +58,10 @@ function StudentRegForm() {
 
   const handleChange = (e) => {
     const { name, type, checked } = e.target;
-    let value = e.target.value;
 
+    let value = type === "checkbox" ? checked : e.target.value;
+    console.log(value);
+    console.log(name);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -68,7 +70,8 @@ function StudentRegForm() {
 
   const handleSubmit = async (e) => {
 
-    if (!formData.Gdpr) {
+    if (!formData.Gdpr === true) {
+      console.log(formData.Gdpr);
       alert("Du måste acceptera GDPR-villkoren för att kunna registrera dig");
       return;
     }
@@ -399,8 +402,8 @@ function StudentRegForm() {
               </div>
             </div>
             <div>
-                <input type="checkbox" required name="gdpr"/>
-                <label style={label} checked={formData.Gdpr} onChange={handleChange} htmlFor="gdpr">Jag accepterar GDPR-villkoren </label>
+                <input type="checkbox" value={formData.Gdpr} onChange={handleChange} name="Gdpr" required />
+                <label style={label}  htmlFor="Gdpr">Jag accepterar GDPR-villkoren </label>
             </div>
             <RedButton text="Nästa" className="regButton" />
             <SecondaryButton text="Redan medlem? Logga in" className="regButton" />
