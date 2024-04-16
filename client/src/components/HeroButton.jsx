@@ -19,25 +19,11 @@ function HeroButton({ text, style: additionalStyle, onClick }) {
       cursor: pointer;
     }
   `;
-
-
-  // const HeroButton = styled.button`
-  //   background-color: transparent;
-  //   color: white;
-  //   border: 1px solid white;
-  //   border-radius: 35px;
-  //   width: 100%;
-  //   height: 56px;
-  //   padding: 16px 24px;
-  //   font-family: inter;
-  // `;
-
   return (
-    <button onClick={onClick}>
-      {text}
-    </button>
+    <>
+      <HeroButton onClick={onClick}>{text}</HeroButton>
+    </>
   );
-
 }
 
 export default HeroButton;
