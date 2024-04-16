@@ -15,10 +15,8 @@ function CompanyReg() {
 
   const Wrapper = styled.div`
     width: 100vw;
-
     display: flex;
     flex-direction: row;
-
     justify-content: space-around;
   `;
 
@@ -26,13 +24,6 @@ function CompanyReg() {
     @media (max-width: 900px) {
       display: none;
     }
-  `;
-
-  const LeftContent = styled.div`
-    width: 35%;
-
-    display: flex;
-    flex-direction: column;
   `;
 
   return (
