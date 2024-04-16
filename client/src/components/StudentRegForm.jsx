@@ -7,6 +7,7 @@ import backarrow from "../assets/arrow_back.svg";
 import { css } from "@emotion/react";
 import iconMonitor from "../assets/icon3.svg";
 import { useNavigate } from "react-router-dom";
+import SecondaryButton from "./SecondaryButton";
 import CompanyRegProgBar from "./CompanyRegProgBar";
 
 function StudentRegForm() {
@@ -53,16 +54,19 @@ function StudentRegForm() {
     linkedin: "",
     portfolio: "",
     textfield: "",
+    Gdpr: false,
   });
+  
+  const handleChange = (e) => {
+    const { name, type, checked } = e.target;
 
-  // const handleChange = (e) => {
-  //   const { name, type, checked } = e.target;
-  //   let value = e.target.value;
-
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
+    let value = type === "checkbox" ? checked : e.target.value;
+    console.log(value);
+    console.log(name);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   // };
 
   const handleChange = (event) => {
@@ -85,6 +89,14 @@ function StudentRegForm() {
   };
 
   const handleSubmit = async (e) => {
+
+
+    if (!formData.Gdpr === true) {
+      console.log(formData.Gdpr);
+
+      alert("Du måste acceptera GDPR-villkoren för att kunna registrera dig");
+      return;
+    }
     // Validate first name, last name, email, password, and text field
     console.log(formData);
 
@@ -167,6 +179,8 @@ function StudentRegForm() {
       console.error("Error:", error);
     }
   };
+ 
+
 
   return (
     <>
@@ -447,17 +461,13 @@ function StudentRegForm() {
                   Digital designer
                 </label>
               </div>
-            </div> */}
+            </div>
+            <div>
+                <input type="checkbox" value={formData.Gdpr} onChange={handleChange} name="Gdpr" required />
+                <label style={label}  htmlFor="Gdpr">Jag accepterar GDPR-villkoren </label>
+            </div>
             <RedButton text="Nästa" className="regButton" />
-          </div>
-          <div>
-            <p
-              css={css`
-                font-family: "inter";
-              `}
-            >
-              Redan medlem? Logga in
-            </p>
+            <SecondaryButton text="Redan medlem? Logga in" className="regButton" />
           </div>
         </form>
       </section>

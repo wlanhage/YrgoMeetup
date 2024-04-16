@@ -19,9 +19,10 @@ const header = {
   justifyContent: "flex-end",
   height: "5%",
   position: 'absolute',
-  top: '2rem',
-  right: '2rem',
+  top: '60px',
+  right: '0',
   zIndex: 1,
+  marginRight: '10%'
 };
 const student = {
   display: "flex",

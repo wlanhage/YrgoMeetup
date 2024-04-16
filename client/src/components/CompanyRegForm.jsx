@@ -35,6 +35,7 @@ function CompanyRegForm({ setIsFormSubmitted }) {
     firstname: "",
     lastname: "",
     email: "",
+    Gdpr: false,
   });
 
   const handleChange = (e) => {
@@ -72,6 +73,7 @@ function CompanyRegForm({ setIsFormSubmitted }) {
         firstname: "",
         lastname: "",
         email: "",
+        gdpr: false,
       });
       setIsFormSubmitted(true);
       console.log(setIsFormSubmitted);
@@ -171,6 +173,10 @@ function CompanyRegForm({ setIsFormSubmitted }) {
             placeholder="email@gmail.com"
             required
           />
+          <div >
+              <input type="checkbox" required name="gdpr"/>
+              <label style={label} checked={formData.Gdpr} onChange={handleChange} htmlFor="gdpr">Jag accepterar GDPR-villkoren </label>
+          </div>
           <RedButton text="Submit" />
         </form>
       </section>
