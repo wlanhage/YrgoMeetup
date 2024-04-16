@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import UserProfileInfo from "../components/UserProfileInfo";
 import RedButton from "../components/RedButton";
 import SecondaryButton from "../components/SecondaryButton";
@@ -133,7 +132,6 @@ console.log(id);
 
   return (
     <div>
-      <Navbar />
       <section
         css={css`
           display: flex;
