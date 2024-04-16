@@ -162,18 +162,12 @@ export async function getStudentCredentials(email) {
 }
 
 export async function getUserInformation(id) {
-  try {
-    const [rows] = await pool.query(
-      `SELECT * FROM students WHERE id = ?`,
-      [id]
-    );
-    return rows[0];
-  } catch (error) {
-    console.error("Error fetching user information:", error);
-    throw error;
-  }
+  const result = await pool.query(
+    "SELECT * FROM students, student_languages, student_softwares WHERE id = ?",
+    [id]
+  );
+  return result;
 }
-
 
 export async function getUserSkills(id) {
   console.log(`Fetching skills for user with ID: ${id}`);
@@ -288,4 +282,10 @@ export async function getLatestStudentId() {
   const query = "SELECT id FROM students ORDER BY id DESC LIMIT 1";
   const [rows] = await pool.query(query);
   return rows;
+}
+
+export async function getStudentId(email) {
+  const query = `SELECT id FROM students WHERE email = ?`;
+  const [rows] = await pool.query(query, [email]);
+  return rows[0];
 }
