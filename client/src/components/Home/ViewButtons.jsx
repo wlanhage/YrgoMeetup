@@ -32,6 +32,14 @@ export default function ViewButtons() {
     height: 56px;
     padding: 16px 24px;
     font-family: "inter";
+
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      background-color: #f52a3b;
+      opacity: 0.8;
+      cursor: pointer;
+    }
   `;
 
   const HeroButtonWhiteView = styled.button`
@@ -44,6 +52,15 @@ export default function ViewButtons() {
     height: 56px;
     padding: 16px 24px;
     font-family: "inter";
+
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      background-color: #e9e9e9;
+      opacity: 0.8;
+      color: black;
+      cursor: pointer;
+    }
   `;
   const NavigateToUserDashboard = (e) => {
     try {
@@ -72,6 +89,7 @@ export default function ViewButtons() {
         ${mq[1]} {
           width: 400px;
           padding: 0;
+          margin: 0;
         }
       `}
     >
@@ -90,6 +108,11 @@ export default function ViewButtons() {
         style={text}
         css={css`
           text-decoration: underline;
+          transition: opacity 0.3s ease;
+          &:hover {
+            cursor: pointer;
+            opacity: 0.5;
+          }
         `}
         onClick={handleClickStudent}
       >

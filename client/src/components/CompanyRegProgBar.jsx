@@ -22,6 +22,10 @@ function CompanyRegProgBar({ number, grayBarWidth, redBarWidth, link }) {
     marginBottom: "15px",
   };
 
+  const StyledImg = styled.img`
+    cursor: pointer;
+  `;
+
   const grayBar = {
     width: grayBarWidth,
     height: "3px",
@@ -52,7 +56,8 @@ function CompanyRegProgBar({ number, grayBarWidth, redBarWidth, link }) {
     <>
       <div style={container}>
         <div onClick={() => navigate(link)}>
-          <img src={leftArrow} alt="leftArrow" />
+          <StyledImg src={leftArrow} alt="leftArrow" />
+          {/* <img src={leftArrow} alt="leftArrow" /> */}
         </div>
         <div style={textStyle}>Steg {number} av 3</div>
         <div style={empty}></div>

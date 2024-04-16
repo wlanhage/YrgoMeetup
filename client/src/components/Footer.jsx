@@ -20,6 +20,20 @@ const HeroFooter = styled.div`
 const Paragraph = styled.p`
   font-family: "Inter";
   margin: 0.5rem 0 0.5rem 0;
+  transition: color 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  &:visited {
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: none;
+  }
 `;
 
 const breakpoints = [576, 768, 900, 1200];
@@ -52,7 +66,15 @@ function Footer() {
           Anmäl ditt företag här
         </Paragraph>
         <Paragraph onClick={handleClickStudent}>Logga in som student</Paragraph>
-        <Paragraph>https://www.yrgo.se/</Paragraph>
+        <Paragraph>
+          <a
+            href="https://www.yrgo.se/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://www.yrgo.se/
+          </a>
+        </Paragraph>
       </HeroFooter>
     </>
   );

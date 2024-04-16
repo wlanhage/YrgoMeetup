@@ -22,20 +22,18 @@ export default function EventInformation() {
         css={css`
           display: flex;
           flex-direction: column;
-          /* background-color: #9af52a; */
+          /* background-color: #475634; */
+          padding: 2rem;
 
           ${mq[1]} {
-            padding: 4rem;
+            padding: 4rem 8rem;
           }
         `}
       >
         <div
           css={css`
             text-align: left;
-            padding: 32px 32px 0 32px;
-            /* display: flex;
-            flex-direction: column;
-            align-items: center; */
+            padding: 32px 32px 0 0;
           `}
         >
           <h1
@@ -48,9 +46,8 @@ export default function EventInformation() {
 
               ${mq[1]} {
                 font-size: 60px;
-
                 font-weight: 300;
-                line-height: 72px; /* 120% */
+                line-height: 72px;
                 letter-spacing: -0.5px;
               }
             `}
@@ -58,18 +55,18 @@ export default function EventInformation() {
             Branchevent 2024
           </h1>
         </div>
-        <div></div>
+
         <div
           css={css`
             display: flex;
             flex-direction: column;
-            /* background-color: aliceblue; */
-            margin: 2rem;
+            margin: 1rem 0;
+            /* margin: 2rem 2rem 2rem 0; */
+            /* background-color: #9af52a; */
           `}
         >
           <div
             css={css`
-              /* background-color: #3c4e75; */
               display: flex;
             `}
           >
@@ -110,8 +107,6 @@ export default function EventInformation() {
             css={css`
               display: flex;
               flex-direction: row;
-
-              /* background-color: #819dd9; */
             `}
           >
             <span
@@ -187,11 +182,11 @@ export default function EventInformation() {
             display: flex;
             flex-direction: column;
             width: 100%;
+
             ${mq[1]} {
               flex-direction: row;
-
-              justify-content: center;
-              gap: 56px;
+              justify-content: flex-start;
+              gap: 4rem;
             }
           `}
         >
@@ -201,7 +196,7 @@ export default function EventInformation() {
               color: white;
               border: none;
               height: auto;
-              margin: 0 36px 36px 36px;
+              /* margin: 0 36px 36px 36px; */
               justify-content: space-between;
               font-family: inter;
               font-size: 16px;
@@ -269,7 +264,7 @@ export default function EventInformation() {
 
                 ${mq[1]} {
                   font-size: 20px;
-                  line-height: 24px; /* 120% */
+                  line-height: 24px;
                   letter-spacing: 0.15px;
                   max-width: 600px;
                 }
